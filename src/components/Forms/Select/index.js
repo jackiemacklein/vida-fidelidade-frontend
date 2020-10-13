@@ -24,8 +24,10 @@ function Select({
         ) : (
           <></>
         )}
-        {options.map(item => (
-          <option value={item.value}>{item.text}</option>
+        {options.map((item, index) => (
+          <option key={index} value={item.value}>
+            {item.text}
+          </option>
         ))}
       </Field>
       {infoText ? <Small color={infoTextColor}>{infoText}</Small> : <Small color={infoTextColor}>&nbsp;</Small>}

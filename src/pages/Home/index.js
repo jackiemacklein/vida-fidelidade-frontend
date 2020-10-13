@@ -84,12 +84,12 @@ async function requestInitialData() {
   let siteConfig = { sucesss: true };
   let plans = [];
 
-  plans = await fetch(`${process.env.REACT_APP_API}/produtos/`, {
+  /*plans = await fetch(`${process.env.REACT_APP_API}/produtos/`, {
     method: "GET",
     headers: {},
   })
     .then(response => response.json())
-    .catch(error => console.log(error));
+    .catch(error => console.log(error));*/
 
   return { siteConfig, plans };
 }

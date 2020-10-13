@@ -2,7 +2,7 @@ import React from "react";
 
 function InstagramIcon(props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" iewBox="0 0 30 30" style={props.style ?? {}} width={props.width} height={props.height}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style={props.style ?? {}} width={props.width} height={props.height}>
       <path
         d="M21.721,0H8.279A8.288,8.288,0,0,0,0,8.279V21.721A8.288,8.288,0,0,0,8.279,30H21.721A8.288,8.288,0,0,0,30,21.721V8.279A8.288,8.288,0,0,0,21.721,0Zm5.618,21.721a5.624,5.624,0,0,1-5.617,5.617H8.279a5.623,5.623,0,0,1-5.617-5.617V8.279A5.624,5.624,0,0,1,8.279,2.662H21.721a5.624,5.624,0,0,1,5.617,5.617V21.721Z"
         fill={props.fill}

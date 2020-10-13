@@ -90,19 +90,15 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
 
         <List open={openedMenu}>
           {!internalPage ? (
-            <>
-              <ListItem id="headerBtnDuvidasFrequentes" name="headerBtnDuvidasFrequentes" onClick={() => handleAnchor("duvidas-frequentes")}>
+            <ListItem id="headerBtnDuvidasFrequentes" name="headerBtnDuvidasFrequentes" onClick={() => handleAnchor("duvidas-frequentes")}>
+              Dúvidas Frequentes
+            </ListItem>
+          ) : (
+            <a href={"/#duvidas-frequentes"} title="duvidas-frequentes">
+              <ListItem id="headerBtnDuvidasFrequentes" name="headerBtnDuvidasFrequentes">
                 Dúvidas Frequentes
               </ListItem>
-            </>
-          ) : (
-            <>
-              <a href={"/#duvidas-frequentes"} title="duvidas-frequentes">
-                <ListItem id="headerBtnDuvidasFrequentes" name="headerBtnDuvidasFrequentes">
-                  Dúvidas Frequentes
-                </ListItem>
-              </a>
-            </>
+            </a>
           )}
 
           <Link to={"/client/signin"} title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
@@ -115,41 +111,35 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
         </List>
       </Nav>
       {showHeader ? (
-        <>
-          <Banners onClick={() => setOpenedMenu(false)}>
-            {banners.map((item, index) => (
-              <>
-                <Content key={index} active={showing === index}>
-                  <Subtitle>{item.summary}</Subtitle>
-                  <Title>
-                    {item.title} <span>{item.subtitle}</span>
-                  </Title>
-                  <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
+        <Banners onClick={() => setOpenedMenu(false)}>
+          {banners.map((item, index) => (
+            <>
+              <Content key={index} active={showing === index}>
+                <Subtitle>{item.summary}</Subtitle>
+                <Title>
+                  {item.title} <span>{item.subtitle}</span>
+                </Title>
+                <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
 
-                  <Video>
-                    {item.video_path ? (
-                      <>
-                        <iframe
-                          src={`${item.video_path}?autoplay=0&amp;showinfo=0&amp;modestbranding=0&amp;controls=1&amp;rel=0`}
-                          frameborder="0"
-                          controls="1"
-                          rel="0"
-                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <Figure title={item.summary} alt={item.summary}>
-                          <Image src={item.image_path} title={item.summary} alt={item.summary} />
-                        </Figure>
-                      </>
-                    )}
-                  </Video>
-                </Content>
-              </>
-            ))}
-          </Banners>
-        </>
+                <Video>
+                  {item.video_path ? (
+                    <iframe
+                      src={`${item.video_path}?autoplay=0&amp;showinfo=0&amp;modestbranding=0&amp;controls=1&amp;rel=0`}
+                      frameBorder="0"
+                      controls="1"
+                      rel="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  ) : (
+                    <Figure title={item.summary} alt={item.summary}>
+                      <Image src={item.image_path} title={item.summary} alt={item.summary} />
+                    </Figure>
+                  )}
+                </Video>
+              </Content>
+            </>
+          ))}
+        </Banners>
       ) : (
         <></>
       )}

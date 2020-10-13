@@ -1,0 +1,31 @@
+{
+  "short_name": "Vida",
+  "name": "Vida Fidelidade",
+  "description": "Vida Fidelidade - Cartão de descontos em saúde para a sua família",
+  "icons": [
+    {
+      "src": "/static/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#939597",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#0D756F",
+  "shortcuts": [
+    {
+      "short_name": "Vida",
+      "name": "Vida Fidelidade",
+      "description": "Vida Fidelidade - Cartão de descontos em saúde para a sua família",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "/static/logo192.png", "sizes": "192x192" }]
+    }
+  ]
+}

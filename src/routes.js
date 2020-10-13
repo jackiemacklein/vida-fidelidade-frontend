@@ -1,0 +1,93 @@
+import Home from "./pages/Home";
+import Account from "./pages/Account";
+import Payment from "./pages/Payment";
+import EasyPayment from "./pages/EasyPayment";
+import NotFount from "./pages/404";
+
+import MyAccount from "./pages/Panel/Account";
+import MyPlan from "./pages/Panel/Plan";
+import MyPay from "./pages/Panel/Payments";
+import MyDependents from "./pages/Panel/Dependents";
+
+const routes = [
+  {
+    exact: true,
+    path: "/",
+    component: Home.Component,
+    requestInitialData: Home.requestInitialData,
+    options: {
+      Head: Home.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/criar-conta/:plan_id?",
+    component: Account.Component,
+    requestInitialData: Account.requestInitialData,
+    options: {
+      Head: Account.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/pagamento/:plan_id/:user_id",
+    component: Payment.Component,
+    requestInitialData: Payment.requestInitialData,
+    options: {
+      Head: Payment.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/vida-pagamento-facil",
+    component: EasyPayment.Component,
+    requestInitialData: EasyPayment.requestInitialData,
+    options: {
+      Head: EasyPayment.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/painel/meus-dados",
+    component: MyAccount.Component,
+    requestInitialData: MyAccount.requestInitialData,
+    options: {
+      Head: MyAccount.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/painel/meu-plano",
+    component: MyPlan.Component,
+    requestInitialData: MyPlan.requestInitialData,
+    options: {
+      Head: MyPlan.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/painel/pagamentos",
+    component: MyPay.Component,
+    requestInitialData: MyPay.requestInitialData,
+    options: {
+      Head: MyPay.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/painel/meus-dependentes",
+    component: MyDependents.Component,
+    requestInitialData: MyDependents.requestInitialData,
+    options: {
+      Head: MyDependents.Head,
+    },
+  },
+  {
+    component: NotFount.Component,
+    options: {
+      Head: NotFount.Head,
+    },
+  },
+];
+
+export default routes;

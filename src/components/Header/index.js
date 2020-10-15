@@ -105,7 +105,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
             <ListItem>Portal do Assinante</ListItem>
           </Link>
 
-          <Link to={"/pagamento"} title="Pagar sua mensalidade do Cartão Fidelidade - Cartão de descontos">
+          <Link to={"/vida-pagamento-facil"} title="Pagar sua mensalidade do Cartão Fidelidade - Cartão de descontos">
             <ListItem className="button">Pague aqui sua mensalidade</ListItem>
           </Link>
         </List>
@@ -113,31 +113,29 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
       {showHeader ? (
         <Banners onClick={() => setOpenedMenu(false)}>
           {banners.map((item, index) => (
-            <>
-              <Content key={index} active={showing === index}>
-                <Subtitle>{item.summary}</Subtitle>
-                <Title>
-                  {item.title} <span>{item.subtitle}</span>
-                </Title>
-                <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
+            <Content key={index} active={showing === index}>
+              <Subtitle>{item.summary}</Subtitle>
+              <Title>
+                {item.title} <span>{item.subtitle}</span>
+              </Title>
+              <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
 
-                <Video>
-                  {item.video_path ? (
-                    <iframe
-                      src={`${item.video_path}?autoplay=0&amp;showinfo=0&amp;modestbranding=0&amp;controls=1&amp;rel=0`}
-                      frameBorder="0"
-                      controls="1"
-                      rel="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    />
-                  ) : (
-                    <Figure title={item.summary} alt={item.summary}>
-                      <Image src={item.image_path} title={item.summary} alt={item.summary} />
-                    </Figure>
-                  )}
-                </Video>
-              </Content>
-            </>
+              <Video>
+                {item.video_path ? (
+                  <iframe
+                    src={`${item.video_path}?autoplay=0&amp;showinfo=0&amp;modestbranding=0&amp;controls=1&amp;rel=0`}
+                    frameBorder="0"
+                    controls="1"
+                    rel="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  />
+                ) : (
+                  <Figure title={item.summary} alt={item.summary}>
+                    <Image src={item.image_path} title={item.summary} alt={item.summary} />
+                  </Figure>
+                )}
+              </Video>
+            </Content>
           ))}
         </Banners>
       ) : (

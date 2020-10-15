@@ -22,7 +22,7 @@ import routes from "../src/routes";
 
 /* express config */
 //const PORT = 80;
-const PORT = 3000;
+const PORT = 3002;
 const app = express();
 
 app.use(cors());

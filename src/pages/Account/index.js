@@ -2,7 +2,7 @@ import "./../../configs/dotenv";
 import "isomorphic-fetch";
 
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 /* import Kieee Rendering */
 import { KieeeHead, useInitialData } from "./../../components/Kieee";
@@ -11,6 +11,9 @@ import { KieeeHead, useInitialData } from "./../../components/Kieee";
 import { maskCpfCnpj, maskTelephone89Digitos, parseInteger, maskCep } from "./../../utils/functions";
 import { ModalContext } from "./../../components/Forms/Modal";
 import states from "./../../utils/states.json";
+
+/* import services */
+import api from "./../../services/api";
 
 /* import components */
 import InternalTitle from "./../../components/InternalTitle";
@@ -31,11 +34,14 @@ import { Content, ContentTitle, Row } from "./styles";
 function Component(props) {
   const modal = useContext(ModalContext);
   const history = useHistory();
+  const params = useParams();
 
   const [openedMenu, setOpenedMenu] = useState(false);
   const initialData = useInitialData(props, requestInitialData);
 
+  const [type, setType] = useState("");
   const [name, setName] = useState("");
+  const [fantasyName, setFantasyName] = useState("");
   const [cpf, setCpf] = useState("");
   const [rg, setRg] = useState("");
   const [dtbirth, setDtbirth] = useState("");
@@ -63,17 +69,51 @@ function Component(props) {
   const [privacy_policy, setPrivacy_policy] = useState(false);
   const [refund_policy, setRefund_policy] = useState(false);
 
-  const handleCreateUser = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleCreateUser = async event => {
+    event.preventDefault();
+
     try {
+      setLoading(true);
+      const client = await api.post("/clientes", {
+        NomeCliente: name,
+        NomeFantasia: fantasyName,
+        TipoCliente: type,
+        CpfCNPJ: cpf,
+        IERG: rg,
+        Endereço: address,
+        Numero: number,
+        Complemento: complement,
+        Bairro: neighborhood,
+        Cidade: city,
+        UF: state,
+        Cep: cep,
+        DataNascimento: dtbirth,
+        Sexo: gender,
+        FoneResidencial: "",
+        FoneComercial: "",
+        Celular: phone,
+        Contato: "",
+        EmailPrincipal: email,
+        EmailSecundario: "",
+        skype: "",
+        whats: "",
+        UsuarioCadastro: "website",
+        StatusCliente: "ativo",
+      });
+      setLoading(false);
+      history.push(`/pagamento/${params.plan_id}/${client.data._id}`);
     } catch (error) {
       console.log(error);
       modal.show(true, "Atenção", "CPF já cadastrado, faça login ou digite outro CPF.", "", "FAZER LOGIN", () => () => history.push("/login"), "", "", true);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    //console.log(terms);
-  }, [terms]);
+    if (type === "PF") setFantasyName("");
+  }, [type]);
 
   useEffect(() => {
     if (confirm_password && password !== confirm_password) {
@@ -143,19 +183,50 @@ function Component(props) {
               preenchendo o formulário abaixo
             </span>
           </Description>
-          <Content autoComplete="off" autocomplete="off" onSubmit={() => handleCreateUser()}>
+          <Content autoComplete="off" autocomplete="off" onSubmit={handleCreateUser}>
             <ContentTitle>Dados Pessoais</ContentTitle>
+            <Row>
+              <Select
+                name="type"
+                id="type"
+                initialValue={type}
+                onChange={text => setType(text)}
+                label="Tipo *"
+                infoText="Campo obrigatório"
+                required
+                options={[
+                  { value: "PF", text: "Pessoa física" },
+                  { value: "PJ", text: "Pessoa jurídica" },
+                ]}
+                empty
+              />
+            </Row>
             <Row>
               <Input
                 name="name"
                 id="name"
                 initialValue={name}
                 onChange={text => setName(text)}
-                label="Nome Completo *"
+                label={type === "PJ" ? "Razão Social *" : "Nome Completo *"}
                 infoText="Campo obrigatório"
                 required
                 type="text"
               />
+
+              {type === "PJ" ? (
+                <Input
+                  name="fantasyName"
+                  id="fantasyName"
+                  initialValue={fantasyName}
+                  onChange={text => setFantasyName(text)}
+                  label="Nome Fantasia *"
+                  infoText="Campo obrigatório"
+                  required={type === "PJ"}
+                  type="text"
+                />
+              ) : (
+                <></>
+              )}
             </Row>
 
             <Row>
@@ -164,43 +235,56 @@ function Component(props) {
                 id="cpf"
                 initialValue={cpf}
                 onChange={text => setCpf(maskCpfCnpj(text))}
-                label="CPF *"
+                label={type === "PJ" ? "CNPJ *" : "CPF *"}
                 infoText="Campo obrigatório"
                 required
                 type="text"
-                maxLength={11}
+                maxLength={type === "PJ" ? 14 : 11}
               />
 
-              <Input name="rg" id="rg" initialValue={rg} onChange={text => setRg(text)} label="RG *" infoText="Campo obrigatório" required type="text" />
-            </Row>
-
-            <Row>
               <Input
-                name="dtbirth"
-                id="dtbirth"
-                initialValue={dtbirth}
-                onChange={text => setDtbirth(text)}
-                label="Data de Nascimento *"
-                infoText="Campo obrigatório"
+                name="rg"
+                id="rg"
+                initialValue={rg}
+                onChange={text => setRg(text)}
+                label={type === "PJ" ? "IE" : "RG *"}
+                infoText={type === "PJ" ? "" : "Campo obrigatório"}
                 required
-                type="date"
-              />
-
-              <Select
-                name="gender"
-                id="gender"
-                initialValue={gender}
-                onChange={text => setGender(text)}
-                label="Sexo *"
-                infoText="Campo obrigatório"
-                required
-                options={[
-                  { value: "F", text: "Feminino" },
-                  { value: "M", text: "Masculino" },
-                ]}
-                empty
+                type="text"
               />
             </Row>
+
+            {type === "PF" ? (
+              <Row>
+                <Input
+                  name="dtbirth"
+                  id="dtbirth"
+                  initialValue={dtbirth}
+                  onChange={text => setDtbirth(text)}
+                  label={type === "PJ" ? "Data de Nascimento" : "Data de Nascimento *"}
+                  infoText={type === "PJ" ? "" : "Campo obrigatório"}
+                  required={type === "PF"}
+                  type="date"
+                />
+
+                <Select
+                  name="gender"
+                  id="gender"
+                  initialValue={gender}
+                  onChange={text => setGender(text)}
+                  label={type === "PJ" ? "Sexo" : "Sexo *"}
+                  infoText={type === "PJ" ? "" : "Campo obrigatório"}
+                  required={type === "PF"}
+                  options={[
+                    { value: "F", text: "Feminino" },
+                    { value: "M", text: "Masculino" },
+                  ]}
+                  empty
+                />
+              </Row>
+            ) : (
+              <></>
+            )}
 
             <Row>
               <Input

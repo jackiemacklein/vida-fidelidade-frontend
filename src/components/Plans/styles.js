@@ -101,7 +101,7 @@ export const Description = styled.p`
 export const Items = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
 
   margin-top: 68px;
@@ -219,6 +219,15 @@ export const Content = styled.ul`
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+
+  flex: 1;
+
+  a {
+    align-self: center;
+    flex: 1;
+    display: flex;
+    text-decoration: none;
+  }
 `;
 
 export const Line = styled.li`

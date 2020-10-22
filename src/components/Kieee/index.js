@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export let InitialDataContext = React.createContext(() => {});
 
-export function KieeeHead({ themeColor, title, description, appleIcon, icon, imagePath, siteName, url, favicon, manifest }) {
+export function KieeeHead({ themeColor, title, description, appleIcon, icon, imagePath, siteName, url, favicon, manifest, canonical }) {
   return (
     <>
       <meta name="theme-color" content={themeColor} />
@@ -35,6 +35,8 @@ export function KieeeHead({ themeColor, title, description, appleIcon, icon, ima
       <meta property="twitter:description" content={description} />
 
       <link rel="icon" href={favicon} />
+
+      <link rel="canonical" href={canonical} />
     </>
   );
 }

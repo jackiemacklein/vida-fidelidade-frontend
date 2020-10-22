@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 /* import Kieee Rendering */
 import { InitialDataContext } from "./../Kieee";
@@ -9,6 +10,7 @@ import Title from "./../Title";
 /* import images */
 
 /* import utils */
+import { maskCurrencyReal } from "./../../utils/functions";
 
 /* import icons */
 
@@ -17,6 +19,19 @@ import { Container, Description, Items, Item, Header, HeaderTitle, Content } fro
 import { Line, Price, SmalLine, Button } from "./styles";
 
 function Plans() {
+  const initialData = InitialDataContext;
+  const [plans, setPlans] = useState(initialData?.plans ?? []);
+
+  const getLines = lines => {
+    const items = lines.split("\n");
+
+    return items;
+  };
+
+  useEffect(() => {
+    setPlans(initialData?.plans ?? []);
+  }, [InitialDataContext]);
+
   return (
     <Container id="planos">
       <Title title1="Conheça nossos" title2="Planos" styles={{ marginBottom: "20px" }} />
@@ -29,89 +44,35 @@ function Plans() {
       </Description>
 
       <Items>
-        <Item>
-          <Header>
-            <HeaderTitle>
-              <span>Vida</span>
-              Fidelidade
-            </HeaderTitle>
-          </Header>
-          <Content>
-            <Line>Descontos em consultas</Line>
+        {plans.map((item, index) => (
+          <Item key={index}>
+            <Header>
+              <HeaderTitle>
+                <span>Vida</span>
+                {item.DescricaoProduto}
+              </HeaderTitle>
+            </Header>
+            <Content>
+              {getLines(item.BeneficiosProduto).map(line => (
+                <Line key={line}>{line}</Line>
+              ))}
 
-            <Line>Descontos em exames de imagem</Line>
+              {getLines(item.DiferencialProduto).map(line => (
+                <Line key={line}>{line}</Line>
+              ))}
 
-            <Line>Descontos em exames laboratoriais</Line>
+              <Price>
+                <span>R$</span>
+                {item.ValorProduto ? maskCurrencyReal(item.ValorProduto) : "Sob Consulta"}
+              </Price>
+              {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)}</SmalLine> : <></>}
 
-            <Line>Assistência Funeral para o Titular</Line>
-
-            <Line>Seguro de morte acidental para o titular</Line>
-
-            <Price>
-              <span>R$</span>
-              39,90
-            </Price>
-            <SmalLine>+ adesão de R$ 80</SmalLine>
-
-            <Button>ASSINE AGORA</Button>
-          </Content>
-        </Item>
-
-        <Item>
-          <Header>
-            <HeaderTitle>
-              <span>Vida</span>
-              Fidelidade
-            </HeaderTitle>
-          </Header>
-          <Content>
-            <Line>Descontos em consultas</Line>
-
-            <Line>Descontos em exames de imagem</Line>
-
-            <Line>Descontos em exames laboratoriais</Line>
-
-            <Line>Assistência Funeral para o Titular</Line>
-
-            <Line>Seguro de morte acidental para o titular</Line>
-
-            <Price>
-              <span>R$</span>
-              39,90
-            </Price>
-            <SmalLine>+ adesão de R$ 80</SmalLine>
-
-            <Button>ASSINE AGORA</Button>
-          </Content>
-        </Item>
-
-        <Item>
-          <Header>
-            <HeaderTitle>
-              <span>Vida</span>
-              Fidelidade
-            </HeaderTitle>
-          </Header>
-          <Content>
-            <Line>Descontos em consultas</Line>
-
-            <Line>Descontos em exames de imagem</Line>
-
-            <Line>Descontos em exames laboratoriais</Line>
-
-            <Line>Assistência Funeral para o Titular</Line>
-
-            <Line>Seguro de morte acidental para o titular</Line>
-
-            <Price>
-              <span>R$</span>
-              39,90
-            </Price>
-            <SmalLine>+ adesão de R$ 80</SmalLine>
-
-            <Button>ASSINE AGORA</Button>
-          </Content>
-        </Item>
+              <Link to={`/criar-conta/${item._id}`}>
+                <Button>ASSINE AGORA</Button>
+              </Link>
+            </Content>
+          </Item>
+        ))}
       </Items>
     </Container>
   );

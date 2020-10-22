@@ -84,12 +84,15 @@ async function requestInitialData() {
   let siteConfig = { sucesss: true };
   let plans = [];
 
-  /*plans = await fetch(`${process.env.REACT_APP_API}/produtos/`, {
+  plans = await fetch(`${process.env.REACT_APP_API}/produtos/`, {
     method: "GET",
-    headers: {},
+    headers: {
+      Authorization:
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjhkOTZhMjhjNDQ2NmNlOGI3MDExMzkiLCJuYW1lIjoiSmFja2nDqiBNYWNrbGVpbiIsImVtYWlsIjoiamFja2llbWFja2xlaW5AZ21haWwuY29tIiwidHlwZSI6MCwiaWF0IjoxNjAzMTQ4MzA4LCJleHAiOjE2MDMxNjk5MDh9.4nImoAOBtYzS5bXE3WHd_roXBj_gXDpjoYIwKCFxpxM",
+    },
   })
     .then(response => response.json())
-    .catch(error => console.log(error));*/
+    .catch(error => console.log(error));
 
   return { siteConfig, plans };
 }
@@ -100,7 +103,7 @@ function Head({ siteConfig }) {
     return (
       <KieeeHead
         themeColor="#0D756F"
-        title="Vida Fidelidade - Cartão de descontos em saúde para a sua família"
+        title="Vida Fidelidade - Cartão de descontos em saúde"
         description="Pagando uma pequena mensalidade, você e seus dependentes tem descontos em consultas e exames que fazem parte do complexo Vida, além do plano odontológico e muitos outros Benefícios."
         appleIcon="https://fidelidade.vidavg.com.br/logo512.png"
         icon="https://fidelidade.vidavg.com.br/logo512.png"
@@ -109,6 +112,7 @@ function Head({ siteConfig }) {
         url={process.env.REACT_APP_SITE_HOST}
         favicon="/static/favicon.png"
         manifest="/static/manifest.json"
+        canonical="https://fidelidade.vidavg.com.br"
       />
     );
   } else {

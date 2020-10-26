@@ -31,8 +31,8 @@ const credentials = { cert: certificate, key: privateKey, passphrase: pass };
 
 /* express config */
 //const PORT = 80;
-const PORT = 3003;
-const PORT_HTTPS = 3004;
+const PORT = 3004;
+const PORT_HTTPS = 3005;
 const app = express();
 
 app.use(cors());

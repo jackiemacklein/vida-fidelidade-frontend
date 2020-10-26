@@ -4,6 +4,7 @@ import Payment from "./pages/Payment";
 import EasyPayment from "./pages/EasyPayment";
 import NotFount from "./pages/404";
 
+import Login from "./pages/Login";
 import MyAccount from "./pages/Panel/Account";
 import MyPlan from "./pages/Panel/Plan";
 import MyPay from "./pages/Panel/Payments";
@@ -44,6 +45,15 @@ const routes = [
     requestInitialData: EasyPayment.requestInitialData,
     options: {
       Head: EasyPayment.Head,
+    },
+  },
+  {
+    exact: true,
+    path: "/login",
+    component: Login.Component,
+    requestInitialData: Login.requestInitialData,
+    options: {
+      Head: Login.Head,
     },
   },
   {

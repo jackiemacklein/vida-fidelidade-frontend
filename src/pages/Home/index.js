@@ -88,11 +88,14 @@ async function requestInitialData() {
     method: "GET",
     headers: {
       Authorization:
-        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjhkOTZhMjhjNDQ2NmNlOGI3MDExMzkiLCJuYW1lIjoiSmFja2nDqiBNYWNrbGVpbiIsImVtYWlsIjoiamFja2llbWFja2xlaW5AZ21haWwuY29tIiwidHlwZSI6MCwiaWF0IjoxNjAzMTQ4MzA4LCJleHAiOjE2MDMxNjk5MDh9.4nImoAOBtYzS5bXE3WHd_roXBj_gXDpjoYIwKCFxpxM",
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjhkOTZhMjhjNDQ2NmNlOGI3MDExMzkiLCJuYW1lIjoiSmFja2nDqiBNYWNrbGVpbiIsImVtYWlsIjoiamFja2llbWFja2xlaW5AZ21haWwuY29tIiwidHlwZSI6MCwiaWF0IjoxNjAzNzA4Nzc3LCJleHAiOjE2MDM3MzAzNzd9.noCWInXySy2PEJT97oZPtcmgin6ebNfLKtWb-6_-LbA",
     },
   })
     .then(response => response.json())
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log("erro: ", error);
+      return [];
+    });
 
   return { siteConfig, plans };
 }

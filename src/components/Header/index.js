@@ -101,7 +101,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
             </a>
           )}
 
-          <Link to={"/client/signin"} title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
+          <Link to={"/login"} title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
             <ListItem>Portal do Assinante</ListItem>
           </Link>
 

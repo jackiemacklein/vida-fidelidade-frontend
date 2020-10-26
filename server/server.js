@@ -5,6 +5,8 @@ import cors from "cors";
 import fs from "fs";
 import path from "path";
 import serialize from "serialize-javascript";
+import https from "https";
+import http from "http";
 
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
 
@@ -20,9 +22,17 @@ import { StaticRouter, matchPath } from "react-router-dom";
 import App from "../src/App";
 import routes from "../src/routes";
 
+/* certificates config */
+const privateKey = fs.readFileSync("keys/key.key", "utf8");
+const certificate = fs.readFileSync("keys/cert.crt", "utf8");
+const pass = "@VidaVgD2020$";
+
+const credentials = { cert: certificate, key: privateKey, passphrase: pass };
+
 /* express config */
 //const PORT = 80;
-const PORT = 3002;
+const PORT = 3003;
+const PORT_HTTPS = 3004;
 const app = express();
 
 app.use(cors());
@@ -83,6 +93,16 @@ const renderHead = (activeRoute, initialData) => {
   }
 };
 
-app.listen(PORT, () => {
-  console.log(`App launched on ${PORT}`);
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(PORT, function () {
+  console.log("Server is running on HTTP PORT: " + PORT);
 });
+httpsServer.listen(PORT_HTTPS, function () {
+  console.log("Server is running on HTTPS PORT: " + PORT_HTTPS);
+});
+
+/*app.listen(PORT, () => {
+  console.log(`App launched on ${PORT}`);
+});*/

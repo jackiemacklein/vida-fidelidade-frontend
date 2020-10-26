@@ -20,7 +20,8 @@ import { Line, Price, SmalLine, Button } from "./styles";
 
 function Plans() {
   const initialData = InitialDataContext;
-  const [plans, setPlans] = useState(initialData?.plans ?? []);
+
+  const [plans, setPlans] = useState(initialData.plans ?? []);
 
   const getLines = lines => {
     const items = lines.split("\n");
@@ -29,7 +30,7 @@ function Plans() {
   };
 
   useEffect(() => {
-    setPlans(initialData?.plans ?? []);
+    setPlans(initialData.plans ?? []);
   }, [InitialDataContext]);
 
   return (

@@ -2,13 +2,17 @@ import "./../../configs/dotenv";
 import "isomorphic-fetch";
 
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 /* import Kieee Rendering */
 import { KieeeHead, useInitialData } from "./../../components/Kieee";
 
 /* import utils */
 import { ModalContext } from "./../../components/Forms/Modal";
+import { getCardFlag, maskCurrencyReal } from "./../../utils/functions";
+
+/* import services */
+import api from "./../../services/api";
 
 /* import components */
 import InternalTitle from "./../../components/InternalTitle";
@@ -30,6 +34,7 @@ import { Content, ContentTitle, Row, FormGroup, Label, Label2 } from "./styles";
 function Component(props) {
   const modal = useContext(ModalContext);
   const history = useHistory();
+  const params = useParams();
 
   const [openedMenu, setOpenedMenu] = useState(false);
   const initialData = useInitialData(props, requestInitialData);
@@ -41,45 +46,122 @@ function Component(props) {
   const [cvc, setCvc] = useState("");
   const [indicated_by, setIndicated_by] = useState("");
 
-  const [plan_name, setPlan_name] = useState("VIDA FIDELIDADE");
-  const [plan_price, setPlan_price] = useState("39,90");
-  const [plan_adesao, setPlan_adesao] = useState("80,00");
+  const [plan_name, setPlan_name] = useState("");
+  const [plan_price, setPlan_price] = useState("");
+  const [plan_adesao, setPlan_adesao] = useState("");
 
-  const handlePayment = () => {
+  const [client_id, setClient_id] = useState("");
+  const [plan_id, setPlan_id] = useState("");
+
+  const checkCardValidate = () => {
+    const check = validate.split("/");
+    if (check.length === 2 && check[0].length === 2 && check[1].length === 4) return true;
+    else return false;
+  };
+
+  const getMonth = () => {
+    const val = validate.split("/");
+    return val[0];
+  };
+
+  const getYear = () => {
+    const val = validate.split("/");
+    return val[1];
+  };
+
+  const handlePayment = async event => {
+    event.preventDefault();
+
+    if (!checkCardValidate()) {
+      modal.show(true, "Atenção!", "Informe corretamente a validade do cartão!", "Padrão: MM/AAAA", "", "", "Tentar novamente", () => () => modal.hide(), true);
+
+      return false;
+    }
+
     try {
-      modal.show(
-        true,
-        "Pagamento efetuado com sucesso!",
-        "Obrigado!",
-        "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
-        "ACESSAR MINHA CONTA",
-        () => () => history.push("/"),
-        "",
-        "",
-        true,
-      );
+      const { data } = await api.post("/contratos", {
+        CodigoEmpresa: "5f8da1658c4466ce8b70113a",
+        CodigoCliente: client_id,
+        CodigoVendedor: "website",
+        CodigoProduto: plan_id,
+        NomedoIndicador: indicated_by,
+        TipoContrato: "Individual",
+        TipoPagamento: method === "card-credit" ? "Cartão" : "Boleto",
+        TipoCobranca: "Mensal",
+        NumeroCartao: card_number,
+        TipoCartao: getCardFlag(card_number),
+        NomeCartao: name,
+        MesCartao: getMonth(),
+        AnoCartao: getYear(),
+        CVVCarta: cvc,
+      });
+
+      if (data) {
+        console.log(data);
+
+        modal.show(
+          true,
+          "Pagamento efetuado com sucesso!",
+          "Obrigado!",
+          "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
+          "ACESSAR MINHA CONTA",
+          () => () => history.push("/"),
+          "",
+          "",
+          true,
+        );
+      }
     } catch (error) {
       console.log(error);
-      modal.show(
-        true,
-        "Erro",
-        "Infelizmente não conseguimos processar o seu pagamento através do cartão de crédito.",
-        "Verifique as informações digitadas e tente novamente ou escolha outra forma de pagamento.",
-        "",
-        "",
-        "Tentar novamente",
-        () => () => modal.hide(),
-        true,
-      );
+
+      if (method === "card-credit") {
+        modal.show(
+          true,
+          "Erro",
+          "Infelizmente não conseguimos processar o seu pagamento através do cartão de crédito.",
+          "Verifique as informações digitadas e tente novamente ou escolha outra forma de pagamento.",
+          "",
+          "",
+          "Tentar novamente",
+          () => () => modal.hide(),
+          true,
+        );
+      } else {
+        modal.show(
+          true,
+          "Erro",
+          "Infelizmente não foi possivel gerar o seu boleto para pagamento.",
+          "Tente novamente!",
+          "",
+          "",
+          "Tentar novamente",
+          () => () => modal.hide(),
+          true,
+        );
+      }
     }
   };
 
-  const loadUser = () => {};
+  useEffect(() => {
+    if (params.plan_id && params.user_id) {
+      setPlan_id(params.plan_id);
+      setClient_id(params.user_id);
+    } else {
+      history.goBack();
+    }
+  }, []);
 
-  const loadPlan = () => {};
-
-  useEffect(() => {}, [initialData]);
-
+  useEffect(() => {
+    async function loadPlan() {
+      const { data } = await api.get(`/produtos/${params.plan_id}`);
+      if (data) {
+        setPlan_name(data.DescricaoProduto);
+        setPlan_price(maskCurrencyReal(data.ValorProduto ?? 0));
+        setPlan_adesao(maskCurrencyReal(data.ValorAdesao ?? 0));
+      }
+    }
+    loadPlan();
+  }, []);
   return (
     <>
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
@@ -90,7 +172,7 @@ function Component(props) {
           <Description>
             <span className="black">Informe corretamente os dados para realizar o pagamento.</span>
           </Description>
-          <Content autoComplete="off" autocomplete="off" onSubmit={() => handlePayment()}>
+          <Content autoComplete="off" autocomplete="off" onSubmit={handlePayment}>
             <ContentTitle style={{ textAlign: "center" }}>
               Seu Pedido{" "}
               <a href="/#planos" title="Alterar Pedido">

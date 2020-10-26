@@ -36,6 +36,15 @@ const PORT_HTTPS = 3004;
 const app = express();
 
 app.use(cors());
+
+app.use(function (req, res, next) {
+  if (!req.connection.encrypted) {
+    res.redirect("https://" + req.headers.host + req.url);
+  } else {
+    next();
+  }
+});
+
 app.use("/sitemap.xml", express.static(path.resolve(__dirname, "..", "build/static/sitemap.xml")));
 app.use("/robots.txt", express.static(path.resolve(__dirname, "..", "build/static/robots.txt")));
 app.use("/static", express.static(path.resolve(__dirname, "..", "build/static")));

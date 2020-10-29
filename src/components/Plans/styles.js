@@ -104,6 +104,8 @@ export const Items = styled.div`
   align-items: stretch;
   justify-content: center;
 
+  flex-wrap: wrap;
+
   margin-top: 68px;
 
   @media (max-width: 1366px) {
@@ -112,7 +114,7 @@ export const Items = styled.div`
   }
   @media (max-width: 1025px) {
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -139,11 +141,14 @@ export const Item = styled.article`
   width: 295px;
 
   margin: 0px;
+
   &:nth-of-type(2) {
     margin: 0px 90px;
+    margin-bottom: 35px;
   }
 
   box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.16);
+  margin-bottom: 35px;
 
   @media (max-width: 1366px) {
   }
@@ -153,6 +158,7 @@ export const Item = styled.article`
 
     &:nth-of-type(2) {
       margin: 0px 25px;
+      margin-bottom: 25px;
     }
   }
   @media (max-width: 1025px) {

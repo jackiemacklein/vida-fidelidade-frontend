@@ -72,7 +72,7 @@ function Component(props) {
   const handlePayment = async event => {
     event.preventDefault();
 
-    if (!checkCardValidate()) {
+    if (method === "card-credit" && !checkCardValidate()) {
       modal.show(true, "Atenção!", "Informe corretamente a validade do cartão!", "Padrão: MM/AAAA", "", "", "Tentar novamente", () => () => modal.hide(), true);
 
       return false;
@@ -82,18 +82,30 @@ function Component(props) {
       const { data } = await api.post("/contratos", {
         CodigoEmpresa: "5f8da1658c4466ce8b70113a",
         CodigoCliente: client_id,
-        CodigoVendedor: "website",
-        CodigoProduto: plan_id,
+        CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
         NomedoIndicador: indicated_by,
         TipoContrato: "Individual",
         TipoPagamento: method === "card-credit" ? "Cartão" : "Boleto",
         TipoCobranca: "Mensal",
-        NumeroCartao: card_number,
-        TipoCartao: getCardFlag(card_number),
-        NomeCartao: name,
-        MesCartao: getMonth(),
-        AnoCartao: getYear(),
-        CVVCarta: cvc,
+        //TipoCartao: getCardFlag(card_number),
+        //NomeCartao: name,
+        //MesCartao: getMonth(),
+        //AnoCartao: getYear(),
+        //CVVCarta: cvc,
+        ClientexContrato: [
+          {
+            CodigoCliente: client_id,
+            CodigoProduto: plan_id,
+          },
+        ],
+        CobrancaxContrato: {
+          NumeroCartao: method === "card-credit" ? card_number : "",
+          TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
+          NomeCartao: method === "card-credit" ? name : "",
+          MesCartao: method === "card-credit" ? getMonth() : "",
+          AnoCartao: method === "card-credit" ? getYear() : "",
+          CVVCarta: method === "card-credit" ? cvc : "",
+        },
       });
 
       if (data) {

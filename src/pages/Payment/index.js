@@ -2,7 +2,7 @@ import "./../../configs/dotenv";
 import "isomorphic-fetch";
 
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 
 /* import Kieee Rendering */
 import { KieeeHead, useInitialData } from "./../../components/Kieee";
@@ -111,17 +111,31 @@ function Component(props) {
       if (data) {
         console.log(data);
 
-        modal.show(
-          true,
-          "Pagamento efetuado com sucesso!",
-          "Obrigado!",
-          "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
-          "ACESSAR MINHA CONTA",
-          () => () => history.push("/"),
-          "",
-          "",
-          true,
-        );
+        if (method === "card-credit") {
+          modal.show(
+            true,
+            "Pagamento efetuado com sucesso!",
+            "Obrigado!",
+            "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
+            "ACESSAR MINHA CONTA",
+            () => () => history.push("/"),
+            "",
+            "",
+            true,
+          );
+        } else if (method === "billet") {
+          modal.show(
+            true,
+            "Pagamento efetuado com sucesso!",
+            "Seu boleto para pagamento foi gerado com sucesso!",
+            "Se deseja imprimir o seu boleto agora clique em imprimir boleto. Também enviamos uma cópia do boleto para o seu e-mail!",
+            "IMPRIMIR MEU BOLETO",
+            () => () => window.open("", "_blank"),
+            "",
+            "",
+            true,
+          );
+        }
       }
     } catch (error) {
       console.log(error);

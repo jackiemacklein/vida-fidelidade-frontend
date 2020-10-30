@@ -71,6 +71,22 @@ function Component(props) {
 
   const [loading, setLoading] = useState(false);
 
+  const getDDD = tel => {
+    if (tel) {
+      return parseInteger(tel).substr(0, 2);
+    } else {
+      return "";
+    }
+  };
+
+  const getTel = tel => {
+    if (tel) {
+      return parseInteger(tel).substr(2);
+    } else {
+      return "";
+    }
+  };
+
   const handleCreateUser = async event => {
     event.preventDefault();
 
@@ -80,9 +96,9 @@ function Component(props) {
         NomeCliente: name,
         NomeFantasia: fantasyName,
         TipoCliente: type,
-        CpfCNPJ: cpf,
+        CpfCNPJ: parseInteger(cpf),
         IERG: rg,
-        Endereço: address,
+        Endereco: address,
         Numero: number,
         Complemento: complement,
         Bairro: neighborhood,
@@ -93,7 +109,12 @@ function Component(props) {
         Sexo: gender,
         FoneResidencial: "",
         FoneComercial: "",
-        Celular: phone,
+        DDDResidencial: "",
+        FoneResidencial: "",
+        DDDComercial: "",
+        FoneComercial: "",
+        DDDCelular: getDDD(phone),
+        Celular: getTel(phone),
         Contato: "",
         EmailPrincipal: email,
         EmailSecundario: "",
@@ -261,9 +282,9 @@ function Component(props) {
                   id="dtbirth"
                   initialValue={dtbirth}
                   onChange={text => setDtbirth(text)}
-                  label={type === "PJ" ? "Data de Nascimento" : "Data de Nascimento *"}
-                  infoText={type === "PJ" ? "" : "Campo obrigatório"}
-                  required={type === "PF"}
+                  label={"Data de Nascimento *"}
+                  infoText={"Campo obrigatório"}
+                  required={true}
                   type="date"
                 />
 
@@ -283,7 +304,18 @@ function Component(props) {
                 />
               </Row>
             ) : (
-              <></>
+              <>
+                <Input
+                  name="dtbirth"
+                  id="dtbirth"
+                  initialValue={dtbirth}
+                  onChange={text => setDtbirth(text)}
+                  label={"Data de Fundação"}
+                  infoText={"Campo obrigatório *"}
+                  required={true}
+                  type="date"
+                />
+              </>
             )}
 
             <Row>
@@ -303,10 +335,11 @@ function Component(props) {
                 id="phone"
                 initialValue={phone}
                 onChange={text => setPhone(maskTelephone89Digitos(text))}
-                label="Telefone/Celular"
+                label="Telefone/Celular *"
                 infoText="&nbsp;"
                 type="text"
                 placeholder="(00) 0 0000-0000"
+                required
               />
             </Row>
 

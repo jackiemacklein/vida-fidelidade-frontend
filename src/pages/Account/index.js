@@ -104,7 +104,7 @@ function Component(props) {
         Bairro: neighborhood,
         Cidade: city,
         UF: state,
-        Cep: cep,
+        Cep: parseInteger(cep),
         DataNascimento: dtbirth,
         Sexo: gender,
         FoneResidencial: "",
@@ -124,10 +124,27 @@ function Component(props) {
         StatusCliente: "ativo",
       });
       setLoading(false);
-      history.push(`/pagamento/${params.plan_id}/${client.data._id}`);
+      history.push(
+        process.env.REACT_APP_PAGE_CONSTRUCTION ? `/site/pagamento/${params.plan_id}/${client.data._id}` : `/pagamento/${params.plan_id}/${client.data._id}`,
+      );
     } catch (error) {
       console.log(error);
-      modal.show(true, "Atenção", "CPF já cadastrado, faça login ou digite outro CPF.", "", "FAZER LOGIN", () => () => history.push("/login"), "", "", true);
+
+      //if (error.response.statusCode === 500) {
+      modal.show(
+        true,
+        "Erro desconhecido",
+        "Desculpe o transtorno! Estamos enfrentando uma instabilidade em nosso serviços!",
+        "Tente novamente.",
+        "",
+        "",
+        "Fechar",
+        () => () => modal.hide(),
+        true,
+      );
+      //} else {
+      // }
+
       setLoading(false);
     }
   };
@@ -192,7 +209,7 @@ function Component(props) {
 
   return (
     <>
-      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
+      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
           <InternalTitle title1="Realize seu" title2="Cadastro" styles={{ marginBottom: "20px" }} />

@@ -1,3 +1,4 @@
+import "./configs/dotenv";
 import Home from "./pages/Home";
 import Account from "./pages/Account";
 import Payment from "./pages/Payment";
@@ -13,7 +14,7 @@ import MyDependents from "./pages/Panel/Dependents";
 const routes = [
   {
     exact: true,
-    path: "/site/",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/" : "/",
     component: Home.Component,
     requestInitialData: Home.requestInitialData,
     options: {
@@ -22,7 +23,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/criar-conta/:plan_id?",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/criar-conta/:plan_id?" : "/criar-conta/:plan_id?",
     component: Account.Component,
     requestInitialData: Account.requestInitialData,
     options: {
@@ -31,7 +32,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/pagamento/:plan_id/:user_id",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/pagamento/:plan_id/:user_id" : "/pagamento/:plan_id/:user_id",
     component: Payment.Component,
     requestInitialData: Payment.requestInitialData,
     options: {
@@ -40,7 +41,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/vida-pagamento-facil",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/vida-pagamento-facil" : "/vida-pagamento-facil",
     component: EasyPayment.Component,
     requestInitialData: EasyPayment.requestInitialData,
     options: {
@@ -49,7 +50,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/login",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login",
     component: Login.Component,
     requestInitialData: Login.requestInitialData,
     options: {
@@ -58,7 +59,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/painel/meus-dados",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meus-dados" : "/painel/meus-dados",
     component: MyAccount.Component,
     requestInitialData: MyAccount.requestInitialData,
     options: {
@@ -67,7 +68,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/painel/meu-plano",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meu-plano" : "/painel/meu-plano",
     component: MyPlan.Component,
     requestInitialData: MyPlan.requestInitialData,
     options: {
@@ -76,7 +77,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/painel/pagamentos",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/pagamentos" : "/painel/pagamentos",
     component: MyPay.Component,
     requestInitialData: MyPay.requestInitialData,
     options: {
@@ -85,7 +86,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/site/painel/meus-dependentes",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meus-dependentes" : "/painel/meus-dependentes",
     component: MyDependents.Component,
     requestInitialData: MyDependents.requestInitialData,
     options: {

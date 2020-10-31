@@ -255,7 +255,7 @@ export const Banners = styled.div`
 
   position: relative;
 
-  padding: 50px;
+  padding: 60px;
   margin-top: 10px;
 
   width: 1200px;
@@ -469,4 +469,48 @@ export const Figure = styled.figure`
 
 export const Image = styled.img`
   width: 100%;
+`;
+
+export const Description = styled.h4`
+  font-family: "HelveticaNeueThin";
+  font-size: 22px;
+  line-height: 30px;
+  color: #ffffff;
+  text-align: center;
+
+  animation: fadeInDown;
+
+  animation-duration: 0.6s;
+
+  cursor: pointer;
+
+  transition: all 0.4s ease-in-out;
+
+  margin-top: 35px;
+  text-align: center;
+
+  align-self: center;
+
+  border: 0;
+  background-color: transparent;
+
+  @media (max-width: 1366px) {
+  }
+  @media (max-width: 1281px) {
+  }
+  @media (max-width: 1025px) {
+    font-size: 18px;
+    line-height: 20px;
+
+    margin: 20px;
+    color: #fff;
+  }
+  @media (max-width: 801px) {
+  }
+  @media (max-width: 600px) {
+  }
+  @media (max-width: 480px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;

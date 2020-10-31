@@ -1,3 +1,4 @@
+import "./../configs/dotenv";
 export const TOKEN_API = "TOKEN_API";
 export const CLIENT_ID = "CLIENT_ID";
 export const USER_NAME = "USER_NAME";
@@ -24,5 +25,5 @@ export const logout = history => {
   localStorage.removeItem(USER_ID);
   localStorage.removeItem(USER_EMAIL);
 
-  history.push("/");
+  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/" : "/");
 };

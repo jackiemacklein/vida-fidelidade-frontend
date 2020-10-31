@@ -32,13 +32,13 @@ function Benefits() {
             <BenefitsIcon width="30px" height="30px" fill="#FFF" />
           </Icone>
           <Title>
-            <span>Desconto</span>Exames clínicos
+            <span>Desconto</span>Clínico Geral
           </Title>
           <Line className="through">
-            Particular: <span>R$ 150</span>
+            Particular: <span>R$ 200</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 50</span>
+            Vida Fidelidade: <span>R$ 85</span>
           </Line>
         </Item>
 
@@ -47,13 +47,13 @@ function Benefits() {
             <BenefitsIcon width="30px" height="30px" fill="#FFF" />
           </Icone>
           <Title>
-            <span>Desconto</span>Exames clínicos
+            <span>Desconto</span>Ortopedia
           </Title>
           <Line className="through">
-            Particular: <span>R$ 150</span>
+            Particular: <span>R$ 250</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 50</span>
+            Vida Fidelidade: <span>R$ 85</span>
           </Line>
         </Item>
 
@@ -62,13 +62,13 @@ function Benefits() {
             <BenefitsIcon width="30px" height="30px" fill="#FFF" />
           </Icone>
           <Title>
-            <span>Desconto</span>Exames clínicos
+            <span>Desconto</span>Oftalmologia
           </Title>
           <Line className="through">
-            Particular: <span>R$ 150</span>
+            Particular: <span>R$ 200</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 50</span>
+            Vida Fidelidade: <span>R$ 85</span>
           </Line>
         </Item>
 
@@ -77,13 +77,13 @@ function Benefits() {
             <BenefitsIcon width="30px" height="30px" fill="#FFF" />
           </Icone>
           <Title>
-            <span>Desconto</span>Exames clínicos
+            <span>Desconto</span>Otorrinolaringologia
           </Title>
           <Line className="through">
-            Particular: <span>R$ 150</span>
+            Particular: <span>R$ 300</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 50</span>
+            Vida Fidelidade: <span>R$ 85</span>
           </Line>
         </Item>
 
@@ -92,13 +92,13 @@ function Benefits() {
             <BenefitsIcon width="30px" height="30px" fill="#FFF" />
           </Icone>
           <Title>
-            <span>Desconto</span>Exames clínicos
+            <span>Desconto</span>Hepatologia
           </Title>
           <Line className="through">
-            Particular: <span>R$ 150</span>
+            Particular: <span>R$ 300</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 50</span>
+            Vida Fidelidade: <span>R$ 85</span>
           </Line>
         </Item>
 
@@ -107,13 +107,148 @@ function Benefits() {
             <BenefitsIcon width="30px" height="30px" fill="#FFF" />
           </Icone>
           <Title>
-            <span>Desconto</span>Exames clínicos
+            <span>Desconto</span>Oncologia
           </Title>
           <Line className="through">
-            Particular: <span>R$ 150</span>
+            Particular: <span>R$ 300</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 50</span>
+            Vida Fidelidade: <span>R$ 85</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Proctologia
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 300</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 85</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Vascular
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 250</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 85</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Gastroenterologia
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 300</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 85</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Urologia
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 200</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 85</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Mastologia
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 300</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 85</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Ginecologia
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 200</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 95</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Dermatologia
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 250</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 100</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Pediatria
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 300</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 100</span>
+          </Line>
+        </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Cardiologia - Incluindo - ECG
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 310</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 140</span>
           </Line>
         </Item>
       </Items>

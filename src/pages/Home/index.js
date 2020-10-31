@@ -47,7 +47,7 @@ function Component(props) {
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} showHeader />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
-          <Description className="mt185">
+          <Description className="mt90">
             Conheça o <span className="green">cartão de descontos</span> em saúde para a sua <span className="orange">família!</span>
             <br />
             <span className="black">

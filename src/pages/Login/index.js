@@ -60,7 +60,7 @@ function Component(props) {
 
   return (
     <>
-      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
+      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
           <InternalTitle title1="" title2="Login" styles={{ marginBottom: "20px" }} />

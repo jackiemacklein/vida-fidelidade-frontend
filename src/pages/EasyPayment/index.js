@@ -67,7 +67,7 @@ function Component(props) {
 
   return (
     <>
-      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
+      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
           <InternalTitle title1="Vida Pagamento" title2="Fácil" styles={{ marginBottom: "20px" }} />

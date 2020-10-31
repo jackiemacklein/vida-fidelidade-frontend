@@ -1,3 +1,4 @@
+import "./../../configs/dotenv";
 import React, { useState, useEffect } from "react";
 
 /* navigation */
@@ -22,7 +23,7 @@ import MenuCloseIcon from "./../../assets/icons/menuClose";
 
 /* import styles */
 import { Container, LogoContainer, Logo, Nav, List, ListItem } from "./styles";
-import { Banners, Content, Subtitle, Title, Button, Video } from "./styles";
+import { Banners, Content, Subtitle, Title, Button, Video, Description } from "./styles";
 import { Figure, Image } from "./styles";
 
 let timer;
@@ -38,6 +39,8 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
       buttonTarget: "beneficios",
       image_path: "",
       video_path: "https://www.youtube.com/embed/GsyJE-f2Ue4",
+      description:
+        "Agora cuidar da sua saúde e de quem você ama ficou mais fácil. Com ótimos descontos e sem filas, o Vida Cartão Fidelidade proporciona mais saúde e segurança para toda sua família.",
     },
   ]);
   //const [banners, setBanners] = useState(initialData.banners?.data ?? []);
@@ -81,7 +84,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
   return (
     <Container id="home">
       <Nav>
-        <Link to="/">
+        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/home" : "/"}>
           <LogoContainer title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos">
             <Logo src={color} title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos" />
           </LogoContainer>
@@ -94,20 +97,32 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
               Dúvidas Frequentes
             </ListItem>
           ) : (
-            <a href={"/#duvidas-frequentes"} title="duvidas-frequentes">
+            <a href={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/#duvidas-frequentes" : "/#duvidas-frequentes"} title="duvidas-frequentes">
               <ListItem id="headerBtnDuvidasFrequentes" name="headerBtnDuvidasFrequentes">
                 Dúvidas Frequentes
               </ListItem>
             </a>
           )}
 
-          <Link to={"/login"} title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
+          <Link
+            to={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login"}
+            title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
             <ListItem>Portal do Assinante</ListItem>
           </Link>
 
-          <Link to={"/vida-pagamento-facil"} title="Pagar sua mensalidade do Cartão Fidelidade - Cartão de descontos">
+          {!internalPage ? (
+            <>
+              <ListItem onClick={() => handleAnchor("planos")} className="button">
+                adquira já seu Cartão Vida Fidelidade
+              </ListItem>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {/*<Link to={"/vida-pagamento-facil"} title="Pagar sua mensalidade do Cartão Fidelidade - Cartão de descontos">
             <ListItem className="button">Pague aqui sua mensalidade</ListItem>
-          </Link>
+          </Link>*/}
         </List>
       </Nav>
       {showHeader ? (
@@ -118,9 +133,13 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
               <Title>
                 {item.title} <span>{item.subtitle}</span>
               </Title>
-              <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
 
-              <Video>
+              <Description>{item.description}</Description>
+
+              {/*
+              <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
+              */}
+              {/*<Video>
                 {item.video_path ? (
                   <iframe
                     src={`${item.video_path}?autoplay=0&amp;showinfo=0&amp;modestbranding=0&amp;controls=1&amp;rel=0`}
@@ -134,7 +153,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
                     <Image src={item.image_path} title={item.summary} alt={item.summary} />
                   </Figure>
                 )}
-              </Video>
+                </Video>*/}
             </Content>
           ))}
         </Banners>

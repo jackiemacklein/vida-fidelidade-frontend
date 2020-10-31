@@ -101,7 +101,7 @@ function Component(props) {
         },
       });
 
-      if (res.data) {
+      if (res.data.message === "Cliente criado com sucesso") {
         const { data } = await api.post("/contratos", {
           CodigoEmpresa: "5f8da1658c4466ce8b70113a",
           CodigoCliente: client_id,
@@ -127,26 +127,26 @@ function Component(props) {
         if (data) {
           console.log(data);
 
-          if (method === "card-credit") {
+          if (method === "card-credit" && data.status === "ACTIVE") {
             modal.show(
               true,
-              "Pagamento efetuado com sucesso!",
-              "Obrigado!",
-              "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
+              "Processando Pagamento!",
+              "No momento estamos processando o seu pagamento, você receberá uma confirmação por e-mail quando o processo for concluído.",
+              "Acompanhe através do Portal realizando login em sua conta.",
               "ACESSAR MINHA CONTA",
-              () => () => history.push("/"),
+              () => () => history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login"),
               "",
               "",
               true,
             );
-          } else if (method === "billet") {
+          } else if (method === "billet" && data._links.boleto.redirect_href) {
             modal.show(
               true,
-              "Pagamento efetuado com sucesso!",
-              "Seu boleto para pagamento foi gerado com sucesso!",
-              "Se deseja imprimir o seu boleto agora clique em imprimir boleto. Também enviamos uma cópia do boleto para o seu e-mail!",
+              "Boleto gerado com sucesso!",
+              "Seu boleto para pagamento foi gerado com sucesso! Enviamos uma cópia para o seu e-mail",
+              "Se desejar imprimir o seu boleto, clique no botão abaixo. O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.",
               "IMPRIMIR MEU BOLETO",
-              () => () => window.open("", "_blank"),
+              () => () => window.open(data._links.boleto.redirect_href, "_blank"),
               "",
               "",
               true,

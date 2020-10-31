@@ -72,6 +72,10 @@ export const Description = styled.p`
     margin-top: 185px;
   }
 
+  &.mt90 {
+    margin-top: 90px;
+  }
+
   @media (max-width: 1366px) {
     font-size: 32px;
     line-height: 32px;

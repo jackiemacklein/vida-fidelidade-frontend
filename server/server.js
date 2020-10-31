@@ -10,9 +10,6 @@ import http from "http";
 
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
 
-import sslRootCAs from "ssl-root-cas/latest";
-sslRootCAs.inject();
-
 //import sourceMapSupport from "source-map-support";
 /* React utils */
 

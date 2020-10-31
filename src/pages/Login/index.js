@@ -9,6 +9,7 @@ import { KieeeHead, useInitialData } from "./../../components/Kieee";
 
 /* import services */
 import api from "./../../services/api";
+import { login } from "./../../services/auth";
 
 /* import utils */
 import { ModalContext } from "./../../components/Forms/Modal";
@@ -43,6 +44,8 @@ function Component(props) {
     try {
       const { data } = await api.post("/auth/login", { type: 1, email, password });
       if (data) {
+        await login(data.access_token, data.id, data.email, data.user);
+        history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meus-dados" : "/painel/meus-dados");
       }
     } catch (error) {
       console.log(error);

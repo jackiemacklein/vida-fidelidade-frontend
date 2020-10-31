@@ -172,8 +172,11 @@ export const Content = styled.form`
 
   border: 1px solid rgba(112, 112, 112, 0.33);
 
+  width: 70%;
+  align-self: center;
+
   @media (max-width: 1366px) {
-    width: 70%;
+    width: 80%;
   }
   @media (max-width: 1281px) {
   }

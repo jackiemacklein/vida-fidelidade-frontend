@@ -503,7 +503,7 @@ function Component(props) {
               />
             </Row>
 
-            <Button>CADASTRAR</Button>
+            <Button disabled={loading}>{loading ? `PROCESSANDO...` : `CADASTRAR`}</Button>
           </Content>
         </About>
       </Container>

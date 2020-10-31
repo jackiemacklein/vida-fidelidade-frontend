@@ -53,6 +53,8 @@ function Component(props) {
   const [client_id, setClient_id] = useState("");
   const [plan_id, setPlan_id] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const checkCardValidate = () => {
     const check = validate.split("/");
     if (check.length === 2 && check[0].length === 2 && check[1].length === 4) return true;
@@ -77,6 +79,8 @@ function Component(props) {
 
       return false;
     }
+
+    setLoading(true);
 
     try {
       const res = await api.post("/contratos/criacliente", {
@@ -151,9 +155,47 @@ function Component(props) {
               "",
               true,
             );
+          } else {
+            modal.show(
+              true,
+              "Erro ao processar pagamento",
+              "Identificamos um erro ao tentar gerar o seu pagamento!",
+              "Por favor tente novamente mais tarde.",
+              "",
+              "",
+              "Tentar novamente",
+              () => () => modal.hide(),
+              true,
+            );
           }
+        } else {
+          modal.show(
+            true,
+            "Erro",
+            "Identificamos uma instabilidade na operadora de pagamento!",
+            "Por favor tente novamente mais tarde.",
+            "",
+            "",
+            "Tentar novamente",
+            () => () => modal.hide(),
+            true,
+          );
         }
+      } else {
+        modal.show(
+          true,
+          "Erro",
+          "Identificamos uma instabilidade na operadora de pagamento!",
+          "Por favor tente novamente mais tarde.",
+          "",
+          "",
+          "Tentar novamente",
+          () => () => modal.hide(),
+          true,
+        );
       }
+
+      setLoading(false);
     } catch (error) {
       console.log(error);
 
@@ -182,6 +224,8 @@ function Component(props) {
           true,
         );
       }
+
+      setLoading(false);
     }
   };
 
@@ -341,6 +385,7 @@ function Component(props) {
             </Row>
 
             <Button>{method === "billet" ? "Gerar Boleto" : "Realizar Pagamento"}</Button>
+            <Button disabled={loading}>{loading ? `PROCESSANDO PAGAMENTO...` : method === "billet" ? "Gerar Boleto" : "Realizar Pagamento"}</Button>
           </Content>
         </About>
       </Container>

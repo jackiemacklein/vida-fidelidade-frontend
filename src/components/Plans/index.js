@@ -1,3 +1,4 @@
+import "./../../configs/dotenv";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -34,7 +35,7 @@ function Plans() {
 
   useEffect(() => {
     async function load() {
-      const { data } = await api.get("/produtos");
+      const { data } = await api.get("/produtos/situacao/ativo");
       if (data) {
         setPlans(data);
       }
@@ -78,7 +79,7 @@ function Plans() {
               </Price>
               {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)}</SmalLine> : <></>}
 
-              <Link to={`/criar-conta/${item._id}`}>
+              <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION ? `/site/criar-conta/${item._id}` : `/criar-conta/${item._id}`}>
                 <Button>ASSINE AGORA</Button>
               </Link>
             </Content>

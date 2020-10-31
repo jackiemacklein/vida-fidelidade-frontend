@@ -7,7 +7,7 @@ import { InitialDataContext } from "./../Kieee";
 /* import components */
 import Title from "./../Title";
 
-/* import images */
+/* import images*/
 
 /* import utils */
 import { maskCurrencyReal } from "./../../utils/functions";

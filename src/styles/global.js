@@ -4,7 +4,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeue';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeue.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeue.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -13,7 +13,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueBd';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueBd.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueBd.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -22,7 +22,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueBlackCond';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueBlackCond.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueBlackCond.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -31,7 +31,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueBold';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueBold.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueBold.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -40,7 +40,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueHv';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueHv.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueHv.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -49,7 +49,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueIt';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueIt.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueIt.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -58,7 +58,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueLight';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueLight.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueLight.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -67,7 +67,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueLt';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueLt.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueLt.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -76,7 +76,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueMed';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueMed.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueMed.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -85,7 +85,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueMedium';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueMedium.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueMedium.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -94,7 +94,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueThin';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/helvetica/HelveticaNeueThin.ttf') format('truetype');
+      src: url('/static/fonts//HelveticaNeueThin.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -102,7 +102,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'Effra-Italic';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/Effra-Italic.ttf') format('truetype');
+      src: url('/static/fonts/Effra-Italic.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -110,7 +110,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'EffraLight-Italic';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/EffraLight-Italic.ttf') format('truetype');
+      src: url('/static/fonts/EffraLight-Italic.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -118,7 +118,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'Effra-BoldItalic';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/Effra-BoldItalic.ttf') format('truetype');
+      src: url('/static/fonts/Effra-BoldItalic.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -126,7 +126,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'EffraMedium-Regular';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/EffraMedium-Regular.ttf') format('truetype');
+      src: url('/static/fonts/EffraMedium-Regular.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -134,7 +134,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'EffraHeavy-Italic';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/EffraHeavy-Italic.ttf') format('truetype');
+      src: url('/static/fonts/EffraHeavy-Italic.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -142,7 +142,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'EffraHeavy-Regular';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/EffraHeavy-Regular.ttf') format('truetype');
+      src: url('/static/fonts/EffraHeavy-Regular.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -150,7 +150,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'EffraLight-Regular';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/EffraLight-Regular.ttf') format('truetype');
+      src: url('/static/fonts/EffraLight-Regular.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -158,7 +158,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'Effra-Regular';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/Effra-Regular.ttf') format('truetype');
+      src: url('/static/fonts/Effra-Regular.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -166,7 +166,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'Effra-Bold';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/Effra-Bold.ttf') format('truetype');
+      src: url('/static/fonts/Effra-Bold.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -174,7 +174,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'EffraMedium-Italic';
-      src: url('https://zukt-3s.nyc3.digitaloceanspaces.com/repositories/fonts/effra/EffraMedium-Italic.ttf') format('truetype');
+      src: url('/static/fonts/EffraMedium-Italic.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -186,7 +186,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.4s ease-in-out;
+    //transition: all 0.4s ease-in-out;
 
   }
 

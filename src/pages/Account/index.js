@@ -277,7 +277,7 @@ function Component(props) {
                 infoText="Campo obrigatório"
                 required
                 type="text"
-                maxLength={type === "PJ" ? 14 : 11}
+                maxLength={type === "PJ" ? 18 : 11}
               />
 
               <Input
@@ -387,7 +387,16 @@ function Component(props) {
             </Row>
 
             <Row>
-              <Input name="number" id="number" initialValue={number} onChange={text => setNumber(text)} label="Número" infoText="&nbsp;" type="text" />
+              <Input
+                name="number"
+                id="number"
+                initialValue={number}
+                onChange={text => setNumber(text)}
+                label="Número *"
+                infoText="Campo obrigatório (S/N = Sem Número)"
+                type="text"
+                required
+              />
 
               <Input
                 name="complement"

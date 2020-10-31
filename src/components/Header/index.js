@@ -84,7 +84,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
   return (
     <Container id="home">
       <Nav>
-        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/home" : "/"}>
+        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/" : "/"}>
           <LogoContainer title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos">
             <Logo src={color} title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos" />
           </LogoContainer>

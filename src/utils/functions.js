@@ -64,6 +64,17 @@ export function maskTelephone89Digitos(value) {
   }
 }
 
+export function maskCardExpiration(value) {
+  var novo = value.replace(/[^0-9]/g, "");
+
+  if (novo.length >= 3) {
+    novo = novo.substr(0, 2) + "/" + novo.substr(2, 2);
+    return novo;
+  } else {
+    return novo;
+  }
+}
+
 export function maskCurrencyReal(value, onLoad = false) {
   var v;
 

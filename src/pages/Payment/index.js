@@ -9,7 +9,7 @@ import { KieeeHead, useInitialData } from "./../../components/Kieee";
 
 /* import utils */
 import { ModalContext } from "./../../components/Forms/Modal";
-import { getCardFlag, maskCurrencyReal } from "./../../utils/functions";
+import { getCardFlag, maskCurrencyReal, maskCardExpiration } from "./../../utils/functions";
 
 /* import services */
 import api from "./../../services/api";
@@ -57,7 +57,7 @@ function Component(props) {
 
   const checkCardValidate = () => {
     const check = validate.split("/");
-    if (check.length === 2 && check[0].length === 2 && check[1].length === 4) return true;
+    if (check.length === 2 && parseInt(check[0]) <= 31 && check[0].length === 2 && check[1].length === 2) return true;
     else return false;
   };
 
@@ -71,11 +71,20 @@ function Component(props) {
     return val[1].substr(2);
   };
 
+  const clearFields = () => {
+    setMethod("");
+    setCard_number("");
+    setName("");
+    setValidate("");
+    setCvc("");
+    setIndicated_by("");
+  };
+
   const handlePayment = async event => {
     event.preventDefault();
 
     if (method === "card-credit" && !checkCardValidate()) {
-      modal.show(true, "Atenção!", "Informe corretamente a validade do cartão!", "Padrão: MM/AAAA", "", "", "Tentar novamente", () => () => modal.hide(), true);
+      modal.show(true, "Atenção!", "Informe corretamente a validade do cartão!", "Padrão: MM/AA", "", "", "Tentar novamente", () => () => modal.hide(), true);
 
       return false;
     }
@@ -129,16 +138,17 @@ function Component(props) {
         });
 
         if (data) {
-          console.log(data);
-
           if (method === "card-credit" && data.status === "ACTIVE") {
             modal.show(
               true,
               "Processando Pagamento!",
               "No momento estamos processando o seu pagamento, você receberá uma confirmação por e-mail quando o processo for concluído.",
-              "Acompanhe através do Portal realizando login em sua conta.",
+              "Clque no botão abaixo e acompanhe seu pedido.",
               "ACESSAR MINHA CONTA",
-              () => () => history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login"),
+              () => () => {
+                clearFields();
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login");
+              },
               "",
               "",
               true,
@@ -148,9 +158,12 @@ function Component(props) {
               true,
               "Boleto gerado com sucesso!",
               "Seu boleto para pagamento foi gerado com sucesso! Enviamos uma cópia para o seu e-mail",
-              "Se desejar imprimir o seu boleto, clique no botão abaixo. O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.",
+              "Se desejar imprimir o seu boleto, clique no botão abaixo.<br />O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.<br /><br />",
               "IMPRIMIR MEU BOLETO",
-              () => () => window.open(data._links.boleto.redirect_href, "_blank"),
+              () => () => {
+                clearFields();
+                window.open(data._links.boleto.redirect_href, "_blank");
+              },
               "",
               "",
               true,
@@ -338,8 +351,8 @@ function Component(props) {
                     name="validate"
                     id="validate"
                     initialValue={validate}
-                    onChange={text => setValidate(text)}
-                    label="Validade (MM/AAAA) *"
+                    onChange={text => setValidate(maskCardExpiration(text))}
+                    label="Validade (MM/AA) *"
                     infoText="Campo obrigatório"
                     required={method === "card-credit"}
                     type="text"
@@ -383,8 +396,6 @@ function Component(props) {
                 type="text"
               />
             </Row>
-
-            <Button>{method === "billet" ? "Gerar Boleto" : "Realizar Pagamento"}</Button>
             <Button disabled={loading}>{loading ? `PROCESSANDO PAGAMENTO...` : method === "billet" ? "Gerar Boleto" : "Realizar Pagamento"}</Button>
           </Content>
         </About>

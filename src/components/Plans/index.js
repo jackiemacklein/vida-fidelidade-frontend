@@ -21,6 +21,8 @@ import { Line, Price, SmalLine, Button } from "./styles";
 function Plans() {
   const initialData = InitialDataContext;
 
+  console.log("dentro: ", initialData);
+
   const [plans, setPlans] = useState(initialData.plans ?? []);
 
   const getLines = lines => {

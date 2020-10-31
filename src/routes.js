@@ -13,7 +13,7 @@ import MyDependents from "./pages/Panel/Dependents";
 const routes = [
   {
     exact: true,
-    path: "/",
+    path: "/site/",
     component: Home.Component,
     requestInitialData: Home.requestInitialData,
     options: {
@@ -22,7 +22,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/criar-conta/:plan_id?",
+    path: "/site/criar-conta/:plan_id?",
     component: Account.Component,
     requestInitialData: Account.requestInitialData,
     options: {
@@ -31,7 +31,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/pagamento/:plan_id/:user_id",
+    path: "/site/pagamento/:plan_id/:user_id",
     component: Payment.Component,
     requestInitialData: Payment.requestInitialData,
     options: {
@@ -40,7 +40,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/vida-pagamento-facil",
+    path: "/site/vida-pagamento-facil",
     component: EasyPayment.Component,
     requestInitialData: EasyPayment.requestInitialData,
     options: {
@@ -49,7 +49,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/login",
+    path: "/site/login",
     component: Login.Component,
     requestInitialData: Login.requestInitialData,
     options: {
@@ -58,7 +58,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/painel/meus-dados",
+    path: "/site/painel/meus-dados",
     component: MyAccount.Component,
     requestInitialData: MyAccount.requestInitialData,
     options: {
@@ -67,7 +67,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/painel/meu-plano",
+    path: "/site/painel/meu-plano",
     component: MyPlan.Component,
     requestInitialData: MyPlan.requestInitialData,
     options: {
@@ -76,7 +76,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/painel/pagamentos",
+    path: "/site/painel/pagamentos",
     component: MyPay.Component,
     requestInitialData: MyPay.requestInitialData,
     options: {
@@ -85,7 +85,7 @@ const routes = [
   },
   {
     exact: true,
-    path: "/painel/meus-dependentes",
+    path: "/site/painel/meus-dependentes",
     component: MyDependents.Component,
     requestInitialData: MyDependents.requestInitialData,
     options: {

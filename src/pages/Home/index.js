@@ -97,6 +97,8 @@ async function requestInitialData() {
       return [];
     });
 
+  console.log("initial:", plans);
+
   return { siteConfig, plans };
 }
 

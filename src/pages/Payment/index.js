@@ -66,7 +66,7 @@ function Component(props) {
 
   const getYear = () => {
     const val = validate.split("/");
-    return val[1];
+    return val[1].substr(2);
   };
 
   const handlePayment = async event => {
@@ -79,19 +79,12 @@ function Component(props) {
     }
 
     try {
-      const { data } = await api.post("/contratos", {
+      const res = await api.post("/contratos/criacliente", {
         CodigoEmpresa: "5f8da1658c4466ce8b70113a",
         CodigoCliente: client_id,
         CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
         NomedoIndicador: indicated_by,
-        TipoContrato: "Individual",
-        TipoPagamento: method === "card-credit" ? "Cartão" : "Boleto",
-        TipoCobranca: "Mensal",
-        //TipoCartao: getCardFlag(card_number),
-        //NomeCartao: name,
-        //MesCartao: getMonth(),
-        //AnoCartao: getYear(),
-        //CVVCarta: cvc,
+        TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
         ClientexContrato: [
           {
             CodigoCliente: client_id,
@@ -108,33 +101,57 @@ function Component(props) {
         },
       });
 
-      if (data) {
-        console.log(data);
+      if (res.data) {
+        const { data } = await api.post("/contratos", {
+          CodigoEmpresa: "5f8da1658c4466ce8b70113a",
+          CodigoCliente: client_id,
+          CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
+          NomedoIndicador: indicated_by,
+          TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
+          ClientexContrato: [
+            {
+              CodigoCliente: client_id,
+              CodigoProduto: plan_id,
+            },
+          ],
+          CobrancaxContrato: {
+            NumeroCartao: method === "card-credit" ? card_number : "",
+            TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
+            NomeCartao: method === "card-credit" ? name : "",
+            MesCartao: method === "card-credit" ? getMonth() : "",
+            AnoCartao: method === "card-credit" ? getYear() : "",
+            CVVCarta: method === "card-credit" ? cvc : "",
+          },
+        });
 
-        if (method === "card-credit") {
-          modal.show(
-            true,
-            "Pagamento efetuado com sucesso!",
-            "Obrigado!",
-            "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
-            "ACESSAR MINHA CONTA",
-            () => () => history.push("/"),
-            "",
-            "",
-            true,
-          );
-        } else if (method === "billet") {
-          modal.show(
-            true,
-            "Pagamento efetuado com sucesso!",
-            "Seu boleto para pagamento foi gerado com sucesso!",
-            "Se deseja imprimir o seu boleto agora clique em imprimir boleto. Também enviamos uma cópia do boleto para o seu e-mail!",
-            "IMPRIMIR MEU BOLETO",
-            () => () => window.open("", "_blank"),
-            "",
-            "",
-            true,
-          );
+        if (data) {
+          console.log(data);
+
+          if (method === "card-credit") {
+            modal.show(
+              true,
+              "Pagamento efetuado com sucesso!",
+              "Obrigado!",
+              "Seu pagamento através do cartão de crédito foi efetuado com sucesso.",
+              "ACESSAR MINHA CONTA",
+              () => () => history.push("/"),
+              "",
+              "",
+              true,
+            );
+          } else if (method === "billet") {
+            modal.show(
+              true,
+              "Pagamento efetuado com sucesso!",
+              "Seu boleto para pagamento foi gerado com sucesso!",
+              "Se deseja imprimir o seu boleto agora clique em imprimir boleto. Também enviamos uma cópia do boleto para o seu e-mail!",
+              "IMPRIMIR MEU BOLETO",
+              () => () => window.open("", "_blank"),
+              "",
+              "",
+              true,
+            );
+          }
         }
       }
     } catch (error) {

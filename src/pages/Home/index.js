@@ -28,19 +28,8 @@ function Component(props) {
   const [openedMenu, setOpenedMenu] = useState(false);
 
   const initialData = useInitialData(props, requestInitialData);
-  //const [aboutConfig, setAboutConfig] = useState(initialData?.aboutConfig ?? {});
-  //const [consultingConfig, setConsultingConfigConfig] = useState(initialData?.consultingConfig ?? {});
-  //const [pressOfficeConfig, setPressOfficeConfig] = useState(initialData?.pressOfficeConfig ?? {});
-  //const [teams, setTeams] = useState(initialData.teams?.data ?? []);
-  //const [partners, setPartners] = useState(initialData.partners?.data ?? []);
 
-  useEffect(() => {
-    //setAboutConfig(initialData?.aboutConfig ?? {});
-    //setConsultingConfigConfig(initialData?.consultingConfig ?? {});
-    //setPressOfficeConfig(initialData?.pressOfficeConfig ?? {});
-    //setTeams(initialData.teams?.data ?? []);
-    //setPartners(initialData.partners?.data ?? []);
-  }, [initialData]);
+  useEffect(() => {}, [initialData]);
 
   return (
     <>

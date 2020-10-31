@@ -12,18 +12,19 @@ import Title from "./../Title";
 /* import utils */
 import { maskCurrencyReal } from "./../../utils/functions";
 
-/* import icons */
+/* import services */
+import api from "./../../services/api";
 
 /* import styles */
 import { Container, Description, Items, Item, Header, HeaderTitle, Content } from "./styles";
 import { Line, Price, SmalLine, Button } from "./styles";
 
 function Plans() {
-  const initialData = InitialDataContext;
+  //const initialData = InitialDataContext;
 
-  console.log("dentro: ", initialData);
+  //console.log("dentro: ", initialData);
 
-  const [plans, setPlans] = useState(initialData.plans ?? []);
+  const [plans, setPlans] = useState([]);
 
   const getLines = lines => {
     const items = lines.split("\n");
@@ -32,7 +33,14 @@ function Plans() {
   };
 
   useEffect(() => {
-    setPlans(initialData.plans ?? []);
+    async function load() {
+      const { data } = await api.get("/produtos");
+      if (data) {
+        setPlans(data);
+      }
+    }
+
+    load();
   }, [InitialDataContext]);
 
   return (

@@ -37,15 +37,19 @@ function Component(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async event => {
+    event.preventDefault();
+
     try {
-      const { data } = await api.post("/login");
+      const { data } = await api.post("/auth/login", { type: 1, email, password });
+      if (data) {
+      }
     } catch (error) {
       console.log(error);
       modal.show(
         true,
         "Não foi possível realizar o acesso",
-        "Verifique seu usuário e sua senha e tente novamente!",
+        "Verifique o usuário e senha e tente novamente!",
         "",
         "",
         "",

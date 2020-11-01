@@ -202,15 +202,16 @@ export const Item = styled.li`
 
   background-color: ${props => (props.active ? "#ffffff" : "transparent")};
 
-  margin-left: ${props => (!props.active ? "50px" : "0")};
-  margin-right: ${props => (!props.active ? "50px" : "0")};
+  margin-left: ${props => (!props.active ? "20px" : "0")};
+  margin-right: ${props => (!props.active ? "20px" : "0")};
 
   margin-bottom: 15px;
   padding: 20px;
   border-radius: 5px;
 
   border: 1px solid rgba(112, 112, 112, 0.33);
-  cursor: pointer;
+
+  transition: all 0.4s ease-in-out;
 
   &:hover {
     margin-left: 0;
@@ -246,7 +247,12 @@ export const ItemButton = styled.button`
   border: 0;
 
   border-radius: 5px;
+
   background-color: rgba(149, 0, 0, 0.55);
+
+  &.edit {
+    background-color: rgb(0, 121, 191, 0.55);
+  }
 
   padding: 5px 20px 5px 20px;
 
@@ -256,12 +262,18 @@ export const ItemButton = styled.button`
   line-height: 19px;
   letter-spacing: 1px;
 
+  margin-left: 5px;
+
   cursor: pointer;
   transition: all 0.4s ease-in-out;
 
   &:hover {
     background-color: rgba(149, 0, 0, 1);
     color: #fff;
+
+    &.edit {
+      background-color: rgb(0, 121, 191, 1);
+    }
   }
 
   @media (max-width: 1366px) {
@@ -292,6 +304,9 @@ export const ItemTitle = styled.h3`
   font-size: 14px;
   line-height: 14px;
   color: #54595f;
+
+  max-width: 150px;
+  min-width: 150px;
 
   span {
     margin-left: 4px;

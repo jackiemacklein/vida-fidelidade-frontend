@@ -1,5 +1,6 @@
 import { parseISO, format } from "date-fns";
 import pt from "date-fns/locale/pt-BR";
+import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 
 function isInt(n) {
   return Number(n) === n && n % 1 === 0;
@@ -7,6 +8,14 @@ function isInt(n) {
 
 function isFloat(n) {
   return Number(n) === n && n % 1 !== 0;
+}
+
+export function getDateByTimeZoneCba(date, formatDate) {
+  if (date) {
+    return format(utcToZonedTime(date, ""), formatDate, { locale: pt });
+  } else {
+    return "";
+  }
 }
 
 export function getDate(date, formatDate) {
@@ -274,4 +283,20 @@ export const getCardFlag = cardnumber => {
   }
 
   return "";
+};
+
+export const getDDD = tel => {
+  if (tel) {
+    return parseInteger(tel).substr(0, 2);
+  } else {
+    return "";
+  }
+};
+
+export const getTel = tel => {
+  if (tel) {
+    return parseInteger(tel).substr(2);
+  } else {
+    return "";
+  }
 };

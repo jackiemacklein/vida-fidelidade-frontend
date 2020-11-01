@@ -16,6 +16,8 @@ export const Container = styled.div`
   display: ${props => (props.open ? "flex" : "none")};
   align-items: center;
   justify-content: center;
+  animation: fadeIn; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 0.6s; /* don't forget to set a duration! */
 `;
 
 export const Content = styled.div`
@@ -25,6 +27,8 @@ export const Content = styled.div`
   padding: 32px;
   box-shadow: 0px 3px 11px 0px rgba(1, 1, 1, 0.2);
   border-radius: 10px;
+  animation: fadeInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 0.6s; /* don't forget to set a duration! */
 
   @media (max-width: 1366px) {
     width: 60%;

@@ -38,29 +38,39 @@ function Component(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async event => {
     event.preventDefault();
 
     try {
+      setLoading(true);
       const { data } = await api.post("/auth/login", { type: 1, email, password });
       if (data) {
+        console.log(data);
         await login(data.access_token, data.id, data.email, data.user);
-        history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meus-dados" : "/painel/meus-dados");
+        history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meus-dados" : "/portal/meus-dados");
       }
-    } catch (error) {
-      console.log(error);
-      modal.show(
-        true,
-        "Não foi possível realizar o acesso",
-        "Verifique o usuário e senha e tente novamente!",
-        "",
-        "",
-        "",
-        "Tentar novamente",
-        () => () => modal.hide(),
-        true,
-      );
+    } catch (e) {
+      console.log(e);
+      if (e.response && e.response.status === 401) {
+        modal.show(true, "Tente novamente!", "", "Verifique seu usuário e senha!", "", "", "Tentar novamente", () => () => modal.hide(), true);
+      } else {
+        modal.show(
+          true,
+          "Ocorreu um erro!",
+          "Desculpe o transtorno! Identificamos um instabilidade em nossos serviços!",
+          "Tente novamente!",
+          "",
+          "",
+          "Tentar novamente",
+          () => () => modal.hide(),
+          true,
+        );
+      }
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {}, [initialData]);
@@ -100,7 +110,7 @@ function Component(props) {
               />
             </Row>
 
-            <Button>ACESSAR</Button>
+            <Button disabled={loading}>{loading ? `CARREGANDO...` : "ACESSAR"}</Button>
           </Content>
         </About>
       </Container>

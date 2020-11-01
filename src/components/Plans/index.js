@@ -79,7 +79,7 @@ function Plans() {
               </Price>
               {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)}</SmalLine> : <></>}
 
-              <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION ? `/site/criar-conta/${item._id}` : `/criar-conta/${item._id}`}>
+              <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${item._id}` : `/criar-conta/${item._id}`}>
                 <Button>ASSINE AGORA</Button>
               </Link>
             </Content>

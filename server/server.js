@@ -52,7 +52,7 @@ app.use("/robots.txt", express.static(path.resolve(__dirname, "..", "build/stati
 app.use("/static", express.static(path.resolve(__dirname, "..", "build/static")));
 app.use("/static", express.static(path.resolve(__dirname, "..", "build/static/media")));
 
-app.get("/site/*", (req, res, next) => {
+app.get("/site*", (req, res, next) => {
   const activeRoute = routes.find(route => matchPath(req.url, route));
   const sheet = new ServerStyleSheet();
 

@@ -55,6 +55,8 @@ function Component(props) {
 
   const [loading, setLoading] = useState(false);
 
+  const [clientContract, setClientContract] = useState(false);
+
   const checkCardValidate = () => {
     const check = validate.split("/");
     if (check.length === 2 && parseInt(check[0]) <= 31 && check[0].length === 2 && check[1].length === 2) return true;
@@ -92,29 +94,33 @@ function Component(props) {
     setLoading(true);
 
     try {
-      const res = await api.post("/contratos/criacliente", {
-        CodigoEmpresa: "5f8da1658c4466ce8b70113a",
-        CodigoCliente: client_id,
-        CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
-        NomedoIndicador: indicated_by,
-        TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
-        ClientexContrato: [
-          {
-            CodigoCliente: client_id,
-            CodigoProduto: plan_id,
+      let res = {};
+      if (!clientContract) {
+        res = await api.post("/contratos/criacliente", {
+          CodigoEmpresa: "5f8da1658c4466ce8b70113a",
+          CodigoCliente: client_id,
+          CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
+          NomedoIndicador: indicated_by,
+          TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
+          ClientexContrato: [
+            {
+              CodigoCliente: client_id,
+              CodigoProduto: plan_id,
+            },
+          ],
+          CobrancaxContrato: {
+            NumeroCartao: method === "card-credit" ? card_number : "",
+            TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
+            NomeCartao: method === "card-credit" ? name : "",
+            MesCartao: method === "card-credit" ? getMonth() : "",
+            AnoCartao: method === "card-credit" ? getYear() : "",
+            CVVCarta: method === "card-credit" ? cvc : "",
           },
-        ],
-        CobrancaxContrato: {
-          NumeroCartao: method === "card-credit" ? card_number : "",
-          TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
-          NomeCartao: method === "card-credit" ? name : "",
-          MesCartao: method === "card-credit" ? getMonth() : "",
-          AnoCartao: method === "card-credit" ? getYear() : "",
-          CVVCarta: method === "card-credit" ? cvc : "",
-        },
-      });
+        });
+      }
+      if (clientContract === true || res?.data?.message === "Cliente criado com sucesso") {
+        setClientContract(true);
 
-      if (res.data.message === "Cliente criado com sucesso") {
         const { data } = await api.post("/contratos", {
           CodigoEmpresa: "5f8da1658c4466ce8b70113a",
           CodigoCliente: client_id,
@@ -147,18 +153,18 @@ function Component(props) {
               "ACESSAR MINHA CONTA",
               () => () => {
                 clearFields();
-                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login");
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login");
               },
               "",
               "",
-              true,
+              false,
             );
           } else if (method === "billet" && data._links.boleto.redirect_href) {
             modal.show(
               true,
               "Boleto gerado com sucesso!",
               "Seu boleto para pagamento foi gerado com sucesso! Enviamos uma cópia para o seu e-mail",
-              "Se desejar imprimir o seu boleto, clique no botão abaixo.<br />O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.<br /><br />",
+              `Se desejar imprimir o seu boleto, clique no botão abaixo.<br />O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.<br /><br />`,
               "IMPRIMIR MEU BOLETO",
               () => () => {
                 clearFields();
@@ -166,7 +172,7 @@ function Component(props) {
               },
               "",
               "",
-              true,
+              false,
             );
           } else {
             modal.show(
@@ -185,7 +191,7 @@ function Component(props) {
           modal.show(
             true,
             "Erro",
-            "Identificamos uma instabilidade na operadora de pagamento!",
+            "Identificamos uma instabilidade na operadora de pagamentos!",
             "Por favor tente novamente mais tarde.",
             "",
             "",

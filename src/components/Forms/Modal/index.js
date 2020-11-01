@@ -22,14 +22,38 @@ function Modal({
     <Container open={open}>
       <Content>
         <Header>
-          {title ? <Title>{title}</Title> : <></>}
+          {title ? (
+            <Title
+              dangerouslySetInnerHTML={{
+                __html: title,
+              }}
+            />
+          ) : (
+            <></>
+          )}
 
           {closeButton ? <CloseButton onClick={() => modal.hide()}>X</CloseButton> : <></>}
         </Header>
         <Body>
-          {summary ? <Summary>{summary}</Summary> : <></>}
+          {summary ? (
+            <Summary
+              dangerouslySetInnerHTML={{
+                __html: summary,
+              }}
+            />
+          ) : (
+            <></>
+          )}
 
-          {message ? <Description>{message}</Description> : <></>}
+          {message ? (
+            <Description
+              dangerouslySetInnerHTML={{
+                __html: message,
+              }}
+            />
+          ) : (
+            <></>
+          )}
         </Body>
         <Footer>
           {successButton ? <SuccessButton onClick={() => successButtonCallback()}>{successButton}</SuccessButton> : <></>}

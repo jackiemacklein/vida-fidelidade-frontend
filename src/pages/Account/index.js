@@ -9,6 +9,7 @@ import { KieeeHead, useInitialData } from "./../../components/Kieee";
 
 /* import utils */
 import { maskCpfCnpj, maskTelephone89Digitos, parseInteger, maskCep } from "./../../utils/functions";
+import { getDDD, getTel } from "./../../utils/functions";
 import { ModalContext } from "./../../components/Forms/Modal";
 import states from "./../../utils/states.json";
 
@@ -62,8 +63,8 @@ function Component(props) {
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirm_password] = useState("");
 
-  const [confirm_password_erro, setConfirm_password_error] = useState("");
-  const [confirm_password_erro_color, setConfirm_password_error_color] = useState("#AA91A0");
+  const [confirm_password_erro, setConfirm_password_error] = useState("Confirme aqui sua senha");
+  const [confirm_password_erro_color, setConfirm_password_error_color] = useState("#FF0000");
 
   const [terms, setTerms] = useState(false);
   const [privacy_policy, setPrivacy_policy] = useState(false);
@@ -71,27 +72,41 @@ function Component(props) {
 
   const [loading, setLoading] = useState(false);
 
-  const getDDD = tel => {
-    if (tel) {
-      return parseInteger(tel).substr(0, 2);
-    } else {
-      return "";
-    }
-  };
-
-  const getTel = tel => {
-    if (tel) {
-      return parseInteger(tel).substr(2);
-    } else {
-      return "";
-    }
-  };
+  const [user, setUser] = useState({});
 
   const handleCreateUser = async event => {
     event.preventDefault();
 
+    setLoading(true);
+    let userData = user;
+
     try {
-      setLoading(true);
+      if (userData.length === undefined) {
+        userData = await api.post("/users", { type: 1, password, name, email });
+
+        setUser(userData.data);
+        userData = userData.data;
+      }
+    } catch (errorUser) {
+      console.log("erro ao cadastrar usuário", errorUser);
+
+      modal.show(
+        true,
+        "Erro!",
+        "Tente novamente.",
+        "Desculpe o transtorno! Não foi possivel criar a sua conta de assinatura no momento! Estamos enfrentando uma instabilidade em nosso serviços!",
+        "",
+        "",
+        "Fechar",
+        () => () => modal.hide(),
+        true,
+      );
+
+      setLoading(false);
+      return false;
+    }
+
+    try {
       const client = await api.post("/clientes", {
         NomeCliente: name,
         NomeFantasia: fantasyName,
@@ -122,10 +137,14 @@ function Component(props) {
         whats: "",
         UsuarioCadastro: "website",
         StatusCliente: "ativo",
+        CodigoUsuario: userData._id,
       });
       setLoading(false);
+
       history.push(
-        process.env.REACT_APP_PAGE_CONSTRUCTION ? `/site/pagamento/${params.plan_id}/${client.data._id}` : `/pagamento/${params.plan_id}/${client.data._id}`,
+        process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
+          ? `/site/pagamento/${params.plan_id}/${client.data._id}`
+          : `/pagamento/${params.plan_id}/${client.data._id}`,
       );
     } catch (error) {
       console.log(error);
@@ -134,8 +153,8 @@ function Component(props) {
       modal.show(
         true,
         "Erro desconhecido",
-        "Desculpe o transtorno! Estamos enfrentando uma instabilidade em nosso serviços!",
         "Tente novamente.",
+        "Desculpe o transtorno! Estamos enfrentando uma instabilidade em nosso serviços!",
         "",
         "",
         "Fechar",
@@ -161,7 +180,7 @@ function Component(props) {
       setConfirm_password_error("OK!");
       setConfirm_password_error_color("#AA91A0");
     } else {
-      setConfirm_password_error("");
+      setConfirm_password_error("-");
       setConfirm_password_error_color("#AA91A0");
     }
   }, [password, confirm_password]);

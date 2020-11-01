@@ -263,6 +263,8 @@ export const Banners = styled.div`
 
   align-self: center;
 
+  border-radius: 4px;
+
   @media (max-width: 1366px) {
   }
   @media (max-width: 1281px) {

@@ -7,8 +7,13 @@ import { useHistory } from "react-router-dom";
 /* import Kieee Rendering */
 import { KieeeHead, useInitialData } from "./../../../components/Kieee";
 
+/* import services */
+import api from "./../../../services/api";
+import { getUser } from "./../../../services/auth";
+
 /* import utils */
-import { maskTelephone89Digitos, parseInteger, maskCep } from "./../../../utils/functions";
+import { maskTelephone89Digitos, parseInteger, maskCep, maskCpfCnpj } from "./../../../utils/functions";
+import { getDDD, getTel, getDateByTimeZoneCba } from "./../../../utils/functions";
 import { ModalContext } from "./../../../components/Forms/Modal";
 import states from "./../../../utils/states.json";
 
@@ -34,12 +39,16 @@ function Component(props) {
   const [openedMenu, setOpenedMenu] = useState(false);
   const initialData = useInitialData(props, requestInitialData);
 
+  const [id, setId] = useState("");
+  const [nomeFantasia, setNomeFantasia] = useState("");
   const [name, setName] = useState("");
+  const [tipoCliente, setTipoCliente] = useState("");
   const [cpf, setCpf] = useState("");
   const [rg, setRg] = useState("");
   const [dtbirth, setDtbirth] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
+  const [emailSecundario, setEmailSecundario] = useState("");
   const [phone, setPhone] = useState("");
   const [cep, setCep] = useState("");
   const [cep_msg, setCep_msg] = useState("Campo obrigatório");
@@ -51,20 +60,119 @@ function Component(props) {
   const [neighborhood, setNeighborhood] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [contato, setContato] = useState("");
+  const [usuarioCadastro, setUsuarioCadastro] = useState("");
+
+  const [statusCliente, setStatusCliente] = useState("");
+  const [foneResidencial, setFoneResidencial] = useState("");
+  const [foneComercial, setFoneComercial] = useState("");
+  const [dDDResidencial, setDDDResidencial] = useState("");
+  const [dDDComercial, setDDDComercial] = useState("");
+  const [codigoUsuario, setCodigoUsuario] = useState("");
 
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirm_password] = useState("");
 
-  const [confirm_password_erro, setConfirm_password_error] = useState("");
+  const [confirm_password_erro, setConfirm_password_error] = useState("-");
   const [confirm_password_erro_color, setConfirm_password_error_color] = useState("#AA91A0");
 
-  const handleUpdateUser = () => {
+  const [loading, setLoading] = useState(false);
+  const [preLoading, setPreLoading] = useState(true);
+
+  const handleUpdateUser = async event => {
+    event.preventDefault();
+
     try {
-      modal.show(true, "Sucesso!", "Seus dados foram atualizados com sucesso!", "", "", "", "Fechar", () => () => modal.hide(), true);
+      setLoading(true);
+
+      /** ATUALIZA O USUÁRIO SE O CLIENTE DIGITAR A SENHA */
+      if (password && confirm_password) {
+        const responseUser = await api.put(`/users/${getUser()?.id}`, { type: 1, password, name: name, email: email });
+        if (!responseUser.data) {
+          modal.show(true, "Erro!", "Erro ao tentar atualizar suas informações!", "Tente novamente", "", "", "Fechar", () => () => modal.hide(), true);
+          setLoading(false);
+          return false;
+        }
+      }
+
+      const { data } = await api.put(`/clientes/${id}`, {
+        NomeCliente: name,
+        NomeFantasia: nomeFantasia,
+        TipoCliente: tipoCliente,
+        CpfCNPJ: parseInteger(cpf),
+        IERG: rg,
+        Endereco: address,
+        Numero: number,
+        Complemento: complement,
+        Bairro: neighborhood,
+        Cidade: city,
+        UF: state,
+        Cep: parseInteger(cep),
+        DataNascimento: dtbirth,
+        Sexo: gender,
+        FoneResidencial: foneResidencial,
+        FoneComercial: foneComercial,
+        DDDResidencial: dDDResidencial,
+        DDDComercial: dDDComercial,
+        DDDCelular: getDDD(phone),
+        Celular: getTel(phone),
+        Contato: contato,
+        EmailPrincipal: email,
+        EmailSecundario: emailSecundario,
+        skype: "",
+        whats: "",
+        UsuarioCadastro: usuarioCadastro,
+        StatusCliente: statusCliente,
+        CodigoUsuario: getUser().id,
+      });
+      console.log(data);
+
+      modal.show(true, "Sucesso!", "", "Seus dados foram atualizados com sucesso!", "", "", "Fechar", () => () => modal.hide(), true);
     } catch (error) {
       console.log(error);
+      console.log(error?.response);
       modal.show(true, "Erro!", "Erro ao tentar atualizar suas informações!", "Tente novamente", "", "", "Fechar", () => () => modal.hide(), true);
     }
+
+    setLoading(false);
+  };
+
+  const loadData = async () => {
+    setPreLoading(true);
+    try {
+      const { data } = await api.get(`/clientes/${getUser()?.client_id}`);
+      if (data) {
+        setId(data._id);
+        setName(data.NomeCliente);
+        setNomeFantasia(data.NomeFantasia);
+        setTipoCliente(data.TipoCliente);
+        setCpf(maskCpfCnpj(data.CpfCNPJ));
+        setRg(data.IERG);
+        setAddress(data.Endereço);
+        setNumber(data.Numero);
+        setComplement(data.Complemento);
+        setNeighborhood(data.Bairro);
+        setCity(data.Cidade);
+        setState(data.UF);
+        setCep(data.Cep);
+        setDtbirth(getDateByTimeZoneCba(data.DataNascimento, "yyyy'-'MM'-'dd"));
+        setGender(data.Sexo);
+        setPhone(maskTelephone89Digitos(`${data.DDDCelular} ${data.Celular}`));
+        setContato(data.Contato);
+        setEmail(data.EmailPrincipal);
+        setEmailSecundario(data.EmailSecundario);
+        setStatusCliente(data.StatusCliente);
+        setUsuarioCadastro(data.UsuarioCadastro);
+        setFoneResidencial(data.FoneResidencial);
+        setFoneComercial(data.FoneComercial);
+        setDDDResidencial(data.DDDResidencial);
+        setDDDComercial(data.DDDComercial);
+        setCodigoUsuario(data.CodigoUsuario);
+      }
+    } catch (erro) {
+      console.log("Erro ao consultar dados: ", erro);
+    }
+    setPreLoading(false);
   };
 
   useEffect(() => {
@@ -75,7 +183,7 @@ function Component(props) {
       setConfirm_password_error("OK!");
       setConfirm_password_error_color("#AA91A0");
     } else {
-      setConfirm_password_error("");
+      setConfirm_password_error("-");
       setConfirm_password_error_color("#AA91A0");
     }
   }, [password, confirm_password]);
@@ -121,17 +229,29 @@ function Component(props) {
     }
   }, [cpf]);
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <>
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
-          <InternalTitle title1="Meus" title2="Dados" styles={{ marginBottom: "20px" }} />
+          {preLoading ? (
+            <>
+              <InternalTitle title1="Carregando" title2="Dados ..." styles={{ marginBottom: "20px" }} />
+            </>
+          ) : (
+            <>
+              <InternalTitle title1="Meus" title2="Dados" styles={{ marginBottom: "20px" }} />
+            </>
+          )}
 
           <Description>
             <span className="black">Confira seu dados e atualize seu cadastro preenchendo o formulário abaixo</span>
           </Description>
-          <Content autoComplete="off" autocomplete="off" onSubmit={() => handleUpdateUser()}>
+          <Content autoComplete="off" autocomplete="off" onSubmit={handleUpdateUser}>
             <ContentTitle>Dados Pessoais</ContentTitle>
             <Row>
               <Input
@@ -199,9 +319,12 @@ function Component(props) {
                 initialValue={email}
                 onChange={text => setEmail(text)}
                 label="E-mail *"
-                infoText="Campo obrigatório"
+                infoText="Entre contato com nossa central para alterar o seu e-mail"
+                infoTextColor="#FFA53C"
                 required
                 type="email"
+                disabled
+                readonly
               />
 
               <Input
@@ -243,7 +366,16 @@ function Component(props) {
             </Row>
 
             <Row>
-              <Input name="number" id="number" initialValue={number} onChange={text => setNumber(text)} label="Número" infoText="&nbsp;" type="text" />
+              <Input
+                name="number"
+                id="number"
+                initialValue={number}
+                onChange={text => setNumber(text)}
+                label="Número *"
+                required
+                type="text"
+                infoText="Campo obrigatório (S/N = Sem Número)"
+              />
 
               <Input
                 name="complement"
@@ -300,9 +432,8 @@ function Component(props) {
                 name="password"
                 id="password"
                 initialValue={password}
-                required
                 onChange={text => setPassword(text)}
-                label="Senha *"
+                label="Senha"
                 infoText="Deixe o campo em branco, caso não queria atualizar a sua senha."
                 type="password"
               />
@@ -312,15 +443,14 @@ function Component(props) {
                 id="confirm_password"
                 initialValue={confirm_password}
                 onChange={text => setConfirm_password(text)}
-                label="Confirme sua senha *"
-                required
+                label="Confirme sua senha"
                 infoText={confirm_password_erro}
                 infoTextColor={confirm_password_erro_color}
                 type="password"
               />
             </Row>
 
-            <Button>Atualizar dados</Button>
+            <Button disabled={loading}>{loading ? "Atualizando dados..." : "Atualizar dados"}</Button>
           </Content>
         </About>
       </Container>

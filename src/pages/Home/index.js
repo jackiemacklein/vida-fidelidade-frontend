@@ -73,11 +73,11 @@ async function requestInitialData() {
   let siteConfig = { sucesss: true };
   let plans = [];
 
-  plans = await fetch(`${process.env.REACT_APP_API}/produtos/`, {
+  /*  plans = await fetch(`${process.env.REACT_APP_API}/produtos/`, {
     method: "GET",
     headers: {
       Authorization:
-        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjhkOTZhMjhjNDQ2NmNlOGI3MDExMzkiLCJuYW1lIjoiSmFja2nDqiBNYWNrbGVpbiIsImVtYWlsIjoiamFja2llbWFja2xlaW5AZ21haWwuY29tIiwidHlwZSI6MCwiaWF0IjoxNjAzNzA4Nzc3LCJleHAiOjE2MDM3MzAzNzd9.noCWInXySy2PEJT97oZPtcmgin6ebNfLKtWb-6_-LbA",
+        "bearer ",
     },
   })
     .then(response => response.json())
@@ -86,7 +86,7 @@ async function requestInitialData() {
       return [];
     });
 
-  console.log("initial:", plans);
+  console.log("initial:", plans);*/
 
   return { siteConfig, plans };
 }

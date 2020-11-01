@@ -84,7 +84,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
   return (
     <Container id="home">
       <Nav>
-        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/" : "/"}>
+        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/" : "/"}>
           <LogoContainer title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos">
             <Logo src={color} title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos" />
           </LogoContainer>
@@ -97,7 +97,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
               Dúvidas Frequentes
             </ListItem>
           ) : (
-            <a href={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/#duvidas-frequentes" : "/#duvidas-frequentes"} title="duvidas-frequentes">
+            <a href={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/#duvidas-frequentes" : "/#duvidas-frequentes"} title="duvidas-frequentes">
               <ListItem id="headerBtnDuvidasFrequentes" name="headerBtnDuvidasFrequentes">
                 Dúvidas Frequentes
               </ListItem>
@@ -105,7 +105,7 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
           )}
 
           <Link
-            to={process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login"}
+            to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"}
             title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
             <ListItem>Portal do Assinante</ListItem>
           </Link>

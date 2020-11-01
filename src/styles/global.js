@@ -4,7 +4,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeue';
-      src: url('/static/fonts//HelveticaNeue.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeue.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -13,7 +13,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueBd';
-      src: url('/static/fonts//HelveticaNeueBd.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueBd.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -22,7 +22,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueBlackCond';
-      src: url('/static/fonts//HelveticaNeueBlackCond.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueBlackCond.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -31,7 +31,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueBold';
-      src: url('/static/fonts//HelveticaNeueBold.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueBold.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -40,7 +40,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueHv';
-      src: url('/static/fonts//HelveticaNeueHv.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueHv.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -49,7 +49,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueIt';
-      src: url('/static/fonts//HelveticaNeueIt.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueIt.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -58,7 +58,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueLight';
-      src: url('/static/fonts//HelveticaNeueLight.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueLight.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -67,7 +67,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueLt';
-      src: url('/static/fonts//HelveticaNeueLt.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueLt.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -76,7 +76,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueMed';
-      src: url('/static/fonts//HelveticaNeueMed.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueMed.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -85,7 +85,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueMedium';
-      src: url('/static/fonts//HelveticaNeueMedium.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueMedium.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -94,7 +94,7 @@ export default createGlobalStyle`
 
   @font-face {
       font-family: 'HelveticaNeueThin';
-      src: url('/static/fonts//HelveticaNeueThin.ttf') format('truetype');
+      src: url('/static/fonts/HelveticaNeueThin.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -187,6 +187,9 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     //transition: all 0.4s ease-in-out;
+
+    animation: fadeIn; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 0.6s; /* don't forget to set a duration! */
 
   }
 

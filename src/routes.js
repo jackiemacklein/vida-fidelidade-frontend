@@ -14,7 +14,7 @@ import MyDependents from "./pages/Panel/Dependents";
 const routes = [
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/" : "/",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site" : "/",
     component: Home.Component,
     requestInitialData: Home.requestInitialData,
     options: {
@@ -23,7 +23,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/criar-conta/:plan_id?" : "/criar-conta/:plan_id?",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/criar-conta/:plan_id?" : "/criar-conta/:plan_id?",
     component: Account.Component,
     requestInitialData: Account.requestInitialData,
     options: {
@@ -32,7 +32,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/pagamento/:plan_id/:user_id" : "/pagamento/:plan_id/:user_id",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/pagamento/:plan_id/:user_id" : "/pagamento/:plan_id/:user_id",
     component: Payment.Component,
     requestInitialData: Payment.requestInitialData,
     options: {
@@ -41,7 +41,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/vida-pagamento-facil" : "/vida-pagamento-facil",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/vida-pagamento-facil" : "/vida-pagamento-facil",
     component: EasyPayment.Component,
     requestInitialData: EasyPayment.requestInitialData,
     options: {
@@ -50,7 +50,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/login" : "/login",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login",
     component: Login.Component,
     requestInitialData: Login.requestInitialData,
     options: {
@@ -59,7 +59,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meus-dados" : "/painel/meus-dados",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/" : "/portal/",
     component: MyAccount.Component,
     requestInitialData: MyAccount.requestInitialData,
     options: {
@@ -68,7 +68,16 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meu-plano" : "/painel/meu-plano",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meus-dados" : "/portal/meus-dados",
+    component: MyAccount.Component,
+    requestInitialData: MyAccount.requestInitialData,
+    options: {
+      Head: MyAccount.Head,
+    },
+  },
+  {
+    exact: true,
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano",
     component: MyPlan.Component,
     requestInitialData: MyPlan.requestInitialData,
     options: {
@@ -77,7 +86,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/pagamentos" : "/painel/pagamentos",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/pagamentos" : "/portal/pagamentos",
     component: MyPay.Component,
     requestInitialData: MyPay.requestInitialData,
     options: {
@@ -86,7 +95,7 @@ const routes = [
   },
   {
     exact: true,
-    path: process.env.REACT_APP_PAGE_CONSTRUCTION ? "/site/painel/meus-dependentes" : "/painel/meus-dependentes",
+    path: process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meus-dependentes" : "/portal/meus-dependentes",
     component: MyDependents.Component,
     requestInitialData: MyDependents.requestInitialData,
     options: {

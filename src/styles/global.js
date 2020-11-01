@@ -188,8 +188,8 @@ export default createGlobalStyle`
     box-sizing: border-box;
     //transition: all 0.4s ease-in-out;
 
-    animation: fadeIn; /* referring directly to the animation's @keyframe declaration */
-    animation-duration: 0.6s; /* don't forget to set a duration! */
+    //animation: fadeIn; /* referring directly to the animation's @keyframe declaration */
+    //animation-duration: 0.6s; /* don't forget to set a duration! */
 
   }
 

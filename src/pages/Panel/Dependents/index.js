@@ -61,7 +61,7 @@ function Component(props) {
     try {
       if (id) {
         const { data } = await api.put(`/dependentes/${id}`, {
-          CodigoCliente: getUser().client_id,
+          CodigoCliente: getUser().id,
           NomeDependente: name,
           CPF: parseInteger(cpf),
           RG: rg,
@@ -76,7 +76,7 @@ function Component(props) {
         }
       } else {
         const { data } = await api.post("/dependentes", {
-          CodigoCliente: getUser().client_id,
+          CodigoCliente: getUser().id,
           NomeDependente: name,
           CPF: parseInteger(cpf),
           RG: rg,
@@ -155,7 +155,7 @@ function Component(props) {
 
   const loadDependents = async () => {
     try {
-      const { data } = await api.get(`/clientes/${getUser()?.client_id}`);
+      const { data } = await api.get(`/clientes/${getUser()?.id}`);
       setDependentes(data.Dependentes ?? []);
 
       // const { data } = await api.get(`/dependentes/`);

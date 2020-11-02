@@ -3,7 +3,6 @@ export const TOKEN_API = "TOKEN_API";
 export const USER_NAME = "USER_NAME";
 export const USER_ID = "USER_ID";
 export const USER_EMAIL = "USER_EMAIL";
-export const CLIENT_ID = "CLIENT_ID";
 export const USER_TYPE = "USER_TYPE";
 
 export const isAuthenticated = () => localStorage?.getItem(TOKEN_API) !== null;
@@ -12,11 +11,10 @@ export const getUser = () => ({
   id: localStorage?.getItem(USER_ID),
   name: localStorage?.getItem(USER_NAME),
   email: localStorage?.getItem(USER_EMAIL),
-  client_id: localStorage?.getItem(CLIENT_ID),
   type: localStorage?.getItem(USER_TYPE),
 });
 
-export const login = (token, id, email, name, type = "", client_id = "") => {
+export const login = (token, id, email, name, type = "") => {
   localStorage.setItem(TOKEN_API, token);
   localStorage.setItem(USER_NAME, name);
   localStorage.setItem(USER_ID, id);

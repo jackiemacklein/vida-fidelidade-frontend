@@ -140,7 +140,7 @@ function Component(props) {
   const loadData = async () => {
     setPreLoading(true);
     try {
-      const { data } = await api.get(`/clientes/${getUser()?.client_id}`);
+      const { data } = await api.get(`/clientes/${getUser()?.id}`);
       if (data) {
         setId(data._id);
         setName(data.NomeCliente);

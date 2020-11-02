@@ -3,8 +3,8 @@ import styled, { keyframes } from "styled-components";
 const pulseAnimate = keyframes`
 
   0% {
-    -moz-box-shadow: 0 0 0 0 #ffa53c;
-    box-shadow: 0 0 0 0 #ffa53c;
+    -moz-box-shadow: 0 0 0 0 #ff443c;
+    box-shadow: 0 0 0 0 #ff443c;
   }
   50% {
       -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
@@ -474,8 +474,9 @@ export const Image = styled.img`
 `;
 
 export const Description = styled.h4`
-  font-family: "HelveticaNeueThin";
-  font-size: 22px;
+  font-weight: 100;
+  font-family: HelveticaNeueThin;
+  font-size: 25px;
   line-height: 30px;
   color: #ffffff;
   text-align: center;

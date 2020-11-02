@@ -40,7 +40,7 @@ function Component(props) {
   const [openedMenu, setOpenedMenu] = useState(false);
   const initialData = useInitialData(props, requestInitialData);
 
-  const [type, setType] = useState("");
+  const [type, setType] = useState("PF");
   const [name, setName] = useState("");
   const [fantasyName, setFantasyName] = useState("");
   const [cpf, setCpf] = useState("");
@@ -72,16 +72,18 @@ function Component(props) {
 
   const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({ _id: null });
 
   const handleCreateUser = async event => {
     event.preventDefault();
+
+    if (confirm_password && password !== confirm_password) return false;
 
     setLoading(true);
     let userData = user;
 
     try {
-      if (userData.length === undefined) {
+      if (userData._id === null) {
         userData = await api.post("/users", { type: 1, password, name, email });
 
         setUser(userData.data);
@@ -92,14 +94,14 @@ function Component(props) {
 
       modal.show(
         true,
-        "Erro!",
-        "Tente novamente.",
-        "Desculpe o transtorno! Não foi possivel criar a sua conta de assinatura no momento! Estamos enfrentando uma instabilidade em nosso serviços!",
-        "",
-        "",
-        "Fechar",
+        "Cadastro existente!",
+        email,
+        "Identificamos que já existe um usuário cadastrado com o e-mail informado!<br />Tente novamente ou faça seu login.",
+        "FAZER LOGIN",
+        () => () => history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"),
+        "Tentar novamente",
         () => () => modal.hide(),
-        true,
+        false,
       );
 
       setLoading(false);
@@ -149,20 +151,31 @@ function Component(props) {
     } catch (error) {
       console.log(error);
 
-      //if (error.response.statusCode === 500) {
-      modal.show(
-        true,
-        "Erro desconhecido",
-        "Tente novamente.",
-        "Desculpe o transtorno! Estamos enfrentando uma instabilidade em nosso serviços!",
-        "",
-        "",
-        "Fechar",
-        () => () => modal.hide(),
-        true,
-      );
-      //} else {
-      // }
+      if (error.response.status === 400) {
+        modal.show(
+          true,
+          "Seu cadastro já existe!",
+          "Identificamos que já existe um cadastro com o mesmo CPF/CNPJ em nosso sistema!",
+          "Por favor verifique seus dados e tente novamente ou faça seu login.",
+          "FAZER LOGIN",
+          () => () => history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"),
+          "Tentar novamente",
+          () => () => modal.hide(),
+          false,
+        );
+      } else {
+        modal.show(
+          true,
+          "Erro desconhecido",
+          "Tente novamente.",
+          "Desculpe o transtorno! Estamos enfrentando uma instabilidade em nosso serviços!",
+          "",
+          "",
+          "Fechar",
+          () => () => modal.hide(),
+          true,
+        );
+      }
 
       setLoading(false);
     }
@@ -212,20 +225,6 @@ function Component(props) {
     }
   }, [cep]);
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const data = await fetch(`https://viacep.com.br/ws/${parseInteger(cep)}/json`, {})
-        .then(response => response.json())
-        .catch(error => console.log(error));
-
-      if (data) {
-      }
-    };
-    if (cpf.length >= 11) {
-      checkUser();
-    }
-  }, [cpf]);
-
   return (
     <>
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
@@ -253,9 +252,8 @@ function Component(props) {
                 required
                 options={[
                   { value: "PF", text: "Pessoa física" },
-                  { value: "PJ", text: "Pessoa jurídica" },
+                  //{ value: "PJ", text: "Pessoa jurídica" },
                 ]}
-                empty
               />
             </Row>
             <Row>

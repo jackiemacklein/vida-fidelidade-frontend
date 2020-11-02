@@ -197,7 +197,7 @@ export const Item = styled.li`
   flex: 1;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 
   background-color: ${props => (props.active ? "#ffffff" : "transparent")};
@@ -242,7 +242,7 @@ export const Item = styled.li`
 `;
 
 export const ItemButton = styled.button`
-  align-self: flex-end;
+  align-self: center;
 
   border: 0;
 

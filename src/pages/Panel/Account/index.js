@@ -85,16 +85,6 @@ function Component(props) {
     try {
       setLoading(true);
 
-      /** ATUALIZA O USUÁRIO SE O CLIENTE DIGITAR A SENHA */
-      if (password && confirm_password) {
-        const responseUser = await api.put(`/users/${getUser()?.id}`, { type: 1, password, name: name, email: email });
-        if (!responseUser.data) {
-          modal.show(true, "Erro!", "Erro ao tentar atualizar suas informações!", "Tente novamente", "", "", "Fechar", () => () => modal.hide(), true);
-          setLoading(false);
-          return false;
-        }
-      }
-
       const { data } = await api.put(`/clientes/${id}`, {
         NomeCliente: name,
         NomeFantasia: nomeFantasia,
@@ -124,6 +114,7 @@ function Component(props) {
         UsuarioCadastro: usuarioCadastro,
         StatusCliente: statusCliente,
         CodigoUsuario: getUser().id,
+        Senha: password,
       });
       console.log(data);
 
@@ -141,7 +132,34 @@ function Component(props) {
     setPreLoading(true);
     try {
       const { data } = await api.get(`/clientes/${getUser()?.id}`);
-      if (data) {
+      if (data.length >= 0) {
+        setId(data[0]._id);
+        setName(data[0].NomeCliente);
+        setNomeFantasia(data[0].NomeFantasia);
+        setTipoCliente(data[0].TipoCliente);
+        setCpf(maskCpfCnpj(data[0].CpfCNPJ));
+        setRg(data[0].IERG);
+        setAddress(data[0].Endereço);
+        setNumber(data[0].Numero);
+        setComplement(data[0].Complemento);
+        setNeighborhood(data[0].Bairro);
+        setCity(data[0].Cidade);
+        setState(data[0].UF);
+        setCep(data[0].Cep);
+        setDtbirth(getDateByTimeZoneCba(data[0].DataNascimento, "yyyy'-'MM'-'dd"));
+        setGender(data[0].Sexo);
+        setPhone(maskTelephone89Digitos(`${data[0].DDDCelular} ${data[0].Celular}`));
+        setContato(data[0].Contato);
+        setEmail(data[0].EmailPrincipal);
+        setEmailSecundario(data[0].EmailSecundario);
+        setStatusCliente(data[0].StatusCliente);
+        setUsuarioCadastro(data[0].UsuarioCadastro);
+        setFoneResidencial(data[0].FoneResidencial);
+        setFoneComercial(data[0].FoneComercial);
+        setDDDResidencial(data[0].DDDResidencial);
+        setDDDComercial(data[0].DDDComercial);
+        setCodigoUsuario(data[0].CodigoUsuario);
+      } else {
         setId(data._id);
         setName(data.NomeCliente);
         setNomeFantasia(data.NomeFantasia);

@@ -156,10 +156,8 @@ function Component(props) {
   const loadDependents = async () => {
     try {
       const { data } = await api.get(`/clientes/${getUser()?.id}`);
-      setDependentes(data.Dependentes ?? []);
-
-      // const { data } = await api.get(`/dependentes/`);
-      // setDependentes(data ?? []);
+      if (data.length >= 1) setDependentes(data[0].clientesDependentes ?? []);
+      else setDependentes(data.clientesDependentes ?? []);
     } catch (error) {
       console.log("erro ao carregar dependentes", error);
     }

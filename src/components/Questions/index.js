@@ -34,9 +34,7 @@ const Questions = () => {
     },
     {
       title: "A primeira mensalidade ja vai vir na mesma cobrança da adesão?",
-      answer: `Não. O Vida Cartão fidelidade é um clube de benefícios onde você cuida da sua saúde e de quem mais ama, com ótimos descontos e sem filas. Pagando
-  apenas uma mensalidade, você e seus dependentes tem acesso a consultas, vacinas e exames que fazem parte do complexo Vida, além do plano odontológico,
-  seguro de vida e auxílio funeral para o titular.`,
+      answer: `Sim!`,
     },
   ]);
 

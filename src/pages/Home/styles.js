@@ -152,3 +152,26 @@ export const Button = styled.button`
   @media (max-width: 320px) {
   }
 `;
+
+export const Partners = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+
+  a {
+    text-decoration: none;
+    text-transform: none;
+    transition: all 0.4s ease-in-out;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    img {
+      margin: 15px;
+      height: 70px;
+    }
+  }
+`;

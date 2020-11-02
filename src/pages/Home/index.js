@@ -18,11 +18,13 @@ import Questions from "./../../components/Questions";
 import Footer from "./../../components/Footer";
 
 /* import images */
+import logoBetoni from "./../../assets/images/logoBetoni.png";
+import logoGenerali from "./../../assets/images/logoGenerali.png";
 
 /* import icons */
 
 /* import styles */
-import { Container, About, Description, Button } from "./styles";
+import { Container, About, Description, Button, Partners } from "./styles";
 
 function Component(props) {
   const [openedMenu, setOpenedMenu] = useState(false);
@@ -62,6 +64,16 @@ function Component(props) {
         </About>
         <Plans />
         <Questions />
+
+        <Partners>
+          <a href="https://clinicabetoni.com.br/" target="_blank" title="Site da Betoni Odontologia" alt="Site da Betoni Odontologia" rel="opener referrer">
+            <img src={logoBetoni} alt="Betoni Odontologia" title="Betoni Odontologia" />
+          </a>
+
+          <a href="https://www.generali.com.br/" target="_blank" title="Site da Generali Seguros" alt="Site da Generali Seguros" rel="opener referrer">
+            <img src={logoGenerali} alt="Generali Seguros" title="Generali Seguros" />
+          </a>
+        </Partners>
       </Container>
       <Footer onClick={() => setOpenedMenu(false)} />
     </>

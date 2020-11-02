@@ -40,6 +40,7 @@ export const Container = styled.section`
 
 export const Item = styled.article`
   margin-bottom: 17px;
+  width: 100%;
 `;
 
 export const Header = styled.header`

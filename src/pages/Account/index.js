@@ -72,41 +72,12 @@ function Component(props) {
 
   const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useState({ _id: null });
-
   const handleCreateUser = async event => {
     event.preventDefault();
 
     if (confirm_password && password !== confirm_password) return false;
 
     setLoading(true);
-    let userData = user;
-
-    try {
-      if (userData._id === null) {
-        userData = await api.post("/users", { type: 1, password, name, email });
-
-        setUser(userData.data);
-        userData = userData.data;
-      }
-    } catch (errorUser) {
-      console.log("erro ao cadastrar usuário", errorUser);
-
-      modal.show(
-        true,
-        "Cadastro existente!",
-        email,
-        "Identificamos que já existe um usuário cadastrado com o e-mail informado!<br />Tente novamente ou faça seu login.",
-        "FAZER LOGIN",
-        () => () => history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"),
-        "Tentar novamente",
-        () => () => modal.hide(),
-        false,
-      );
-
-      setLoading(false);
-      return false;
-    }
 
     try {
       const client = await api.post("/clientes", {
@@ -139,9 +110,12 @@ function Component(props) {
         whats: "",
         UsuarioCadastro: "website",
         StatusCliente: "ativo",
-        CodigoUsuario: userData._id,
+        Senha: password,
       });
+
       setLoading(false);
+
+      localStorage.removeItem("CLIENT_PAYMENT");
 
       history.push(
         process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
@@ -155,8 +129,8 @@ function Component(props) {
         modal.show(
           true,
           "Seu cadastro já existe!",
-          "Identificamos que já existe um cadastro com o mesmo CPF/CNPJ em nosso sistema!",
-          "Por favor verifique seus dados e tente novamente ou faça seu login.",
+          "Identificamos que já existe um cadastro com o mesmo CPF/CNPJ e/ou E-mail em nosso Portal!",
+          "Por favor verifique seus dados e tente novamente ou faça seu login clicando no botão abaixo.",
           "FAZER LOGIN",
           () => () => history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"),
           "Tentar novamente",

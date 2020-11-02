@@ -95,7 +95,8 @@ function Component(props) {
 
     try {
       let res = {};
-      if (!clientContract) {
+      console.log(localStorage.getItem("CLIENT_PAYMENT"));
+      if (localStorage.getItem("CLIENT_PAYMENT") === null && clientContract === false) {
         res = await api.post("/contratos/criacliente", {
           CodigoEmpresa: "5f8da1658c4466ce8b70113a",
           CodigoCliente: client_id,
@@ -118,8 +119,12 @@ function Component(props) {
           },
         });
       }
-      if (clientContract === true || res?.data?.message === "Cliente criado com sucesso") {
+
+      if (localStorage.getItem("CLIENT_PAYMENT") || clientContract === true || res?.data?.message === "Cliente criado com sucesso") {
         setClientContract(true);
+
+        //DEFINA UM ADAPTAÇÃO PARA QUE NÃO PRECISE CRIAR NOVAMENTE O CLIENTE NA WIRECARD
+        await localStorage.setItem("CLIENT_PAYMENT", client_id);
 
         const { data } = await api.post("/contratos", {
           CodigoEmpresa: "5f8da1658c4466ce8b70113a",

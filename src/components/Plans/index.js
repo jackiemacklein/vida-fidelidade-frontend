@@ -33,6 +33,27 @@ function Plans() {
     return items;
   };
 
+  const getButton = _id => {
+    if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
+      return (
+        <Link
+          to={
+            process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
+              ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+              : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+          }>
+          <Button>ASSINE AGORA</Button>
+        </Link>
+      );
+    } else {
+      return (
+        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
+          <Button>ASSINE AGORA</Button>
+        </Link>
+      );
+    }
+  };
+
   useEffect(() => {
     async function load() {
       const { data } = await api.get("/produtos/situacao/ativo");
@@ -78,10 +99,7 @@ function Plans() {
                 {item.ValorProduto ? maskCurrencyReal(item.ValorProduto) : "Sob Consulta"}
               </Price>
               {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)}</SmalLine> : <></>}
-
-              <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${item._id}` : `/criar-conta/${item._id}`}>
-                <Button>ASSINE AGORA</Button>
-              </Link>
+              {getButton(item._id)}
             </Content>
           </Item>
         ))}

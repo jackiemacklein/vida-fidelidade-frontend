@@ -2,60 +2,32 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  background-color: #412a62;
+  background-color: #0b605c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: stretch;
 
   overflow: hidden;
 
   position: relative;
 
-  @media (max-width: 1767px) {
-    .android {
-      width: 700px;
-    }
-  }
-
-  @media (max-width: 1440px) {
-    .android {
-      width: 500px;
-    }
-  }
-
   @media (max-width: 1130px) {
     align-items: center;
-
-    .android {
-      width: 250px;
-    }
   }
 
   @media (max-width: 970px) {
-    .android {
-      width: 175px;
-      top: 471px !important;
-      height: 300px;
-    }
   }
 `;
 
 export const Content = styled.div`
-  margin: 25px 153px;
-  width: 50%;
-  align-self: flex-end;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  @media (max-width: 1130px) {
-    width: 80%;
-  }
-
-  @media (max-width: 968px) {
-    width: unset;
-    align-self: unset;
-    margin: 25px 25px;
-  }
+  margin: 25px;
 `;
 
 export const Label = styled.label`

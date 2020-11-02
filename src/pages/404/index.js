@@ -23,7 +23,6 @@ function Component(props) {
           </Comment>
           <Button to="/">Voltar</Button>
         </Content>
-        <Android />
       </Container>
     </>
   );
@@ -35,29 +34,13 @@ function Head({ params }) {
     <>
       <meta name="theme-color" content="#18684d" />
       <title>Página não encontrada - Site Base</title>
-      <meta
-        name="description"
-        content="Poxaa! Não conseguimos encontrar a página que você estava buscando."
-      />
+      <meta name="description" content="Poxaa! Não conseguimos encontrar a página que você estava buscando." />
       <meta property="og:title" content="Página não encontrada - Site Base" />
       <meta name="title" content="Página não encontrada - Site Base" />
-      <meta
-        property="og:description"
-        content="Poxaa! Não conseguimos encontrar a página que você estava buscando."
-      />
-      <link
-        rel="apple-touch-icon"
-        href="https://piscinapraia.com.br/logo192.png"
-      />
-      <meta
-        rel="icon"
-        type="image/png"
-        href="https://piscinapraia.com.br/logo192.png"
-      />
-      <meta
-        property="og:image"
-        content="https://piscinapraia.com.br/logo512.png"
-      />
+      <meta property="og:description" content="Poxaa! Não conseguimos encontrar a página que você estava buscando." />
+      <link rel="apple-touch-icon" href="https://piscinapraia.com.br/logo192.png" />
+      <meta rel="icon" type="image/png" href="https://piscinapraia.com.br/logo192.png" />
+      <meta property="og:image" content="https://piscinapraia.com.br/logo512.png" />
       <meta property="og:site_name" content="Site Base" />
       <meta property="og:url" content="https://piscinapraia.com.br" />
       <link rel="manifest" href="public/manifest.json" />

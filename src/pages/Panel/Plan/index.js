@@ -13,7 +13,7 @@ import { getUser } from "./../../../services/auth";
 
 /* import utils */
 import { ModalContext } from "./../../../components/Forms/Modal";
-import { maskCurrencyReal } from "./../../../utils/functions";
+import { maskCurrencyReal, getDateByTimeZoneCba } from "./../../../utils/functions";
 
 /* import components */
 import InternalTitle from "./../../../components/InternalTitle";
@@ -41,14 +41,74 @@ function Component(props) {
   const [plan_price, setPlan_price] = useState("");
   const [state, setState] = useState("");
 
+  const [preLoading, setPreLoading] = useState(true);
+
   const [linkPropostaSeguro, setLinkPropostaSeguro] = useState("");
   const [linkContratoAdesao, setLinkContratoAdesao] = useState("");
   const [linkCertificadoSeguro, setLinkCertificadoSeguro] = useState("");
 
   const getFiles = async data => {
-    const linkPropostaSeguro = await apiNoBaseURL.get(`https://adm.vidavg.com.br/createfiletemplate`, { data });
-    const linkContratoAdesao = await apiNoBaseURL.get(`/contratos/getFull/${getUser()?.id}`);
-    const linkCertificadoSeguro = await apiNoBaseURL.get(`/contratos/getFull/${getUser()?.id}`);
+    const celular = `${data[0]?.clientes[0]?.DDDCelular}${data[0]?.clientes[0]?.Celular}`;
+    const phone = `${data[0]?.clientes[0]?.DDDResidencial}${data[0]?.clientes[0]?.FoneResidencial}`;
+    const JsonProposta = {
+      client_id: data[0]?.clientes[0]?._id,
+      nomedoproduto: data[0]?.produtos[0]?.DescricaoProduto,
+      nomedocliente: data[0]?.clientes[0]?.NomeCliente,
+      datadenascimento: getDateByTimeZoneCba(data[0]?.clientes[0]?.DataNascimento, "dd'/'MM'/'yyyy"),
+      cpfcnpj: data[0]?.clientes[0]?.CpfCNPJ,
+      email: data[0]?.clientes[0]?.EmailPrincipal,
+      cep: data[0]?.clientes[0]?.Cep,
+      endereco: `${data[0]?.clientes[0]?.Endereco}, ${data[0]?.clientes[0]?.Bairro}, ${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
+      rua: data[0]?.clientes[0]?.Endereco,
+      bairro: data[0]?.clientes[0]?.Bairro,
+      cidade: `${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
+      endereco: `${data[0]?.clientes[0]?.Endereco}, ${data[0]?.clientes[0]?.Bairro}, ${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
+      enderecocompleto: `${data[0]?.clientes[0]?.Endereco}, nº ${data[0]?.clientes[0]?.Numero}, ${data[0]?.clientes[0]?.Complemento}, ${data[0]?.clientes[0]?.Bairro}, ${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
+      numero: data[0]?.clientes[0]?.Numero,
+      complemento: data[0]?.clientes[0]?.Complemento,
+      telefoneprincipal: celular ?? phone,
+      vigenciainicial: getDateByTimeZoneCba(data[0]?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+      vigenciafinal: getDateByTimeZoneCba(data[0]?.VigenciaFinal, "dd'/'MM'/'yyyy"),
+      tipodepagamento: data[0]?.TipoPagamento,
+      recorrencia: "Mensal",
+      apolice: data[0]?.CodigoSeguro,
+      datadecriacaoformatada: getDateByTimeZoneCba(data[0]?.VigenciaFinal, "dd'/'MM'/'yyyy"),
+    };
+
+    try {
+      const resLinkPropostaSeguro = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkpropostaseguro`, JsonProposta);
+
+      if (resLinkPropostaSeguro.data.link) {
+        console.log(resLinkPropostaSeguro.data.link);
+        setLinkPropostaSeguro(resLinkPropostaSeguro.data.link);
+      }
+    } catch (errorResLinkPropostaSeguro) {
+      console.log("errorResLinkPropostaSeguro:", errorResLinkPropostaSeguro);
+    }
+
+    try {
+      const resLinkContratoAdesao = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcontratoadesao`, JsonProposta);
+
+      if (resLinkContratoAdesao.data.link) {
+        console.log(resLinkContratoAdesao.data.link);
+        setLinkContratoAdesao(resLinkContratoAdesao.data.link);
+      }
+    } catch (errorResLinkContratoAdesao) {
+      console.log("errorResLinkContratoAdesao:", errorResLinkContratoAdesao);
+    }
+
+    try {
+      const resLinkCertificadoSeguro = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcertificadoseguro`, JsonProposta);
+
+      if (resLinkCertificadoSeguro.data.link) {
+        console.log(resLinkCertificadoSeguro.data.link);
+        setLinkCertificadoSeguro(resLinkCertificadoSeguro.data.link);
+      }
+    } catch (errorResLinkCertificadoSeguro) {
+      console.log("errorResLinkCertificadoSeguro:", errorResLinkCertificadoSeguro);
+    }
+
+    setPreLoading(false);
   };
 
   const loadContract = async () => {
@@ -83,6 +143,7 @@ function Component(props) {
           setState(data.StatusContrato);
         }
       }
+      getFiles(data);
     } catch (error) {
       console.log("erro ao carregar planos: ", error);
     }
@@ -97,7 +158,15 @@ function Component(props) {
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
-          <InternalTitle title1="Meu" title2="Plano" styles={{ marginBottom: "20px" }} />
+          {preLoading ? (
+            <>
+              <InternalTitle title1="Carregando" title2="Dados..." styles={{ marginBottom: "20px" }} />
+            </>
+          ) : (
+            <>
+              <InternalTitle title1="Meu" title2="Plano" styles={{ marginBottom: "20px" }} />
+            </>
+          )}
 
           <Description>
             <span className="black">Conheça o seu plano</span>
@@ -116,44 +185,45 @@ function Component(props) {
 
             <Row>
               <Input name="state" id="state" initialValue={state} label="Situação" disabled readonly />
+            </Row>
+            <Row>
+              {/*{state === "Ativo" ? (
+                <>*/}
+              <FormGroup>
+                {linkPropostaSeguro ? (
+                  <>
+                    <a href={linkPropostaSeguro} target="_blank" rel="noopener norefferer">
+                      <Button type="button">Adesão Seguro</Button>
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
 
-              {state === "Ativo" ? (
-                <>
-                  <FormGroup>
-                    {linkPropostaSeguro ? (
-                      <>
-                        <a href="">
-                          <Button>Adesão Seguro</Button>
-                        </a>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                {linkContratoAdesao ? (
+                  <>
+                    <a href={linkContratoAdesao} target="_blank" rel="noopener norefferer">
+                      <Button type="button">Contrato de Adesão</Button>
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
 
-                    {linkContratoAdesao ? (
-                      <>
-                        <a href="">
-                          <Button>Contrato de Adesão</Button>
-                        </a>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-
-                    {linkCertificadoSeguro ? (
-                      <>
-                        <a href="">
-                          <Button>Certificado Seguro</Button>
-                        </a>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </FormGroup>
-                </>
+                {linkCertificadoSeguro ? (
+                  <>
+                    <a href={linkCertificadoSeguro} target="_blank" rel="noopener norefferer">
+                      <Button type="button">Certificado Seguro</Button>
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </FormGroup>
+              {/*</>
               ) : (
                 <></>
-              )}
+              )}*/}
             </Row>
           </Content>
         </About>

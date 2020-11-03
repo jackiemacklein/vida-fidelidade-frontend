@@ -7,9 +7,13 @@ import { useHistory } from "react-router-dom";
 /* import Kieee Rendering */
 import { KieeeHead, useInitialData } from "./../../../components/Kieee";
 
+/* import services */
+import api, { apiNoBaseURL } from "./../../../services/api";
+import { getUser } from "./../../../services/auth";
+
 /* import utils */
 import { ModalContext } from "./../../../components/Forms/Modal";
-import states from "./../../../utils/states.json";
+import { maskCurrencyReal } from "./../../../utils/functions";
 
 /* import components */
 import InternalTitle from "./../../../components/InternalTitle";
@@ -37,6 +41,57 @@ function Component(props) {
   const [plan_price, setPlan_price] = useState("");
   const [state, setState] = useState("");
 
+  const [linkPropostaSeguro, setLinkPropostaSeguro] = useState("");
+  const [linkContratoAdesao, setLinkContratoAdesao] = useState("");
+  const [linkCertificadoSeguro, setLinkCertificadoSeguro] = useState("");
+
+  const getFiles = async data => {
+    const linkPropostaSeguro = await apiNoBaseURL.get(`https://adm.vidavg.com.br/createfiletemplate`, { data });
+    const linkContratoAdesao = await apiNoBaseURL.get(`/contratos/getFull/${getUser()?.id}`);
+    const linkCertificadoSeguro = await apiNoBaseURL.get(`/contratos/getFull/${getUser()?.id}`);
+  };
+
+  const loadContract = async () => {
+    try {
+      const { data } = await api.get(`/contratos/getFull/${getUser()?.id}`);
+      if (data.length >= 0) {
+        if (data[0].produtos.length >= 0) {
+          console.log(data[0].produtos[0]);
+          setPlan(data[0]?.produtos[0]?.DescricaoProduto);
+          setPlan_adesao(maskCurrencyReal(data[0]?.produtos[0]?.ValorAdesao));
+          setPlan_price(maskCurrencyReal(data[0]?.produtos[0]?.ValorProduto));
+          setState(data[0].StatusContrato);
+        } else {
+          console.log(data[0].produtos);
+          setPlan(data[0]?.produtos?.DescricaoProduto);
+          setPlan_adesao(maskCurrencyReal(data[0]?.produtos?.ValorAdesao));
+          setPlan_price(maskCurrencyReal(data[0]?.produtos?.ValorProduto));
+          setState(data[0].StatusContrato);
+        }
+      } else {
+        if (data[0].produtos.length >= 0) {
+          console.log(data.produtos[0]);
+          setPlan(data?.produtos[0]?.DescricaoProduto);
+          setPlan_adesao(maskCurrencyReal(data?.produtos[0]?.ValorAdesao));
+          setPlan_price(maskCurrencyReal(data?.produtos[0]?.ValorProduto));
+          setState(data[0].StatusContrato);
+        } else {
+          console.log(data.produtos);
+          setPlan(data?.produtos?.DescricaoProduto);
+          setPlan_adesao(maskCurrencyReal(data?.produtos?.ValorAdesao));
+          setPlan_price(maskCurrencyReal(data?.produtos?.ValorProduto));
+          setState(data.StatusContrato);
+        }
+      }
+    } catch (error) {
+      console.log("erro ao carregar planos: ", error);
+    }
+  };
+
+  useEffect(() => {
+    loadContract();
+  }, []);
+
   return (
     <>
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
@@ -56,17 +111,49 @@ function Component(props) {
             <Row>
               <Input name="plan_adesao" id="plan_adesao" initialValue={`R$ ${plan_adesao}`} label="Taxa de adesão" type="text" disabled readonly />
 
-              <Input name="plan_price" id="plan_price" initialValue={`R$ ${plan_price}`} label="Mensalidade" type="text" disabled readonly />
+              <Input name="plan_price" id="plan_price" initialValue={`R$ ${plan_price}`} label="Recorrência" type="text" disabled readonly />
             </Row>
 
             <Row>
               <Input name="state" id="state" initialValue={state} label="Situação" disabled readonly />
 
-              <FormGroup>
-                <Button>Termo de Adesão</Button>
+              {state === "Ativo" ? (
+                <>
+                  <FormGroup>
+                    {linkPropostaSeguro ? (
+                      <>
+                        <a href="">
+                          <Button>Adesão Seguro</Button>
+                        </a>
+                      </>
+                    ) : (
+                      <></>
+                    )}
 
-                <Button>Contrato</Button>
-              </FormGroup>
+                    {linkContratoAdesao ? (
+                      <>
+                        <a href="">
+                          <Button>Contrato de Adesão</Button>
+                        </a>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+
+                    {linkCertificadoSeguro ? (
+                      <>
+                        <a href="">
+                          <Button>Certificado Seguro</Button>
+                        </a>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </FormGroup>
+                </>
+              ) : (
+                <></>
+              )}
             </Row>
           </Content>
         </About>

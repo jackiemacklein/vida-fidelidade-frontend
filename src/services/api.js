@@ -14,3 +14,15 @@ api.interceptors.request.use(
 );
 
 export default api;
+
+export const apiNoBaseURL = axios.create();
+
+apiNoBaseURL.interceptors.request.use(
+  config => {
+    config.headers["Authorization"] = "bearer " + getToken();
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);

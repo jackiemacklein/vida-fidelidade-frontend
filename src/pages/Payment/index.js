@@ -175,8 +175,11 @@ function Component(props) {
                 clearFields();
                 window.open(data._links.boleto.redirect_href, "_blank");
               },
-              "",
-              "",
+              "ACESSAR MINHA CONTA",
+              () => () => {
+                clearFields();
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login");
+              },
               false,
             );
           } else {

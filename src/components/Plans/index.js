@@ -15,12 +15,13 @@ import { maskCurrencyReal } from "./../../utils/functions";
 
 /* import services */
 import api from "./../../services/api";
+import { isAuthenticated } from "./../../services/auth";
 
 /* import styles */
 import { Container, Description, Items, Item, Header, HeaderTitle, Content } from "./styles";
 import { Line, Price, SmalLine, Button } from "./styles";
 
-function Plans() {
+function Plans({ header = true }) {
   //const initialData = InitialDataContext;
 
   //console.log("dentro: ", initialData);
@@ -34,23 +35,31 @@ function Plans() {
   };
 
   const getButton = _id => {
-    if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
+    if (isAuthenticated()) {
       return (
-        <Link
-          to={
-            process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
-              ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
-              : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
-          }>
-          <Button>ASSINE AGORA</Button>
+        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/portal/meu-plano` : `/portal/meu-plano`}>
+          <Button>ALTERAR MINHA ASSINATURA</Button>
         </Link>
       );
     } else {
-      return (
-        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
-          <Button>ASSINE AGORA</Button>
-        </Link>
-      );
+      if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
+        return (
+          <Link
+            to={
+              process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
+                ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+                : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+            }>
+            <Button>ASSINE AGORA</Button>
+          </Link>
+        );
+      } else {
+        return (
+          <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
+            <Button>ASSINE AGORA</Button>
+          </Link>
+        );
+      }
     }
   };
 
@@ -67,14 +76,20 @@ function Plans() {
 
   return (
     <Container id="planos">
-      <Title title1="Conheça nossos" title2="Planos" styles={{ marginBottom: "20px" }} />
+      {header ? (
+        <>
+          <Title title1="Conheça nossos" title2="Planos" styles={{ marginBottom: "20px" }} />
 
-      <Description>
-        <span className="black">
-          Não perca está oportunidade e garanta já, mais segurança e saúde para você e toda família. Preços <strong>acessíveis</strong>, descontos{" "}
-          <strong>reais</strong> e muitas <strong>vantagens</strong>.
-        </span>
-      </Description>
+          <Description>
+            <span className="black">
+              Não perca está oportunidade e garanta já, mais segurança e saúde para você e toda família. Preços <strong>acessíveis</strong>, descontos{" "}
+              <strong>reais</strong> e muitas <strong>vantagens</strong>.
+            </span>
+          </Description>
+        </>
+      ) : (
+        <></>
+      )}
 
       <Items>
         {plans.map((item, index) => (

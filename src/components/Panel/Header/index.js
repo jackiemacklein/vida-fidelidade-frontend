@@ -76,12 +76,13 @@ function Header({ setOpenedMenu, openedMenu }) {
             <ListItem className={activeUrl("/portal/meus-dados", history) ? "active" : ""}>Meus Dados</ListItem>
           </Link>
 
+          {/*
           <Link
             to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/pagamentos" : "/portal/pagamentos"}
             title="Seus pagamentos no Vida Cartão Fidelidade - Cartão de descontos">
             <ListItem className={activeUrl("/portal/pagamentos", history) ? "active" : ""}>Pagamentos</ListItem>
           </Link>
-
+*/}
           <Link
             to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano"}
             title="Seu plano do Vida Cartão Fidelidade - Cartão de descontos">

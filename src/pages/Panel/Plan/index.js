@@ -20,6 +20,7 @@ import InternalTitle from "./../../../components/InternalTitle";
 import Input from "./../../../components/Forms/Input";
 import Header from "./../../../components/Panel/Header";
 import Footer from "./../../../components/Footer";
+import Plans from "./../../../components/Plans";
 
 /* import images */
 
@@ -37,6 +38,7 @@ function Component(props) {
   const initialData = useInitialData(props, requestInitialData);
 
   const [plan, setPlan] = useState("");
+  const [plan_id, setPlan_id] = useState("");
   const [plan_adesao, setPlan_adesao] = useState("");
   const [plan_price, setPlan_price] = useState("");
   const [state, setState] = useState("");
@@ -72,14 +74,13 @@ function Component(props) {
       tipodepagamento: data[0]?.TipoPagamento,
       recorrencia: "Mensal",
       apolice: data[0]?.CodigoSeguro,
-      datadecriacaoformatada: getDateByTimeZoneCba(data[0]?.VigenciaFinal, "dd'/'MM'/'yyyy"),
+      datadecriacaoformatada: getDateByTimeZoneCba(data[0]?.VigenciaInicial, "dd'/'MM'/'yyyy"),
     };
 
     try {
       const resLinkPropostaSeguro = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkpropostaseguro`, JsonProposta);
 
       if (resLinkPropostaSeguro.data.link) {
-        console.log(resLinkPropostaSeguro.data.link);
         setLinkPropostaSeguro(resLinkPropostaSeguro.data.link);
       }
     } catch (errorResLinkPropostaSeguro) {
@@ -90,7 +91,6 @@ function Component(props) {
       const resLinkContratoAdesao = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcontratoadesao`, JsonProposta);
 
       if (resLinkContratoAdesao.data.link) {
-        console.log(resLinkContratoAdesao.data.link);
         setLinkContratoAdesao(resLinkContratoAdesao.data.link);
       }
     } catch (errorResLinkContratoAdesao) {
@@ -101,7 +101,6 @@ function Component(props) {
       const resLinkCertificadoSeguro = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcertificadoseguro`, JsonProposta);
 
       if (resLinkCertificadoSeguro.data.link) {
-        console.log(resLinkCertificadoSeguro.data.link);
         setLinkCertificadoSeguro(resLinkCertificadoSeguro.data.link);
       }
     } catch (errorResLinkCertificadoSeguro) {
@@ -114,36 +113,27 @@ function Component(props) {
   const loadContract = async () => {
     try {
       const { data } = await api.get(`/contratos/getFull/${getUser()?.id}`);
-      if (data.length >= 0) {
+      console.log(data.length);
+
+      if (data.length >= 1) {
         if (data[0].produtos.length >= 0) {
-          console.log(data[0].produtos[0]);
           setPlan(data[0]?.produtos[0]?.DescricaoProduto);
           setPlan_adesao(maskCurrencyReal(data[0]?.produtos[0]?.ValorAdesao));
           setPlan_price(maskCurrencyReal(data[0]?.produtos[0]?.ValorProduto));
           setState(data[0].StatusContrato);
+          setPlan_id(data[0].CodigoProduto);
         } else {
-          console.log(data[0].produtos);
           setPlan(data[0]?.produtos?.DescricaoProduto);
+          setPlan_id(data[0].CodigoProduto);
           setPlan_adesao(maskCurrencyReal(data[0]?.produtos?.ValorAdesao));
           setPlan_price(maskCurrencyReal(data[0]?.produtos?.ValorProduto));
           setState(data[0].StatusContrato);
         }
+        getFiles(data);
       } else {
-        if (data[0].produtos.length >= 0) {
-          console.log(data.produtos[0]);
-          setPlan(data?.produtos[0]?.DescricaoProduto);
-          setPlan_adesao(maskCurrencyReal(data?.produtos[0]?.ValorAdesao));
-          setPlan_price(maskCurrencyReal(data?.produtos[0]?.ValorProduto));
-          setState(data[0].StatusContrato);
-        } else {
-          console.log(data.produtos);
-          setPlan(data?.produtos?.DescricaoProduto);
-          setPlan_adesao(maskCurrencyReal(data?.produtos?.ValorAdesao));
-          setPlan_price(maskCurrencyReal(data?.produtos?.ValorProduto));
-          setState(data.StatusContrato);
-        }
+        setPlan_id(null);
+        setPreLoading(false);
       }
-      getFiles(data);
     } catch (error) {
       console.log("erro ao carregar planos: ", error);
     }
@@ -164,68 +154,99 @@ function Component(props) {
             </>
           ) : (
             <>
-              <InternalTitle title1="Meu" title2="Plano" styles={{ marginBottom: "20px" }} />
+              {plan_id === null ? (
+                <>
+                  <InternalTitle title1="Adiquira" title2="Já" styles={{ marginBottom: "20px" }} />
+                </>
+              ) : (
+                <>
+                  <InternalTitle title1="Meu" title2="Plano" styles={{ marginBottom: "20px" }} />
+                </>
+              )}
             </>
           )}
 
           <Description>
-            <span className="black">Conheça o seu plano</span>
+            {plan_id === null ? (
+              <>
+                <span className="black">
+                  Você ainda não assinou nenhum dos nossos planos! Não perca está oportunidade e Assine hoje mesmo e desfrute dos{" "}
+                  <span className="orange">benefícios</span> que só o <strong className="green">Vida Cartão Fidelidade </strong>
+                  têm.
+                  <br />
+                  Escolha um dos planos abaixo e clique em ASSINE AGORA. É <span className="orange">Simples</span>, <span className="orange">Rápido</span> e
+                  <span className="orange"> Fácil</span>.
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="black">Conheça o seu plano e tenha acesso à todas as documentações relacionadas a sua assinatura</span>
+              </>
+            )}
           </Description>
-          <Content autoComplete="off" autocomplete="off">
-            <ContentTitle>Seu plano atual</ContentTitle>
-            <Row>
-              <Input name="plan" id="plan" initialValue={plan} label="Plano" type="text" readonly disabled />
-            </Row>
+          {plan_id === null ? (
+            <>
+              <Plans header={false} />
+            </>
+          ) : (
+            <>
+              <Content autoComplete="off" autocomplete="off">
+                <ContentTitle>Seu plano atual</ContentTitle>
+                <Row>
+                  <Input name="plan" id="plan" initialValue={plan} label="Plano" type="text" readonly disabled />
+                </Row>
 
-            <Row>
-              <Input name="plan_adesao" id="plan_adesao" initialValue={`R$ ${plan_adesao}`} label="Taxa de adesão" type="text" disabled readonly />
+                <Row>
+                  <Input name="plan_adesao" id="plan_adesao" initialValue={`R$ ${plan_adesao}`} label="Taxa de adesão" type="text" disabled readonly />
 
-              <Input name="plan_price" id="plan_price" initialValue={`R$ ${plan_price}`} label="Recorrência" type="text" disabled readonly />
-            </Row>
+                  <Input name="plan_price" id="plan_price" initialValue={`R$ ${plan_price}`} label="Recorrência" type="text" disabled readonly />
+                </Row>
 
-            <Row>
-              <Input name="state" id="state" initialValue={state} label="Situação" disabled readonly />
-            </Row>
-            <Row>
-              {/*{state === "Ativo" ? (
-                <>*/}
-              <FormGroup>
-                {linkPropostaSeguro ? (
-                  <>
-                    <a href={linkPropostaSeguro} target="_blank" rel="noopener norefferer">
-                      <Button type="button">Adesão Seguro</Button>
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
+                <Row>
+                  <Input name="state" id="state" initialValue={state} label="Situação" disabled readonly />
+                </Row>
+                <Row>
+                  {state === "Ativo" || state === "Pago" || state === "ATIVO" || state === "PAGO" ? (
+                    <>
+                      <FormGroup>
+                        {linkPropostaSeguro ? (
+                          <>
+                            <a href={linkPropostaSeguro} target="_blank" rel="noopener norefferer">
+                              <Button type="button">Adesão Seguro</Button>
+                            </a>
+                          </>
+                        ) : (
+                          <></>
+                        )}
 
-                {linkContratoAdesao ? (
-                  <>
-                    <a href={linkContratoAdesao} target="_blank" rel="noopener norefferer">
-                      <Button type="button">Contrato de Adesão</Button>
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
+                        {linkContratoAdesao ? (
+                          <>
+                            <a href={linkContratoAdesao} target="_blank" rel="noopener norefferer">
+                              <Button type="button">Contrato de Adesão</Button>
+                            </a>
+                          </>
+                        ) : (
+                          <></>
+                        )}
 
-                {linkCertificadoSeguro ? (
-                  <>
-                    <a href={linkCertificadoSeguro} target="_blank" rel="noopener norefferer">
-                      <Button type="button">Certificado Seguro</Button>
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </FormGroup>
-              {/*</>
-              ) : (
-                <></>
-              )}*/}
-            </Row>
-          </Content>
+                        {linkCertificadoSeguro ? (
+                          <>
+                            <a href={linkCertificadoSeguro} target="_blank" rel="noopener norefferer">
+                              <Button type="button">Certificado Seguro</Button>
+                            </a>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </FormGroup>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </Row>
+              </Content>
+            </>
+          )}
         </About>
       </Container>
       <Footer onClick={() => setOpenedMenu(false)} />

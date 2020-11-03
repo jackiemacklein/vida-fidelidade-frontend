@@ -52,7 +52,7 @@ app.use("/robots.txt", express.static(path.resolve(__dirname, "..", "build/stati
 app.use("/static", express.static(path.resolve(__dirname, "..", "build/static")));
 app.use("/static", express.static(path.resolve(__dirname, "..", "build/static/media")));
 
-app.get("/site*", (req, res, next) => {
+app.get("*", (req, res, next) => {
   const activeRoute = routes.find(route => matchPath(req.url, route));
   const sheet = new ServerStyleSheet();
 
@@ -85,7 +85,7 @@ app.get("/site*", (req, res, next) => {
     .catch(next);
 });
 
-app.get("*", (req, res, next) => {
+app.get("/construcao", (req, res, next) => {
   res.sendFile(path.join(__dirname, "..", "construction/index.html"));
 });
 

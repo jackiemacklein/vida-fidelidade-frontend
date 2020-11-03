@@ -13,6 +13,7 @@ import { getCardFlag, maskCurrencyReal, maskCardExpiration } from "./../../utils
 
 /* import services */
 import api from "./../../services/api";
+import { isAuthenticated } from "./../../services/auth";
 
 /* import components */
 import InternalTitle from "./../../components/InternalTitle";
@@ -158,7 +159,11 @@ function Component(props) {
               "ACESSAR MINHA CONTA",
               () => () => {
                 clearFields();
-                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login");
+                if (isAuthenticated()) {
+                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+                } else {
+                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+                }
               },
               "",
               "",
@@ -178,7 +183,11 @@ function Component(props) {
               "ACESSAR MINHA CONTA",
               () => () => {
                 clearFields();
-                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login");
+                if (isAuthenticated()) {
+                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+                } else {
+                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+                }
               },
               false,
             );

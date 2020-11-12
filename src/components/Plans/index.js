@@ -65,7 +65,8 @@ function Plans({ header = true }) {
 
   useEffect(() => {
     async function load() {
-      const { data } = await api.get("/produtos/situacao/ativo");
+      const { data } = await api.get("/produtos/tipovenda/Site");
+      //const { data } = await api.get("/produtos/situacao/ativo");
       if (data) {
         setPlans(data);
       }
@@ -111,10 +112,11 @@ function Plans({ header = true }) {
 
               <Price>
                 <span>R$</span>
-                {item.ValorProduto ? maskCurrencyReal(item.ValorProduto) : "Sob Consulta"}
+                {item.ValorProduto ? maskCurrencyReal(item.ValorProduto) : "Sob Consulta"}*
               </Price>
-              {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)}</SmalLine> : <></>}
+              {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)} **</SmalLine> : <></>}
               {getButton(item._id)}
+              <SmalLine>*Mensalidade&nbsp;**Parcela Única</SmalLine>
             </Content>
           </Item>
         ))}

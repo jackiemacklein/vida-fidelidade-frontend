@@ -275,7 +275,7 @@ function Component(props) {
                 name="rg"
                 id="rg"
                 initialValue={rg}
-                onChange={text => setRg(text)}
+                onChange={text => setRg(parseInteger(text))}
                 label={type === "PJ" ? "IE" : "RG *"}
                 infoText={type === "PJ" ? "" : "Campo obrigatório"}
                 required

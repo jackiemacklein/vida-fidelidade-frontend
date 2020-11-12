@@ -206,7 +206,7 @@ function Component(props) {
                   <Input name="state" id="state" initialValue={state} label="Situação" disabled readonly />
                 </Row>
                 <Row>
-                  {state === "Ativo" || state === "Pago" || state === "ATIVO" || state === "PAGO" ? (
+                  {state === "Ativa" || state === "Trial" || state === "ATIVA" || state === "TRIAL" ? (
                     <>
                       <FormGroup>
                         {linkPropostaSeguro ? (

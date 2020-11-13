@@ -166,7 +166,7 @@ export const Content = styled.form`
 
   background-color: #ffffff;
 
-  margin-top: 60px;
+  margin-top: 30px;
   padding: 20px 45px 45px 45px;
   border-radius: 5px;
 
@@ -262,6 +262,54 @@ export const Row = styled.div`
   @media (max-width: 801px) {
   }
   @media (max-width: 600px) {
+  }
+  @media (max-width: 480px) {
+  }
+  @media (max-width: 320px) {
+  }
+`;
+
+export const ItemButton = styled.button`
+  align-self: center;
+
+  border: 0;
+
+  border-radius: 5px;
+
+  background-color: rgb(0, 121, 191, 0.8);
+
+  padding: 10px;
+
+  color: #fff;
+  font-family: "HelveticaNeueLt";
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 1px;
+
+  margin-top: 15px;
+
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    color: #fff;
+    background-color: rgb(0, 121, 191, 1);
+  }
+
+  i {
+    margin-left: 10px;
+  }
+
+  @media (max-width: 1366px) {
+  }
+  @media (max-width: 1281px) {
+  }
+  @media (max-width: 1025px) {
+  }
+  @media (max-width: 801px) {
+  }
+  @media (max-width: 600px) {
+    align-self: stretch;
   }
   @media (max-width: 480px) {
   }

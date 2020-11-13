@@ -23,6 +23,7 @@ import Input from "./../../../components/Forms/Input";
 import Select from "./../../../components/Forms/Select";
 import Header from "./../../../components/Panel/Header";
 import Footer from "./../../../components/Footer";
+import Wallet from "./../Wallet";
 
 /* import images */
 
@@ -30,7 +31,7 @@ import Footer from "./../../../components/Footer";
 
 /* import styles */
 import { Container, About, Description, Button } from "./styles";
-import { Content, ContentTitle, Row } from "./styles";
+import { Content, ContentTitle, Row, ItemButton } from "./styles";
 
 function Component(props) {
   const modal = useContext(ModalContext);
@@ -39,6 +40,9 @@ function Component(props) {
   const [openedMenu, setOpenedMenu] = useState(false);
   const initialData = useInitialData(props, requestInitialData);
 
+  const [modalWalletOpen, setModalWalletOpen] = useState(false);
+
+  const [data, setData] = useState({});
   const [id, setId] = useState("");
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [name, setName] = useState("");
@@ -132,7 +136,9 @@ function Component(props) {
     setPreLoading(true);
     try {
       const { data } = await api.get(`/clientes/${getUser()?.id}`);
+
       if (data.length >= 0) {
+        setData(data[0]);
         setId(data[0]._id);
         setName(data[0].NomeCliente);
         setNomeFantasia(data[0].NomeFantasia);
@@ -160,6 +166,7 @@ function Component(props) {
         setDDDComercial(data[0].DDDComercial);
         setCodigoUsuario(data[0].CodigoUsuario);
       } else {
+        setData(data);
         setId(data._id);
         setName(data.NomeCliente);
         setNomeFantasia(data.NomeFantasia);
@@ -254,7 +261,7 @@ function Component(props) {
   return (
     <>
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
-      <Container onClick={() => setOpenedMenu(false)}>
+      <Container onClick={() => setOpenedMenu(false)} className="hiddenInPrint">
         <About>
           {preLoading ? (
             <>
@@ -269,6 +276,16 @@ function Component(props) {
           <Description>
             <span className="black">Confira seu dados e atualize seu cadastro preenchendo o formulário abaixo</span>
           </Description>
+          {preLoading ? (
+            <></>
+          ) : (
+            <>
+              <ItemButton type="button" className="edit" title="editar" onClick={() => setModalWalletOpen(true)}>
+                Clique aqui para imprimir sua carteirinha<i className="fa fa-address-card"></i>
+              </ItemButton>
+            </>
+          )}
+
           <Content autoComplete="off" autocomplete="off" onSubmit={handleUpdateUser}>
             <ContentTitle>Dados Pessoais</ContentTitle>
             <Row>
@@ -472,6 +489,7 @@ function Component(props) {
           </Content>
         </About>
       </Container>
+      <Wallet modalWalletOpen={modalWalletOpen} setModalWalletOpen={setModalWalletOpen} data={data} />
       <Footer onClick={() => setOpenedMenu(false)} />
     </>
   );

@@ -17,7 +17,7 @@ import { Container, Section, LogoFigure, Logo, Address, Social, Copy } from "./s
 
 function Footer({ onClick }) {
   return (
-    <Container id="footer" onClick={() => onClick()}>
+    <Container id="footer" onClick={() => onClick()} className="hiddenInPrint">
       <Section>
         <LogoFigure title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos">
           <Logo src={white} alt="Logo Vida Cartão Fidelidade - Cartão de descontos" title="Logo Vida Cartão Fidelidade - Cartão de descontos" />

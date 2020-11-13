@@ -1,23 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0bc87881e10555d6590cd5b4a31d1c49",
+    "revision": "d7482bb9b0c40154208866d2a27b9421",
     "url": "/index.html"
   },
   {
-    "revision": "86172a18e458c0a9a0de",
-    "url": "/static/js/2.9edcb9b8.chunk.js"
+    "revision": "214cf9bd79177a1499f2",
+    "url": "/static/js/2.91b8b065.chunk.js"
   },
   {
     "revision": "0749163b59fbee32225059cb60c18af6",
-    "url": "/static/js/2.9edcb9b8.chunk.js.LICENSE.txt"
+    "url": "/static/js/2.91b8b065.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "266e86d0623e4130f344",
-    "url": "/static/js/main.3042253e.chunk.js"
+    "revision": "3cd059d078df4daf0f02",
+    "url": "/static/js/main.58820d17.chunk.js"
   },
   {
     "revision": "0c12efa54c5dd707fca1",
     "url": "/static/js/runtime-main.0d4c3c5c.js"
+  },
+  {
+    "revision": "e8eebae34db05954d138a5e4a7b6d05f",
+    "url": "/static/media/cardBack.e8eebae3.png"
+  },
+  {
+    "revision": "bf882ad90074c998e90f06b6011ff176",
+    "url": "/static/media/cardFront.bf882ad9.png"
   },
   {
     "revision": "7c380a2df20e3ac75424e589a0b7e80b",

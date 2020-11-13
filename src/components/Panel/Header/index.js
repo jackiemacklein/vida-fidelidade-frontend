@@ -54,7 +54,7 @@ function Header({ setOpenedMenu, openedMenu }) {
   }, []);
 
   return (
-    <Container id="home">
+    <Container id="home" className="hiddenInPrint">
       <Nav>
         <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal" : "/portal"}>
           <LogoContainer title="Logo Vida Cartão Fidelidade - Cartão de descontos" alt="Logo Vida Cartão Fidelidade - Cartão de descontos">

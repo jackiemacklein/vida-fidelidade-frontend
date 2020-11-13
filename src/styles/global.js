@@ -212,4 +212,29 @@ export default createGlobalStyle`
     outline: none !important;
   }
 
+  body{
+    @media print {
+        .hiddenInPrint{
+          display: none;
+          margin: 0;
+          padding: 0;
+          border: 0 !important;
+          overflow: hidden;
+        }
+        .removePaddingInPrint{
+          margin: 0;
+          padding: 0;
+          border: 0 !important;
+          overflow: hidden;
+        }
+
+        .MuiDialog-paper{
+          margin: 0;
+          padding: 0;
+          border: 0 !important;
+          overflow: hidden;
+        }
+      }
+  }
+
 `;

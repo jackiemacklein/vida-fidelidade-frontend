@@ -234,6 +234,14 @@ export default createGlobalStyle`
           border: 0 !important;
           overflow: hidden;
         }
+
+        .rdstation-popup-position-bottom_left{
+          display: none;
+          margin: 0;
+          padding: 0;
+          border: 0 !important;
+          overflow: hidden;
+        }
       }
   }
 

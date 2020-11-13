@@ -71,7 +71,7 @@ function Component(props) {
 
   const getYear = () => {
     const val = validate.split("/");
-    return val[1].substr(2);
+    return val[1];
   };
 
   const clearFields = () => {

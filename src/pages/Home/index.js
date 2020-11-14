@@ -56,7 +56,7 @@ function Component(props) {
               Com o <strong>Vida Cartão Fidelidade</strong> você cuida da sua saúde e de quem mais ama, com ótimos descontos e sem filas. Pagando apenas uma
               mensalidade, você e seus dependentes tem acesso a <span className="orange">consultas</span>,<span className="orange">vacinas</span> e{" "}
               <span className="orange">exames</span> que fazem parte do complexo <span className="orange">Vida</span>, além do plano odontológico,{" "}
-              <span className="orange">seguro de vida</span> e <span className="orange">auxílio funeral</span> para o titular.
+              <span className="orange">seguro de vida</span> e <span className="orange">assistência funeral</span> para o titular.
             </span>
           </Description>
 

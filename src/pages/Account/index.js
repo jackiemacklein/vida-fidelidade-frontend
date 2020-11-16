@@ -9,7 +9,7 @@ import { KieeeHead, useInitialData } from "./../../components/Kieee";
 
 /* import utils */
 import { maskCpfCnpj, maskTelephone89Digitos, parseInteger, maskCep } from "./../../utils/functions";
-import { getDDD, getTel } from "./../../utils/functions";
+import { getDDD, getTel, testaCPF } from "./../../utils/functions";
 import { ModalContext } from "./../../components/Forms/Modal";
 import states from "./../../utils/states.json";
 
@@ -53,6 +53,9 @@ function Component(props) {
   const [cep_msg, setCep_msg] = useState("Campo obrigatório");
   const [cep_msg_color, setCep_msg_color] = useState("#AA91A0");
 
+  const [cpf_msg_color, setCpf_msg_color] = useState("#AA91A0");
+  const [cpf_msg, setCpf_msg] = useState("Campo obrigatório");
+
   const [address, setAddress] = useState("");
   const [number, setNumber] = useState("");
   const [complement, setComplement] = useState("");
@@ -76,6 +79,7 @@ function Component(props) {
     event.preventDefault();
 
     if (confirm_password && password !== confirm_password) return false;
+    if (!testaCPF(parseInteger(cpf))) return false;
 
     setLoading(true);
 
@@ -199,6 +203,26 @@ function Component(props) {
     }
   }, [cep]);
 
+  useEffect(() => {
+    if (cpf.length > 0) {
+      if (type === "PF") {
+        if (testaCPF(parseInteger(cpf))) {
+          setCpf_msg_color("#AA91A0");
+          setCpf_msg("O CPF é Válido!");
+        } else {
+          setCpf_msg_color("#FF0000");
+          setCpf_msg("O CPF é Inválido!");
+        }
+      } else {
+        setCpf_msg_color("#AA91A0");
+        setCpf_msg("Campo obrigatório");
+      }
+    } else {
+      setCpf_msg_color("#AA91A0");
+      setCpf_msg("Campo obrigatório");
+    }
+  }, [cpf]);
+
   return (
     <>
       <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
@@ -265,7 +289,8 @@ function Component(props) {
                 initialValue={cpf}
                 onChange={text => setCpf(maskCpfCnpj(text))}
                 label={type === "PJ" ? "CNPJ *" : "CPF *"}
-                infoText="Campo obrigatório"
+                infoText={cpf_msg}
+                infoTextColor={cpf_msg_color}
                 required
                 type="text"
                 maxLength={type === "PJ" ? 18 : 11}

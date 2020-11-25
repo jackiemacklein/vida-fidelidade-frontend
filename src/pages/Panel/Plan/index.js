@@ -53,6 +53,8 @@ function Component(props) {
     const celular = `${data[0]?.clientes[0]?.DDDCelular}${data[0]?.clientes[0]?.Celular}`;
     const phone = `${data[0]?.clientes[0]?.DDDResidencial}${data[0]?.clientes[0]?.FoneResidencial}`;
     const JsonProposta = {
+      portalink: "",
+      iddoproduto: data[0]?.produtos[0]?._id,
       client_id: data[0]?.clientes[0]?._id,
       nomedoproduto: data[0]?.produtos[0]?.DescricaoProduto,
       nomedocliente: data[0]?.clientes[0]?.NomeCliente,

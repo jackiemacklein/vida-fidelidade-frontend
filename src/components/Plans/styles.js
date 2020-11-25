@@ -140,40 +140,28 @@ export const Item = styled.article`
 
   width: 295px;
 
-  margin: 0px;
+  margin: 0px 0px 35px 35px;
 
-  &:nth-of-type(2) {
-    margin: 0px 90px;
-    margin-bottom: 35px;
+  &:nth-of-type(1) {
+    //margin: 0px 90px;
+    //margin-bottom: 35px;
+    margin: 0px 0px 35px 0px;
   }
 
   box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.16);
-  margin-bottom: 35px;
 
   @media (max-width: 1366px) {
   }
   @media (max-width: 1281px) {
-    margin: 0px;
     width: 275px;
-
-    &:nth-of-type(2) {
-      margin: 0px 25px;
-      margin-bottom: 25px;
-    }
   }
   @media (max-width: 1025px) {
-    margin: 25px;
     width: calc(50% - 50px);
   }
   @media (max-width: 801px) {
     width: 100%;
     margin: 0px;
     margin-bottom: 25px;
-
-    &:nth-of-type(2) {
-      margin: 0;
-      margin-bottom: 25px;
-    }
   }
   @media (max-width: 600px) {
   }
@@ -209,6 +197,7 @@ export const HeaderTitle = styled.h2`
   color: #fff;
   font-weight: unset;
   text-transform: uppercase;
+  text-align: center;
 
   span {
     font-family: "EffraLight-Regular";

@@ -26,7 +26,7 @@ export function KieeeHead({ themeColor, title, description, appleIcon, icon, ima
       <meta name="twitter:card" content={description} />
       <meta name="twitter:card" content={description} />
       <meta name="twitter:site" content={siteName} />
-      <meta name="twitter:creator" content="@zuktagencia" />
+      <meta name="twitter:creator" content="@agenciaonside" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imagePath} />

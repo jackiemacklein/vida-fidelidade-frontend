@@ -35,31 +35,23 @@ function Plans({ header = true }) {
   };
 
   const getButton = _id => {
-    if (isAuthenticated()) {
+    if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
       return (
-        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/portal/meu-plano` : `/portal/meu-plano`}>
-          <Button>ALTERAR MINHA ASSINATURA</Button>
+        <Link
+          to={
+            process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
+              ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+              : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+          }>
+          <Button>ASSINE AGORA</Button>
         </Link>
       );
     } else {
-      if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
-        return (
-          <Link
-            to={
-              process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
-                ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
-                : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
-            }>
-            <Button>ASSINE AGORA</Button>
-          </Link>
-        );
-      } else {
-        return (
-          <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
-            <Button>ASSINE AGORA</Button>
-          </Link>
-        );
-      }
+      return (
+        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
+          <Button>ASSINE AGORA</Button>
+        </Link>
+      );
     }
   };
 

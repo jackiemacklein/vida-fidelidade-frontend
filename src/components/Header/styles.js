@@ -517,3 +517,52 @@ export const Description = styled.h4`
   @media (max-width: 320px) {
   }
 `;
+
+export const Line = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  transition: all 0.4s ease-in-out;
+
+  width: 1200px;
+
+  align-self: center;
+
+  margin: 40px 0px;
+`;
+
+export const LineText = styled.span`
+  font-family: "HelveticaNeueThin";
+  font-size: 42px;
+  line-height: 51px;
+  color: #fff;
+  font-weight: unset;
+  text-transform: uppercase;
+
+  align-self: center;
+
+  animation: fadeInRight; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+
+  @media (max-width: 1366px) {
+    font-size: 32px;
+    line-height: 41px;
+  }
+  @media (max-width: 1281px) {
+  }
+  @media (max-width: 1025px) {
+  }
+  @media (max-width: 801px) {
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  @media (max-width: 600px) {
+  }
+  @media (max-width: 480px) {
+  }
+  @media (max-width: 320px) {
+  }
+`;

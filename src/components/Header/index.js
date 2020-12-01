@@ -25,6 +25,7 @@ import MenuCloseIcon from "./../../assets/icons/menuClose";
 import { Container, LogoContainer, Logo, Nav, List, ListItem } from "./styles";
 import { Banners, Content, Subtitle, Title, Button, Video, Description } from "./styles";
 import { Figure, Image } from "./styles";
+import { Line, LineText } from "./styles";
 
 let timer;
 function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = false }) {

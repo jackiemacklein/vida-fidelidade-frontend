@@ -52,6 +52,11 @@ function Component(props) {
   const getFiles = async data => {
     const celular = `${data[0]?.clientes[0]?.DDDCelular}${data[0]?.clientes[0]?.Celular}`;
     const phone = `${data[0]?.clientes[0]?.DDDResidencial}${data[0]?.clientes[0]?.FoneResidencial}`;
+
+    const dependentes = await data[0]?.clientesDependentes.map(item => {
+      return { ...item, DataDeNascimento: getDateByTimeZoneCba(item.DataDeNascimento, "dd'/'MM'/'yyyy") };
+    });
+
     const JsonProposta = {
       portalink: "",
       iddoproduto: data[0]?.produtos[0]?._id,
@@ -77,6 +82,7 @@ function Component(props) {
       recorrencia: "Mensal",
       apolice: data[0]?.CodigoSeguro,
       datadecriacaoformatada: getDateByTimeZoneCba(data[0]?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+      dependentes: dependentes,
     };
 
     try {

@@ -38,11 +38,11 @@ const app = express();
 app.use(cors());
 
 app.use(function (req, res, next) {
-  if (!req.connection.encrypted) {
-    res.redirect("https://" + req.headers.host + req.url);
-  } else {
-    next();
-  }
+  //if (!req.connection.encrypted) {
+  // res.redirect("https://" + req.headers.host + req.url);
+  //} else {
+  next();
+  //}
 });
 
 //app.use("/", express.static(path.resolve(__dirname, "..", "construction/index.html")));

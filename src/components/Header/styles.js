@@ -372,45 +372,41 @@ export const Title = styled.h1`
 `;
 
 export const Button = styled.button`
-  border: 0;
-  background-color: #ffa53c;
-
-  margin-top: 28px;
-  padding: 16px 22px 15px 22px;
-
-  color: #fff;
-  text-transform: uppercase;
-  font-family: "HelveticaNeueLt";
-  font-size: 19px;
-  line-height: 25px;
-
-  cursor: pointer;
-  transition: all 0.4s ease-in-out;
-
-  &:hover {
-    background-color: #fff;
-    color: #ffa53c;
-  }
-
   animation: fadeInUp; /* referring directly to the animation's @keyframe declaration */
   animation-duration: 0.4s; /* don't forget to set a duration! */
 
-  @media (max-width: 1366px) {
-  }
-  @media (max-width: 1281px) {
-  }
-  @media (max-width: 1025px) {
-    padding: 11px 10px 10px 10px;
-    font-size: 16px;
-    line-height: 25px;
-  }
-  @media (max-width: 801px) {
-  }
-  @media (max-width: 600px) {
-  }
-  @media (max-width: 480px) {
-  }
-  @media (max-width: 320px) {
+  font-family: "HelveticaNeueLight";
+  font-size: 16px;
+  line-height: 18px;
+  color: #0d756f;
+
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  transition: all 0.4s ease-in-out;
+
+  align-self: center;
+
+  border: 0;
+  background-color: transparent;
+
+  background-color: #ffa53c;
+  color: #fff;
+  margin-right: 0px;
+  padding: 15px 40px;
+  padding-top: 16px;
+  text-transform: uppercase;
+  font-family: "HelveticaNeueMed";
+  line-height: 16px;
+
+  transition: all 0.4s ease-in-out;
+
+  animation: ${pulseAnimate} 2s infinite;
+
+  &:hover {
+    background-color: #0d756f;
+    animation: none;
   }
 `;
 

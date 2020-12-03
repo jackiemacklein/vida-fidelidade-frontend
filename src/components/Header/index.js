@@ -137,9 +137,10 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
 
               <Description>{item.description}</Description>
 
-              {/*
-              <Button onClick={() => handleAnchor(item.buttonTarget)}>{item.buttonText}</Button>
-              */}
+              {/*<Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/vida-pagamento-facil" : "/vida-pagamento-facil"}>
+                <Button>PAGUE AQUI SUA MENSALIDADE</Button>
+                </Link>*/}
+
               {/*<Video>
                 {item.video_path ? (
                   <iframe

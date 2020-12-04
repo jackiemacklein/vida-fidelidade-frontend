@@ -21,6 +21,27 @@ const pulseAnimate = keyframes`
 
 `;
 
+const pulseAnimate2 = keyframes`
+
+  0% {
+    -moz-box-shadow: 0 0 0 0 #fff;
+    box-shadow: 0 0 0 0 #fff;
+  }
+  50% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+
+`;
+
 export const Container = styled.header`
   position: relative;
 
@@ -291,6 +312,17 @@ export const Content = styled.div`
   align-items: center;
   justify-content: flex-start;
   transition: all 0.4s ease-in-out;
+
+  flex: 1;
+
+  .linkB {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    text-transform: none;
+  }
 `;
 
 export const Subtitle = styled.h2`
@@ -379,6 +411,8 @@ export const Button = styled.button`
   font-size: 16px;
   line-height: 18px;
   color: #0d756f;
+  text-decoration: none;
+  text-transform: none;
 
   cursor: pointer;
 
@@ -392,7 +426,7 @@ export const Button = styled.button`
   background-color: transparent;
 
   background-color: #ffa53c;
-  color: #fff;
+  color: #ffffff;
   margin-right: 0px;
   padding: 15px 40px;
   padding-top: 16px;
@@ -402,10 +436,11 @@ export const Button = styled.button`
 
   transition: all 0.4s ease-in-out;
 
-  animation: ${pulseAnimate} 2s infinite;
+  animation: ${pulseAnimate2} 2s infinite;
 
   &:hover {
-    background-color: #0d756f;
+    background-color: #ffffff;
+    color: #0d756f;
     animation: none;
   }
 `;

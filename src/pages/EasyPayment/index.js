@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { KieeeHead, useInitialData } from "./../../components/Kieee";
 
 /* import utils */
-import { maskCpfCnpj } from "./../../utils/functions";
+import { openLink, parseInteger, maskCpfCnpj } from "./../../utils/functions";
 import { ModalContext } from "./../../components/Forms/Modal";
 
 /* import components */
@@ -20,6 +20,9 @@ import Footer from "./../../components/Footer";
 /* import images */
 
 /* import icons */
+
+/* import services */
+import api from "./../../services/api";
 
 /* import styles */
 import { Container, About, Description, Button } from "./styles";
@@ -33,33 +36,75 @@ function Component(props) {
   const initialData = useInitialData(props, requestInitialData);
 
   const [cpf, setCpf] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLoadPayment = () => {
+  const handleLoadPayment = async event => {
+    event.preventDefault();
+
     try {
-      modal.show(
-        true,
-        "Boleto gerado com sucesso!",
-        "Seu boleto para pagamento de sua assinatura foi gerado com sucesso!",
-        "Se deseja imprimir o seu boleto agora clique em imprimir boleto. Nós também enviamos uma cópia do boleto para o seu e-mail!",
-        "IMPRIMIR MEU BOLETO",
-        () => () => history.push("/"),
-        "",
-        "",
-        true,
-      );
+      if (!cpf) {
+        return false;
+      }
+
+      setLoading(true);
+
+      const { data } = await api.get(`/contratos/getcpfsite/${parseInteger(cpf)}`);
+
+      if ((data.statusContrato === "TRIAL" || data.statusContrato === "ACTIVE") && data.linkBoleto) {
+        modal.show(
+          true,
+          "Boleto gerado com sucesso!",
+          "Seu boleto para pagamento de sua assinatura foi gerado com sucesso!",
+          "Se deseja imprimir o seu boleto agora clique em imprimir meu boleto.",
+          "IMPRIMIR MEU BOLETO",
+          () => () => window.open(data.linkBoleto, "_blank"),
+          "",
+          "",
+          true,
+        );
+      } else if (data.statusContrato === "OVERDUE") {
+        modal.show(
+          true,
+          "Sua assinatura encontra vencida!",
+          "(65) 3029-9700 ou pelo e-mail fernando.rodrigues@vidavg.com.br",
+          "Para emitir o seu boleto para pagamento fale com a nossa equipe!",
+
+          "",
+          () => () => {},
+          "Fechar",
+          () => () => modal.hide(),
+          true,
+        );
+      } else {
+        modal.show(
+          true,
+          "Não existe fatura aberta.",
+          "Identificamos que você está em dias com a suas mensalidades!",
+          "Desfrute dos benefícios que só o Vida Cartão Fidelidade têm!",
+          "ACESSAR MINHA CONTA",
+          () => () => history.push("/login"),
+          "Fechar",
+          () => () => modal.hide(),
+          true,
+        );
+      }
+
+      setLoading(false);
     } catch (error) {
       console.log(error);
       modal.show(
         true,
-        "Não existe fatura aberta.",
-        "Identificamos que você está em dias com a suas mensalidades!",
-        "Desfrute dos benefícios que só o Vida Cartão Fidelidade têm!",
-        "ACESSAR MINHA CONTA",
-        () => () => history.push("/login"),
-        "Fechar",
+        "Erro ao tentar gerar o seu boleto para pagamento",
+        "Identificamos um erro ao tentar gerar o seu pagamento!",
+        "Por favor tente novamente ou se preferir ligue ou fale com a nossa equipe (65) 3029-9700  ",
+        "",
+        "",
+        "Tentar novamente",
         () => () => modal.hide(),
         true,
       );
+
+      setLoading(false);
     }
   };
 
@@ -67,7 +112,7 @@ function Component(props) {
 
   return (
     <>
-      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} internalPage />
+      <Header setOpenedMenu={setOpenedMenu} openedMenu={openedMenu} />
       <Container onClick={() => setOpenedMenu(false)}>
         <About>
           <InternalTitle title1="Vida Pagamento" title2="Fácil" styles={{ marginBottom: "20px" }} />
@@ -82,7 +127,7 @@ function Component(props) {
               <span className="orange"> Fácil</span>.
             </span>
           </Description>
-          <Content autoComplete="off" autocomplete="off" onSubmit={() => handleLoadPayment()}>
+          <Content autoComplete="off" autocomplete="off" onSubmit={handleLoadPayment}>
             <ContentTitle>&nbsp;</ContentTitle>
             <Row>
               <Input
@@ -98,7 +143,7 @@ function Component(props) {
               />
             </Row>
 
-            <Button>GERAR PAGAMENTO</Button>
+            <Button disabled={loading}>{loading ? "CARREGANDO..." : "GERAR PAGAMENTO"}</Button>
           </Content>
         </About>
       </Container>

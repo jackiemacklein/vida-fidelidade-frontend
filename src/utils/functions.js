@@ -321,3 +321,11 @@ export function testaCPF(strCPF) {
   if (Resto != parseInt(strCPF.substring(10, 11))) return false;
   return true;
 }
+
+
+export function openLink(url) {
+  var a = document.createElement("a");
+  a.target = "_blank";
+  a.href = url;
+  a.click();
+}

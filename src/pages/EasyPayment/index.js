@@ -50,7 +50,7 @@ function Component(props) {
 
       const { data } = await api.get(`/contratos/getcpfsite/${parseInteger(cpf)}`);
 
-      if ((data.statusContrato === "TRIAL" || data.statusContrato === "ACTIVE") && data.linkBoleto) {
+      if ((data.statusContrato === "TRIAL" || data.statusContrato === "ACTIVE" || data.statusContrato === "OVERDUE") && data.linkBoleto) {
         modal.show(
           true,
           "Boleto gerado com sucesso!",

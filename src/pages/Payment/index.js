@@ -31,7 +31,6 @@ import EditIcon from "./../../assets/icons/edit";
 /* import styles */
 import { Container, About, Description, Button } from "./styles";
 import { Content, ContentTitle, Row, FormGroup, Label, Label2 } from "./styles";
-import { isAfter } from "date-fns/esm";
 
 function Component(props) {
   const modal = useContext(ModalContext);

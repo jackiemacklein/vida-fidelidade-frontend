@@ -301,32 +301,33 @@ function Component(props) {
                 <EditIcon width="12px" height="11.94px" />
               </a>
             </ContentTitle>
-
-            <Row>
-              <Label2>
-                PRODUTO: <span>{plan_name}</span>
-              </Label2>
-              <Label2>
-                MENSALIDADE: R$ <span>{plan_price}</span>
-              </Label2>
-              <Label2>
-                TAXA ADESÃO: R$ <span>{plan_adesao}</span>
-              </Label2>
-            </Row>
-            {isAuthenticated() ? (
-              <>
-                <Row>
-                  <Label2>
-                    SEU NOME: <span>{getUser()?.name}</span>
-                  </Label2>
-                  <Label2>
-                    SEU E-MAIL:<span>{getUser()?.email}</span>
-                  </Label2>
-                </Row>
-              </>
-            ) : (
-              <></>
-            )}
+            <div>
+              <Row>
+                <Label2>
+                  PRODUTO: <span>{plan_name}</span>
+                </Label2>
+                <Label2>
+                  MENSALIDADE: R$ <span>{plan_price}</span>
+                </Label2>
+                <Label2>
+                  TAXA ADESÃO: R$ <span>{plan_adesao}</span>
+                </Label2>
+              </Row>
+              {isAuthenticated() !== null ? (
+                <>
+                  <Row>
+                    <Label2>
+                      SEU NOME: <span>{getUser()?.name}</span>
+                    </Label2>
+                    <Label2>
+                      SEU E-MAIL: <span>{getUser()?.email}</span>
+                    </Label2>
+                  </Row>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
 
             <ContentTitle>Forma de pagamento</ContentTitle>
             <Row style={{ marginBottom: "25px" }}>

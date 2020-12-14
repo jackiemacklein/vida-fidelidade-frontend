@@ -13,7 +13,7 @@ import { getCardFlag, maskCurrencyReal, maskCardExpiration } from "./../../utils
 
 /* import services */
 import api from "./../../services/api";
-import { isAuthenticated } from "./../../services/auth";
+import { isAuthenticated, getUser } from "./../../services/auth";
 
 /* import components */
 import InternalTitle from "./../../components/InternalTitle";
@@ -31,6 +31,7 @@ import EditIcon from "./../../assets/icons/edit";
 /* import styles */
 import { Container, About, Description, Button } from "./styles";
 import { Content, ContentTitle, Row, FormGroup, Label, Label2 } from "./styles";
+import { isAfter } from "date-fns/esm";
 
 function Component(props) {
   const modal = useContext(ModalContext);
@@ -96,7 +97,7 @@ function Component(props) {
 
     try {
       let res = {};
-      console.log(localStorage.getItem("CLIENT_PAYMENT"));
+      // console.log(localStorage.getItem("CLIENT_PAYMENT"));
       if (localStorage.getItem("CLIENT_PAYMENT") === null && clientContract === false) {
         res = await api.post("/contratos/criacliente", {
           CodigoEmpresa: "5f8da1658c4466ce8b70113a",
@@ -121,94 +122,81 @@ function Component(props) {
         });
       }
 
-      if (localStorage.getItem("CLIENT_PAYMENT") || clientContract === true || res?.data?.message === "Cliente criado com sucesso") {
-        setClientContract(true);
+      //if (localStorage.getItem("CLIENT_PAYMENT") || clientContract === true) {
+      setClientContract(true);
 
-        //DEFINA UM ADAPTAÇÃO PARA QUE NÃO PRECISE CRIAR NOVAMENTE O CLIENTE NA WIRECARD
-        await localStorage.setItem("CLIENT_PAYMENT", client_id);
+      //DEFINA UM ADAPTAÇÃO PARA QUE NÃO PRECISE CRIAR NOVAMENTE O CLIENTE NA WIRECARD
+      await localStorage.setItem("CLIENT_PAYMENT", client_id);
 
-        const { data } = await api.post("/contratos", {
-          CodigoEmpresa: "5f8da1658c4466ce8b70113a",
-          CodigoCliente: client_id,
-          CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
-          NomedoIndicador: indicated_by,
-          TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
-          ClientexContrato: [
-            {
-              CodigoCliente: client_id,
-              CodigoProduto: plan_id,
-            },
-          ],
-          CobrancaxContrato: {
-            NumeroCartao: method === "card-credit" ? card_number : "",
-            TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
-            NomeCartao: method === "card-credit" ? name : "",
-            MesCartao: method === "card-credit" ? getMonth() : "",
-            AnoCartao: method === "card-credit" ? getYear() : "",
-            CVVCarta: method === "card-credit" ? cvc : "",
+      const { data } = await api.post("/contratos", {
+        CodigoEmpresa: "5f8da1658c4466ce8b70113a",
+        CodigoCliente: client_id,
+        CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
+        NomedoIndicador: indicated_by,
+        TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
+        ClientexContrato: [
+          {
+            CodigoCliente: client_id,
+            CodigoProduto: plan_id,
           },
-        });
+        ],
+        CobrancaxContrato: {
+          NumeroCartao: method === "card-credit" ? card_number : "",
+          TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
+          NomeCartao: method === "card-credit" ? name : "",
+          MesCartao: method === "card-credit" ? getMonth() : "",
+          AnoCartao: method === "card-credit" ? getYear() : "",
+          CVVCarta: method === "card-credit" ? cvc : "",
+        },
+      });
 
-        if (data) {
-          if (method === "card-credit" && data.status === "ACTIVE") {
-            modal.show(
-              true,
-              "Processando Pagamento!",
-              "No momento estamos processando o seu pagamento, você receberá uma confirmação por e-mail quando o processo for concluído.",
-              "Clque no botão abaixo e acompanhe seu pedido.",
-              "ACESSAR MINHA CONTA",
-              () => () => {
-                clearFields();
-                if (isAuthenticated()) {
-                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
-                } else {
-                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
-                }
-              },
-              "",
-              "",
-              false,
-            );
-          } else if (method === "billet" && data._links.boleto.redirect_href) {
-            modal.show(
-              true,
-              "Boleto gerado com sucesso!",
-              "Seu boleto para pagamento foi gerado com sucesso! Enviamos uma cópia para o seu e-mail",
-              `Se desejar imprimir o seu boleto, clique no botão abaixo.<br />O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.<br /><br />`,
-              "IMPRIMIR MEU BOLETO",
-              () => () => {
-                clearFields();
-                window.open(data._links.boleto.redirect_href, "_blank");
-              },
-              "ACESSAR MINHA CONTA",
-              () => () => {
-                clearFields();
-                if (isAuthenticated()) {
-                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
-                } else {
-                  history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
-                }
-              },
-              false,
-            );
-          } else {
-            modal.show(
-              true,
-              "Erro ao processar pagamento",
-              "Identificamos um erro ao tentar gerar o seu pagamento!",
-              "Por favor tente novamente mais tarde.",
-              "",
-              "",
-              "Tentar novamente",
-              () => () => modal.hide(),
-              true,
-            );
-          }
+      if (data) {
+        if (method === "card-credit" && data.status === "ACTIVE") {
+          modal.show(
+            true,
+            "Processando Pagamento!",
+            "No momento estamos processando o seu pagamento, você receberá uma confirmação por e-mail quando o processo for concluído.",
+            "Clque no botão abaixo e acompanhe seu pedido.",
+            "ACESSAR MINHA CONTA",
+            () => () => {
+              clearFields();
+              if (isAuthenticated()) {
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+              } else {
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login");
+              }
+            },
+            "",
+            "",
+            false,
+          );
+        } else if (method === "billet" && data._links.boleto.redirect_href) {
+          modal.show(
+            true,
+            "Boleto gerado com sucesso!",
+            "Seu boleto para pagamento foi gerado com sucesso! Enviamos uma cópia para o seu e-mail",
+            `Se desejar imprimir o seu boleto, clique no botão abaixo.<br />O processamento de pagamento dos boletos podem ocorrer em até 3 dias uteis.<br /><br />`,
+            "IMPRIMIR MEU BOLETO",
+            () => () => {
+              clearFields();
+              window.open(data._links.boleto.redirect_href, "_blank");
+            },
+            "ACESSAR MINHA CONTA",
+            () => () => {
+              clearFields();
+              if (isAuthenticated()) {
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+              } else {
+                history.push(process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meu-plano" : "/portal/meu-plano");
+              }
+            },
+            false,
+          );
         } else {
           modal.show(
             true,
-            "Erro",
-            "Identificamos uma instabilidade na operadora de pagamentos!",
+            "Erro ao processar pagamento",
+            "Identificamos um erro ao tentar gerar o seu pagamento!",
             "Por favor tente novamente mais tarde.",
             "",
             "",
@@ -221,7 +209,7 @@ function Component(props) {
         modal.show(
           true,
           "Erro",
-          "Identificamos uma instabilidade na operadora de pagamento!",
+          "Identificamos uma instabilidade na operadora de pagamentos!",
           "Por favor tente novamente mais tarde.",
           "",
           "",
@@ -230,6 +218,19 @@ function Component(props) {
           true,
         );
       }
+      /*     } else {
+        modal.show(
+          true,
+          "Erro",
+          "Identificamos uma instabilidade na operadora de pagamento!",
+          "Por favor tente novamente mais tarde.",
+          "",
+          "",
+          "Tentar novamente",
+          () => () => modal.hide(),
+          true,
+        );
+      }*/
 
       setLoading(false);
     } catch (error) {
@@ -314,6 +315,20 @@ function Component(props) {
                 TAXA ADESÃO: R$ <span>{plan_adesao}</span>
               </Label2>
             </Row>
+            {isAuthenticated() ? (
+              <>
+                <Row>
+                  <Label2>
+                    SEU NOME: <span>{getUser()?.name}</span>
+                  </Label2>
+                  <Label2>
+                    SEU E-MAIL:<span>{getUser()?.email}</span>
+                  </Label2>
+                </Row>
+              </>
+            ) : (
+              <></>
+            )}
 
             <ContentTitle>Forma de pagamento</ContentTitle>
             <Row style={{ marginBottom: "25px" }}>

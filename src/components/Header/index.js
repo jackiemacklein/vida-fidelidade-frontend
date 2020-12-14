@@ -2,7 +2,7 @@ import "./../../configs/dotenv";
 import React, { useState, useEffect } from "react";
 
 /* navigation */
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 /* import Kieee Rendering */
 import { InitialDataContext } from "./../Kieee";
@@ -18,6 +18,8 @@ import color from "./../../assets/logos/color.png";
 /* import icons */
 import MenuIcon from "./../../assets/icons/menu";
 import MenuCloseIcon from "./../../assets/icons/menuClose";
+
+import { isAuthenticated, logout } from "./../../services/auth";
 
 /* import images */
 
@@ -51,6 +53,8 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
 
   const [showing, setShowing] = useState(0);
   //const [openedMenu, setOpenedMenu] = useState(false);
+
+  const history = useHistory();
 
   const handleNext = async () => {
     clearTimeout(timer);
@@ -105,11 +109,23 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
             </a>
           )}
 
-          <Link
-            to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"}
-            title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
-            <ListItem>Portal do Assinante</ListItem>
-          </Link>
+          {isAuthenticated() ? (
+            <>
+              <Link
+                to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/portal/meus-dados" : "/portal/meus-dados"}
+                title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
+                <ListItem>Portal do Assinante</ListItem>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login"}
+                title="Acessar porta do Assinante - Vida Cartão Fidelidade - Cartão de descontos">
+                <ListItem>Portal do Assinante</ListItem>
+              </Link>
+            </>
+          )}
 
           {!internalPage ? (
             <>
@@ -118,7 +134,11 @@ function Header({ setOpenedMenu, openedMenu, showHeader = false, internalPage = 
               </ListItem>
             </>
           ) : (
-            <></>
+            <>
+              <ListItem className="button" onClick={() => logout(history, process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? "/site/login" : "/login")}>
+                Sair
+              </ListItem>
+            </>
           )}
 
           {/*<Link to={"/vida-pagamento-facil"} title="Pagar sua mensalidade do Cartão Fidelidade - Cartão de descontos">

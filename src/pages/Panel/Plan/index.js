@@ -121,21 +121,20 @@ function Component(props) {
   const loadContract = async () => {
     try {
       const { data } = await api.get(`/contratos/getFull/${getUser()?.id}`);
-      console.log(data.length);
 
-      if (data.length >= 1) {
-        if (data[0].produtos.length >= 0) {
-          setPlan(data[0]?.produtos[0]?.DescricaoProduto);
-          setPlan_adesao(maskCurrencyReal(data[0]?.produtos[0]?.ValorAdesao));
-          setPlan_price(maskCurrencyReal(data[0]?.produtos[0]?.ValorProduto));
-          setState(data[0].StatusContrato);
-          setPlan_id(data[0].CodigoProduto);
+      if (data.length >= 1 && data[data.length - 1].StatusContrato != "CANCELADA") {
+        if (data[data.length - 1].produtos.length >= 0) {
+          setPlan(data[data.length - 1]?.produtos[0]?.DescricaoProduto);
+          setPlan_adesao(maskCurrencyReal(data[data.length - 1]?.produtos[0]?.ValorAdesao));
+          setPlan_price(maskCurrencyReal(data[data.length - 1]?.produtos[0]?.ValorProduto));
+          setState(data[data.length - 1].StatusContrato);
+          setPlan_id(data[data.length - 1].CodigoProduto);
         } else {
-          setPlan(data[0]?.produtos?.DescricaoProduto);
-          setPlan_id(data[0].CodigoProduto);
-          setPlan_adesao(maskCurrencyReal(data[0]?.produtos?.ValorAdesao));
-          setPlan_price(maskCurrencyReal(data[0]?.produtos?.ValorProduto));
-          setState(data[0].StatusContrato);
+          setPlan(data[data.length - 1]?.produtos?.DescricaoProduto);
+          setPlan_id(data[data.length - 1].CodigoProduto);
+          setPlan_adesao(maskCurrencyReal(data[data.length - 1]?.produtos?.ValorAdesao));
+          setPlan_price(maskCurrencyReal(data[data.length - 1]?.produtos?.ValorProduto));
+          setState(data[data.length - 1].StatusContrato);
         }
         getFiles(data);
       } else {

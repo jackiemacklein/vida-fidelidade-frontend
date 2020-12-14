@@ -94,21 +94,24 @@ function Plans({ header = true }) {
               </HeaderTitle>
             </Header>
             <Content>
-              {getLines(item.BeneficiosProduto).map(line => (
-                <Line key={line}>{line}</Line>
-              ))}
+              <div style={{ flex: 1 }}>
+                {getLines(item.BeneficiosProduto).map(line => (
+                  <Line key={line}>{line}</Line>
+                ))}
 
-              {getLines(item.DiferencialProduto).map(line => (
-                <Line key={line}>{line}</Line>
-              ))}
-
-              <Price>
-                <span>R$</span>
-                {item.ValorProduto ? maskCurrencyReal(item.ValorProduto) : "Sob Consulta"}*
-              </Price>
-              {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)} **</SmalLine> : <></>}
-              {getButton(item._id)}
-              <SmalLine>*Mensalidade&nbsp;**Parcela Única</SmalLine>
+                {getLines(item.DiferencialProduto).map(line => (
+                  <Line key={line}>{line}</Line>
+                ))}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end" }}>
+                <Price>
+                  <span>R$</span>
+                  {item.ValorProduto ? maskCurrencyReal(item.ValorProduto) : "Sob Consulta"}*
+                </Price>
+                {item.ValorAdesao ? <SmalLine>+ adesão de R$ {maskCurrencyReal(item.ValorAdesao)} **</SmalLine> : <></>}
+                {getButton(item._id)}
+                <SmalLine>*Mensalidade&nbsp;**Parcela Única</SmalLine>
+              </div>
             </Content>
           </Item>
         ))}

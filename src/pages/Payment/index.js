@@ -96,29 +96,29 @@ function Component(props) {
     try {
       let res = {};
       // console.log(localStorage.getItem("CLIENT_PAYMENT"));
-      if (localStorage.getItem("CLIENT_PAYMENT") === null && clientContract === false) {
-        res = await api.post("/contratos/criacliente", {
-          CodigoEmpresa: "5f8da1658c4466ce8b70113a",
-          CodigoCliente: client_id,
-          CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
-          NomedoIndicador: indicated_by,
-          TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
-          ClientexContrato: [
-            {
-              CodigoCliente: client_id,
-              CodigoProduto: plan_id,
-            },
-          ],
-          CobrancaxContrato: {
-            NumeroCartao: method === "card-credit" ? card_number : "",
-            TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
-            NomeCartao: method === "card-credit" ? name : "",
-            MesCartao: method === "card-credit" ? getMonth() : "",
-            AnoCartao: method === "card-credit" ? getYear() : "",
-            CVVCarta: method === "card-credit" ? cvc : "",
+      // if (localStorage.getItem("CLIENT_PAYMENT") === null && clientContract === false) {
+      res = await api.post("/contratos/criacliente", {
+        CodigoEmpresa: "5f8da1658c4466ce8b70113a",
+        CodigoCliente: client_id,
+        CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
+        NomedoIndicador: indicated_by,
+        TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
+        ClientexContrato: [
+          {
+            CodigoCliente: client_id,
+            CodigoProduto: plan_id,
           },
-        });
-      }
+        ],
+        CobrancaxContrato: {
+          NumeroCartao: method === "card-credit" ? card_number : "",
+          TipoCartao: method === "card-credit" ? getCardFlag(card_number) : "",
+          NomeCartao: method === "card-credit" ? name : "",
+          MesCartao: method === "card-credit" ? getMonth() : "",
+          AnoCartao: method === "card-credit" ? getYear() : "",
+          CVVCarta: method === "card-credit" ? cvc : "",
+        },
+      });
+      //  }
 
       //if (localStorage.getItem("CLIENT_PAYMENT") || clientContract === true) {
       setClientContract(true);

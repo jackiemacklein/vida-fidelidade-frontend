@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/static/js/main.949dbd1d.chunk.js",
-    "main.js.map": "/static/js/main.949dbd1d.chunk.js.map",
+    "main.js": "/static/js/main.23abe276.chunk.js",
+    "main.js.map": "/static/js/main.23abe276.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.0d4c3c5c.js",
     "runtime-main.js.map": "/static/js/runtime-main.0d4c3c5c.js.map",
     "static/js/2.30a62a28.chunk.js": "/static/js/2.30a62a28.chunk.js",
     "static/js/2.30a62a28.chunk.js.map": "/static/js/2.30a62a28.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.9477f45b6ebcbb9256e77621b3a3677c.js": "/precache-manifest.9477f45b6ebcbb9256e77621b3a3677c.js",
+    "precache-manifest.98852630b5424e70b35eb2c38848eb1e.js": "/precache-manifest.98852630b5424e70b35eb2c38848eb1e.js",
     "service-worker.js": "/service-worker.js",
     "static/js/2.30a62a28.chunk.js.LICENSE.txt": "/static/js/2.30a62a28.chunk.js.LICENSE.txt",
     "static/media/cardBack.png": "/static/media/cardBack.e8eebae3.png",
@@ -19,6 +19,6 @@
   "entrypoints": [
     "static/js/runtime-main.0d4c3c5c.js",
     "static/js/2.30a62a28.chunk.js",
-    "static/js/main.949dbd1d.chunk.js"
+    "static/js/main.23abe276.chunk.js"
   ]
 }

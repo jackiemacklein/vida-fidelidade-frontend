@@ -28,7 +28,6 @@ import accept_cards from "./../../assets/images/accept_cards.png";
 /* import icons */
 import EditIcon from "./../../assets/icons/edit";
 
-/* import styles */
 import { Container, About, Description, Button } from "./styles";
 import { Content, ContentTitle, Row, FormGroup, Label, Label2 } from "./styles";
 

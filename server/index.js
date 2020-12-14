@@ -9,7 +9,7 @@ require("@babel/register")({
       "@babel/preset-env",
       {
         targets: {
-          esmodules: "es6",
+          esmodules: true,
         },
       },
     ],

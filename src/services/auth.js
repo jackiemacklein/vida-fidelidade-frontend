@@ -5,7 +5,7 @@ export const USER_ID = "USER_ID";
 export const USER_EMAIL = "USER_EMAIL";
 export const USER_TYPE = "USER_TYPE";
 
-export const isAuthenticated = () => localStorage?.getItem(TOKEN_API) !== null;
+export const isAuthenticated = () => (global.window ? localStorage?.getItem(TOKEN_API) !== null : null);
 export const getToken = () => localStorage?.getItem(TOKEN_API);
 export const getUser = () => ({
   id: localStorage?.getItem(USER_ID),

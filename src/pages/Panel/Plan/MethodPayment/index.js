@@ -78,7 +78,6 @@ function MethodPayment({ modalPaymentOpen, setModalPaymentOpen, data = {} }) {
   const [showFields, setShowFields] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(data);
 
   const handleClose = () => {
     setModalPaymentOpen(false);
@@ -89,11 +88,11 @@ function MethodPayment({ modalPaymentOpen, setModalPaymentOpen, data = {} }) {
 
     try {
       if (method === "card-credit" && !checkCardValidate(validate)) {
-        //notify.show(true, "Informe corretamente a validade do cartão! Padrão: MM/AA", "warning");
+        alert("Informe corretamente a validade do cartão! Padrão: MM/AA");
         return false;
       }
 
-      const res = await api.put(`/contratos/${data.contract_id}`, {
+      const res = await api.put(`/contratos/${data._id}`, {
         TipoPagamento: method === "card-credit" ? "Cartao" : "Boleto",
         CobrancaxContrato: {
           NumeroCartao: method === "card-credit" ? card_number : "",
@@ -108,11 +107,11 @@ function MethodPayment({ modalPaymentOpen, setModalPaymentOpen, data = {} }) {
       if (res.data) {
         setLoading(false);
         setShowFields(false);
-        // notify.show(true, "Dados de pagamento atualizado com sucesso", "success");
+        alert("Dados de pagamento atualizado com sucesso");
         setModalPaymentOpen(false);
       } else {
         setLoading(false);
-        //notify.show(true, "Erro ao atualziado dados de pagamento! Tente novamente", "error");
+        alert("Erro ao atualziado dados de pagamento! Tente novamente");
       }
     } catch (error) {
       console.log(error);
@@ -178,7 +177,7 @@ function MethodPayment({ modalPaymentOpen, setModalPaymentOpen, data = {} }) {
           <>
             <DialogContent dividers id="form_fields">
               <Typography gutterBottom className="hiddenInPrint" style={{ textAlign: "center" }}>
-                Sua nova forma de pagamento só será ativado no próximo vencimento.
+                Sua nova forma de pagamento só será ativada no próximo vencimento.
                 <br />
                 <br />
                 Obs: Caso sua assinatura esteja atrasada ligue <strong>(65) 3029-9700</strong> ou pelo e-mail <strong>fernando.rodrigues@vidavg.com.br</strong>{" "}

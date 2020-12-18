@@ -2,6 +2,22 @@ import { parseISO, format } from "date-fns";
 import pt from "date-fns/locale/pt-BR";
 import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 
+export const getMonth = validate => {
+  const val = validate.split("/");
+  return val[0];
+};
+
+export const getYear = validate => {
+  const val = validate.split("/");
+  return val[1];
+};
+
+export function checkCardValidate(validate) {
+  const check = validate.split("/");
+  if (check.length === 2 && parseInt(check[0]) <= 31 && check[0].length === 2 && check[1].length === 2) return true;
+  else return false;
+}
+
 function isInt(n) {
   return Number(n) === n && n % 1 === 0;
 }
@@ -321,7 +337,6 @@ export function testaCPF(strCPF) {
   if (Resto != parseInt(strCPF.substring(10, 11))) return false;
   return true;
 }
-
 
 export function openLink(url) {
   var a = document.createElement("a");

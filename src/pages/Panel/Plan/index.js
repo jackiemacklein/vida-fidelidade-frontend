@@ -21,6 +21,7 @@ import Input from "./../../../components/Forms/Input";
 import Header from "./../../../components/Panel/Header";
 import Footer from "./../../../components/Footer";
 import Plans from "./../../../components/Plans";
+import MethodPayment from "./MethodPayment";
 
 /* import images */
 
@@ -28,7 +29,7 @@ import Plans from "./../../../components/Plans";
 
 /* import styles */
 import { Container, About, Description, Button } from "./styles";
-import { Content, ContentTitle, Row, FormGroup } from "./styles";
+import { Content, ContentTitle, Row, FormGroup, ItemButton } from "./styles";
 
 function Component(props) {
   const { modal } = useContext(ModalContext);
@@ -49,39 +50,54 @@ function Component(props) {
   const [linkContratoAdesao, setLinkContratoAdesao] = useState("");
   const [linkCertificadoSeguro, setLinkCertificadoSeguro] = useState("");
 
-  const getFiles = async data => {
-    const celular = `${data[0]?.clientes[0]?.DDDCelular}${data[0]?.clientes[0]?.Celular}`;
-    const phone = `${data[0]?.clientes[0]?.DDDResidencial}${data[0]?.clientes[0]?.FoneResidencial}`;
+  const [modalPaymentOpen, setModalPaymentOpen] = useState(false);
+  const [paymentData, setPaymentData] = useState({});
 
-    const dependentes = await data[0]?.clientesDependentes.map(item => {
+  const getFiles = async data => {
+    let celular = `${data?.clientes[0]?.DDDCelular}${data?.clientes[0]?.Celular}`;
+    let phone = `${data?.clientes[0]?.DDDResidencial}${data?.clientes[0]?.FoneResidencial}`;
+
+    const dependentes = await data?.clientesDependentes.map(item => {
       return { ...item, DataDeNascimento: getDateByTimeZoneCba(item.DataDeNascimento, "dd'/'MM'/'yyyy") };
     });
 
-    const JsonProposta = {
+    let apolice = "";
+    if (!data.CodigoSeguro) {
+      const clien = data.ClientexContrato.find(item => item.CodigoCliente === data.client_id);
+      if (clien) {
+        if (clien.ApoliceSeguro) {
+          apolice = clien.ApoliceSeguro;
+        }
+      }
+    } else {
+      apolice = data?.CodigoSeguro ?? "";
+    }
+
+    let JsonProposta = {
       portalink: "",
-      iddoproduto: data[0]?.produtos[0]?._id,
-      client_id: data[0]?.clientes[0]?._id,
-      nomedoproduto: data[0]?.produtos[0]?.DescricaoProduto,
-      nomedocliente: data[0]?.clientes[0]?.NomeCliente,
-      datadenascimento: getDateByTimeZoneCba(data[0]?.clientes[0]?.DataNascimento, "dd'/'MM'/'yyyy"),
-      cpfcnpj: data[0]?.clientes[0]?.CpfCNPJ,
-      email: data[0]?.clientes[0]?.EmailPrincipal,
-      cep: data[0]?.clientes[0]?.Cep,
-      endereco: `${data[0]?.clientes[0]?.Endereco}, ${data[0]?.clientes[0]?.Bairro}, ${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
-      rua: data[0]?.clientes[0]?.Endereco,
-      bairro: data[0]?.clientes[0]?.Bairro,
-      cidade: `${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
-      endereco: `${data[0]?.clientes[0]?.Endereco}, ${data[0]?.clientes[0]?.Bairro}, ${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
-      enderecocompleto: `${data[0]?.clientes[0]?.Endereco}, nº ${data[0]?.clientes[0]?.Numero}, ${data[0]?.clientes[0]?.Complemento}, ${data[0]?.clientes[0]?.Bairro}, ${data[0]?.clientes[0]?.Cidade}-${data[0]?.clientes[0]?.UF}`,
-      numero: data[0]?.clientes[0]?.Numero,
-      complemento: data[0]?.clientes[0]?.Complemento,
+      iddoproduto: data?.produtos[0]?._id,
+      client_id: data?.clientes[0]?._id,
+      nomedoproduto: data?.produtos[0]?.DescricaoProduto,
+      nomedocliente: data?.clientes[0]?.NomeCliente,
+      datadenascimento: getDateByTimeZoneCba(data?.clientes[0]?.DataNascimento, "dd'/'MM'/'yyyy"),
+      cpfcnpj: data?.clientes[0]?.CpfCNPJ,
+      email: data?.clientes[0]?.EmailPrincipal,
+      cep: data?.clientes[0]?.Cep,
+      endereco: `${data?.clientes[0]?.Endereco}, ${data?.clientes[0]?.Bairro}, ${data?.clientes[0]?.Cidade}-${data?.clientes[0]?.UF}`,
+      rua: data?.clientes[0]?.Endereco,
+      bairro: data?.clientes[0]?.Bairro,
+      cidade: `${data?.clientes[0]?.Cidade}-${data?.clientes[0]?.UF}`,
+      endereco: `${data?.clientes[0]?.Endereco}, ${data?.clientes[0]?.Bairro}, ${data?.clientes[0]?.Cidade}-${data?.clientes[0]?.UF}`,
+      enderecocompleto: `${data?.clientes[0]?.Endereco}, nº ${data?.clientes[0]?.Numero}, ${data?.clientes[0]?.Complemento}, ${data?.clientes[0]?.Bairro}, ${data?.clientes[0]?.Cidade}-${data?.clientes[0]?.UF}`,
+      numero: data?.clientes[0]?.Numero,
+      complemento: data?.clientes[0]?.Complemento,
       telefoneprincipal: celular ?? phone,
-      vigenciainicial: getDateByTimeZoneCba(data[0]?.VigenciaInicial, "dd'/'MM'/'yyyy"),
-      vigenciafinal: getDateByTimeZoneCba(data[0]?.VigenciaFinal, "dd'/'MM'/'yyyy"),
-      tipodepagamento: data[0]?.TipoPagamento,
+      vigenciainicial: getDateByTimeZoneCba(data?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+      vigenciafinal: getDateByTimeZoneCba(data?.VigenciaFinal, "dd'/'MM'/'yyyy"),
+      tipodepagamento: data?.TipoPagamento,
       recorrencia: "Mensal",
-      apolice: data[0]?.CodigoSeguro,
-      datadecriacaoformatada: getDateByTimeZoneCba(data[0]?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+      apolice: apolice,
+      datadecriacaoformatada: getDateByTimeZoneCba(data?.VigenciaInicial, "dd'/'MM'/'yyyy"),
       dependentes: dependentes,
     };
 
@@ -96,16 +112,6 @@ function Component(props) {
     }
 
     try {
-      const resLinkContratoAdesao = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcontratoadesao`, JsonProposta);
-
-      if (resLinkContratoAdesao.data.link) {
-        setLinkContratoAdesao(resLinkContratoAdesao.data.link);
-      }
-    } catch (errorResLinkContratoAdesao) {
-      console.log("errorResLinkContratoAdesao:", errorResLinkContratoAdesao);
-    }
-
-    try {
       const resLinkCertificadoSeguro = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcertificadoseguro`, JsonProposta);
 
       if (resLinkCertificadoSeguro.data.link) {
@@ -113,6 +119,46 @@ function Component(props) {
       }
     } catch (errorResLinkCertificadoSeguro) {
       console.log("errorResLinkCertificadoSeguro:", errorResLinkCertificadoSeguro);
+    }
+
+    try {
+      celular = `${data?.clientecontrato[0]?.DDDCelular}${data?.clientes[0]?.Celular}`;
+      phone = `${data?.clientecontrato[0]?.DDDResidencial}${data?.clientes[0]?.FoneResidencial}`;
+
+      JsonProposta = {
+        portalink: "",
+        iddoproduto: data?.produtos[0]?._id,
+        client_id: data?.clientecontrato[0]?._id,
+        nomedoproduto: data?.produtos[0]?.DescricaoProduto,
+        nomedocliente: data?.clientecontrato[0]?.NomeCliente,
+        datadenascimento: getDateByTimeZoneCba(data?.clientecontrato[0]?.DataNascimento, "dd'/'MM'/'yyyy"),
+        cpfcnpj: data?.clientecontrato[0]?.CpfCNPJ,
+        email: data?.clientecontrato[0]?.EmailPrincipal,
+        cep: data?.clientecontrato[0]?.Cep,
+        endereco: `${data?.clientecontrato[0]?.Endereco}, ${data?.clientecontrato[0]?.Bairro}, ${data?.clientecontrato[0]?.Cidade}-${data?.clientecontrato[0]?.UF}`,
+        rua: data?.clientecontrato[0]?.Endereco,
+        bairro: data?.clientecontrato[0]?.Bairro,
+        cidade: `${data?.clientecontrato[0]?.Cidade}-${data.clientecontrato[0]?.UF}`,
+        endereco: `${data?.clientecontrato[0]?.Endereco}, ${data?.clientecontrato[0]?.Bairro}, ${data?.clientecontrato[0]?.Cidade}-${data?.clientecontrato[0]?.UF}`,
+        enderecocompleto: `${data?.clientecontrato[0]?.Endereco}, nº ${data?.clientecontrato[0]?.Numero}, ${data?.clientecontrato[0]?.Complemento}, ${data?.clientecontrato[0]?.Bairro}, ${data?.clientecontrato[0]?.Cidade}-${data?.clientecontrato[0]?.UF}`,
+        numero: data?.clientecontrato[0]?.Numero,
+        complemento: data?.clientecontrato[0]?.Complemento,
+        telefoneprincipal: celular ?? phone,
+        vigenciainicial: getDateByTimeZoneCba(data?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+        vigenciafinal: getDateByTimeZoneCba(data?.VigenciaFinal, "dd'/'MM'/'yyyy"),
+        tipodepagamento: data?.TipoPagamento,
+        recorrencia: "Mensal",
+        apolice: apolice,
+        datadecriacaoformatada: getDateByTimeZoneCba(data?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+        dependentes: dependentes,
+      };
+      const resLinkContratoAdesao = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcontratoadesao`, JsonProposta);
+
+      if (resLinkContratoAdesao.data.link) {
+        setLinkContratoAdesao(resLinkContratoAdesao.data.link);
+      }
+    } catch (errorResLinkContratoAdesao) {
+      console.log("errorResLinkContratoAdesao:", errorResLinkContratoAdesao);
     }
 
     setPreLoading(false);
@@ -129,14 +175,28 @@ function Component(props) {
           setPlan_price(maskCurrencyReal(data[data.length - 1]?.produtos[0]?.ValorProduto));
           setState(data[data.length - 1].StatusContrato);
           setPlan_id(data[data.length - 1].CodigoProduto);
+
+          setPaymentData(data[data.length - 1]);
         } else {
           setPlan(data[data.length - 1]?.produtos?.DescricaoProduto);
           setPlan_id(data[data.length - 1].CodigoProduto);
           setPlan_adesao(maskCurrencyReal(data[data.length - 1]?.produtos?.ValorAdesao));
           setPlan_price(maskCurrencyReal(data[data.length - 1]?.produtos?.ValorProduto));
           setState(data[data.length - 1].StatusContrato);
+
+          setPaymentData(data[data.length - 1]);
         }
-        getFiles(data);
+
+        if (
+          data[data.length - 1].StatusContrato === "Ativa" ||
+          data[data.length - 1].StatusContrato === "Trial" ||
+          data[data.length - 1].StatusContrato === "ATIVA" ||
+          data[data.length - 1].StatusContrato === "TRIAL"
+        ) {
+          getFiles(data[data.length - 1]);
+        } else {
+          setPreLoading(false);
+        }
       } else {
         setPlan_id(null);
         setPreLoading(false);
@@ -197,6 +257,22 @@ function Component(props) {
             </>
           ) : (
             <>
+              {preLoading || paymentData?.clientes[0]._id !== paymentData?.clientecontrato[0]._id ? (
+                <></>
+              ) : (
+                <>
+                  <ItemButton
+                    type="button"
+                    className="edit"
+                    title="editar"
+                    onClick={() => {
+                      setModalPaymentOpen(true);
+                    }}>
+                    ALTERAR FORMA DE PAGAMENTO <i className="fa fa-address-card"></i>
+                  </ItemButton>
+                </>
+              )}
+
               <Content autoComplete="off" autocomplete="off">
                 <ContentTitle>Seu plano atual</ContentTitle>
                 <Row>
@@ -256,6 +332,7 @@ function Component(props) {
           )}
         </About>
       </Container>
+      <MethodPayment modalPaymentOpen={modalPaymentOpen} setModalPaymentOpen={setModalPaymentOpen} data={paymentData} />
       <Footer onClick={() => setOpenedMenu(false)} />
     </>
   );

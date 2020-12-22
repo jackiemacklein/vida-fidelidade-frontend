@@ -78,7 +78,6 @@ function MethodPayment({ modalPaymentOpen, setModalPaymentOpen, data = {} }) {
   const [showFields, setShowFields] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const handleClose = () => {
     setModalPaymentOpen(false);
   };
@@ -151,7 +150,7 @@ function MethodPayment({ modalPaymentOpen, setModalPaymentOpen, data = {} }) {
                     )}
                     {data.TipoPagamento === "CARTAO" || data.TipoPagamento === "Cartao" ? (
                       <>
-                        <strong>Número do Cartão:</strong> {data.NumeroCartao.substr(0, 4)}********
+                        <strong>Número do Cartão:</strong> {data.NumeroCartao ? data.NumeroCartao.substr(0, 4) : ""}********
                         <br />
                         <strong>Bandeira do Cartão:</strong> {data.TipoCartao}
                         <br />

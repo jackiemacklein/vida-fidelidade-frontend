@@ -15,6 +15,7 @@ import Header from "./../../components/Header";
 import Benefits from "./../../components/Benefits";
 import Plans from "./../../components/Plans";
 import Questions from "./../../components/Questions";
+import Links from "./../../components/Links";
 import Footer from "./../../components/Footer";
 
 /* import images */
@@ -63,6 +64,7 @@ function Component(props) {
           <Button onClick={() => handleAnchor("planos")}>Assine agora</Button>
         </About>
         <Plans />
+        <Links />
         <Questions />
 
         <Partners>

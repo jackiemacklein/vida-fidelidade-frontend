@@ -12,8 +12,8 @@ export const Container = styled.section`
 
   width: 1100px;
 
-  margin-bottom: 100px;
-  /*margin-top: 100px;*/
+  /*margin-bottom: 100px;*/
+  margin-top: 100px;
 
   @media (max-width: 1366px) {
   }
@@ -25,8 +25,8 @@ export const Container = styled.section`
     justify-content: flex-start;
   }
   @media (max-width: 1025px) {
-    margin-bottom: 50px;
-    /*margin-top: 50px;*/
+    /*margin-bottom: 50px;*/
+    margin-top: 50px;
   }
   @media (max-width: 801px) {
   }
@@ -43,7 +43,9 @@ export const Item = styled.article`
   width: 100%;
 `;
 
-export const Header = styled.header`
+export const Header = styled.a`
+  text-decoration: none;
+
   background-color: #54595f;
 
   border-radius: 4px;

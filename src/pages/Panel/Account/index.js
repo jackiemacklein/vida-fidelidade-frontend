@@ -151,7 +151,7 @@ function Component(props) {
         setNeighborhood(data[0].Bairro);
         setCity(data[0].Cidade);
         setState(data[0].UF);
-        setCep(data[0].Cep);
+        setCep(maskCep(data[0].Cep));
         setDtbirth(getDateByTimeZoneCba(data[0].DataNascimento, "yyyy'-'MM'-'dd"));
         setGender(data[0].Sexo);
         setPhone(maskTelephone89Digitos(`${data[0].DDDCelular} ${data[0].Celular}`));
@@ -179,7 +179,7 @@ function Component(props) {
         setNeighborhood(data.Bairro);
         setCity(data.Cidade);
         setState(data.UF);
-        setCep(data.Cep);
+        setCep(maskCep(data.Cep));
         setDtbirth(getDateByTimeZoneCba(data.DataNascimento, "yyyy'-'MM'-'dd"));
         setGender(data.Sexo);
         setPhone(maskTelephone89Digitos(`${data.DDDCelular} ${data.Celular}`));

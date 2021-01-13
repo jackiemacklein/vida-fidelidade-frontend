@@ -1,5 +1,5 @@
 import "./../../configs/dotenv";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 /* import Kieee Rendering */
@@ -7,6 +7,7 @@ import { InitialDataContext } from "./../Kieee";
 
 /* import components */
 import Title from "./../Title";
+import { ModalContext } from "./../Forms/Modal";
 
 /* import images*/
 
@@ -22,6 +23,7 @@ import { Container, Description, Items, Item, Header, HeaderTitle, Content } fro
 import { Line, Price, SmalLine, Button } from "./styles";
 
 function Plans({ header = true }) {
+  const modal = useContext(ModalContext);
   //const initialData = InitialDataContext;
 
   //console.log("dentro: ", initialData);
@@ -34,24 +36,42 @@ function Plans({ header = true }) {
     return items;
   };
 
+  const showModalInfo = () => {
+    modal.show(
+      true,
+      "Informação Importante!",
+      "Ligue: (65) 3029-9700 ou pelo e-mail fernando.rodrigues@vidavg.com.br e contrate agora mesmo.",
+      "Visando garantir a validade da Certidão de Casamento e/ou Documento de União Estável, esse plano só pode ser contratado através de um representante comercial.",
+      "",
+      () => () => {},
+      "Fechar",
+      () => () => modal.hide(),
+      true,
+    );
+  };
+
   const getButton = _id => {
-    if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
-      return (
-        <Link
-          to={
-            process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
-              ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
-              : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
-          }>
-          <Button>ASSINE AGORA</Button>
-        </Link>
-      );
+    if (_id === "5fbbfaecd97422bfcb015cdf") {
+      return <Button onClick={() => showModalInfo()}>ASSINE AGORA</Button>;
     } else {
-      return (
-        <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
-          <Button>ASSINE AGORA</Button>
-        </Link>
-      );
+      if (localStorage.getItem("USER_ID") !== null && localStorage.getItem("USER_ID") !== "") {
+        return (
+          <Link
+            to={
+              process.env.REACT_APP_PAGE_CONSTRUCTION === "true"
+                ? `/site/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+                : `/pagamento/${_id}/${localStorage.getItem("USER_ID")}`
+            }>
+            <Button>ASSINE AGORA</Button>
+          </Link>
+        );
+      } else {
+        return (
+          <Link to={process.env.REACT_APP_PAGE_CONSTRUCTION === "true" ? `/site/criar-conta/${_id}` : `/criar-conta/${_id}`}>
+            <Button>ASSINE AGORA</Button>
+          </Link>
+        );
+      }
     }
   };
 

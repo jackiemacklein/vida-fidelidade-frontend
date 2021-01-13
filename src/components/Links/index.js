@@ -30,7 +30,7 @@ const Links = () => {
       link: `/static/files/Resumo_DDP_BSF_270520.pdf`,
     },
     {
-      title: "Condições Gerais - Vida Cartão Fidelidade",
+      title: "Condições geral - Assistência Funeral",
       link: `/static/files/CG_094-2020_Generali_Assistencia_Funeral_Individual.pdf`,
     },
   ]);

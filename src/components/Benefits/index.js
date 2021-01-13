@@ -113,7 +113,7 @@ function Benefits() {
             Particular: <span>R$ 300</span>
           </Line>
           <Line>
-            Vida Fidelidade: <span>R$ 85</span>
+            Vida Fidelidade: <span>R$ 150</span>
           </Line>
         </Item>
 

@@ -50,9 +50,15 @@ function Component(props) {
   const [phone, setPhone] = useState("");
 
   const [dependentes, setDependentes] = useState([]);
+  const [kinship_options, setKinship_options] = useState([
+    { value: "Cônjuges", text: "Cônjuges" },
+    { value: "Filhos", text: "Filhos" },
+  ]);
 
   const [loading, setLoading] = useState(false);
   const [preLoading, setPreLoading] = useState(true);
+
+  const [plan_id, setPlan_id] = useState("");
 
   const handleSave = async event => {
     event.preventDefault();
@@ -164,7 +170,30 @@ function Component(props) {
     setPreLoading(false);
   };
 
+  const loadContract = async () => {
+    try {
+      const { data } = await api.get(`/contratos/getFull/${getUser()?.id}`);
+
+      setPlan_id(data[data.length - 1].CodigoProduto);
+
+      if (
+        data[data.length - 1].CodigoProduto !== "" &&
+        (data[data.length - 1].CodigoProduto === "5fac23fed113dd41e37a8fd4" || data[data.length - 1].CodigoProduto === "5f9abb7de441d13dc5681484")
+      ) {
+        setKinship_options([
+          { value: "Cônjuges", text: "Cônjuges" },
+          { value: "Filhos", text: "Filhos" },
+          { value: "Mãe", text: "Mãe" },
+          { value: "Pai", text: "Pai" },
+        ]);
+      }
+    } catch (error) {
+      console.log("erro ao carregar contrato: ", error);
+    }
+  };
+
   useEffect(() => {
+    loadContract();
     loadDependents();
   }, []);
 
@@ -276,10 +305,7 @@ function Component(props) {
                 initialValue={kinship}
                 onChange={text => setKinship(text)}
                 label="Parentesco"
-                options={[
-                  { value: "Cônjuges", text: "Cônjuges" },
-                  { value: "Filhos", text: "Filhos" },
-                ]}
+                options={kinship_options}
                 empty
                 required
                 infoText="Campo obrigatório"

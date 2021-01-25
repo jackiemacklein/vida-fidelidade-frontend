@@ -193,7 +193,10 @@ function Component(props) {
           data[data.length - 1].StatusContrato === "ATIVA" ||
           data[data.length - 1].StatusContrato === "TRIAL"
         ) {
-          getFiles(data[data.length - 1]);
+          const doc = await api.get(`/contratos/gerardocumentos/${getUser()?.id}`);
+          if (doc.data) {
+            getFiles(doc.data);
+          }
         } else {
           setPreLoading(false);
         }

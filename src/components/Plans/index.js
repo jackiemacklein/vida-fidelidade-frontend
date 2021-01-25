@@ -77,7 +77,7 @@ function Plans({ header = true }) {
 
   useEffect(() => {
     async function load() {
-      const { data } = await api.get("/produtos/tipovenda/Site");
+      const { data } = await api.get("/produtos/tipovenda/Ambos");
       //const { data } = await api.get("/produtos/situacao/ativo");
       if (data) {
         setPlans(data);

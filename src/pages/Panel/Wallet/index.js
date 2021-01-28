@@ -95,7 +95,7 @@ function Wallet({ modalWalletOpen, setModalWalletOpen, data = { clientesDependen
                   </span>
                   <span id="ShowNumber">{data.CpfCNPJ}</span>
                   <span id="ShowDateBirthText">DATA DE NASCIMENTO</span>
-                  <span id="ShowDateBirth">{getDate(data.DataNascimento, "dd'/'MM'/'yyyy")}</span>
+                  <span id="ShowDateBirth">{getDateByTimeZoneCba(data.DataNascimento, "dd'/'MM'/'yyyy")}</span>
                   <span id="ShowInitialDateText">DESDE</span>
                   <span id="ShowInitialDate">{getDateByTimeZoneCba(data.DataCadastro, "dd'/'MM'/'yyyy")}</span>
                   <span id="ShowType">{"PARTICULAR"}</span>

@@ -123,6 +123,9 @@ function Component(props) {
       console.log(data);
 
       modal.show(true, "Sucesso!", "", "Seus dados foram atualizados com sucesso!", "", "", "Fechar", () => () => modal.hide(), true);
+
+      //envia a atualização para a wirecard
+      await api.get(`/wiredcard/atualizapessoa/${id}`);
     } catch (error) {
       console.log(error);
       console.log(error?.response);

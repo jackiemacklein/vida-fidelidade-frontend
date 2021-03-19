@@ -251,6 +251,21 @@ function Benefits() {
             Vida Fidelidade: <span>R$ 140</span>
           </Line>
         </Item>
+
+        <Item>
+          <Icone>
+            <BenefitsIcon width="30px" height="30px" fill="#FFF" />
+          </Icone>
+          <Title>
+            <span>Desconto</span>Cirurgiã plástica
+          </Title>
+          <Line className="through">
+            Particular: <span>R$ 280</span>
+          </Line>
+          <Line>
+            Vida Fidelidade: <span>R$ 150</span>
+          </Line>
+        </Item>
       </Items>
     </Container>
   );

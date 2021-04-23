@@ -158,7 +158,9 @@ export const Partners = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  background: #fff;
 
   a {
     text-decoration: none;

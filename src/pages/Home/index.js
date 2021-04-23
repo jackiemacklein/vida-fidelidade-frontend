@@ -21,6 +21,7 @@ import Footer from "./../../components/Footer";
 /* import images */
 import logoBetoni from "./../../assets/images/logoBetoni.png";
 import logoGenerali from "./../../assets/images/logoGenerali.png";
+import siteSecurity from "./../../assets/images/siteSecurity.gif";
 
 /* import icons */
 
@@ -74,6 +75,15 @@ function Component(props) {
 
           <a href="https://www.generali.com.br/" target="_blank" title="Site da Generali Seguros" alt="Site da Generali Seguros" rel="opener referrer">
             <img src={logoGenerali} alt="Generali Seguros" title="Generali Seguros" />
+          </a>
+
+          <a href="javascript:vopenw()">
+            <img
+              src={siteSecurity}
+              border="0"
+              align="center"
+              alt="Um site validado pela Certisign indica que nossa empresa concluiu satisfatoriamente todos os procedimentos para determinar que o domínio validado é de propriedade ou se encontra registrado por uma empresa ou organização autorizada a negociar por ela ou exercer qualquer atividade lícita em seu nome."
+            />
           </a>
         </Partners>
       </Container>

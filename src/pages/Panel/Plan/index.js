@@ -97,7 +97,7 @@ function Component(props) {
       tipodepagamento: data?.TipoPagamento,
       recorrencia: "Mensal",
       apolice: apolice,
-      datadecriacaoformatada: getDateByTimeZoneCba(data?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+      datadecriacaoformatada: getDateByTimeZoneCba(data.DataContrato ? data.DataContrato : data.VigenciaInicial, "dd'/'MM'/'yyyy"),
       dependentes: dependentes,
     };
 
@@ -149,7 +149,7 @@ function Component(props) {
         tipodepagamento: data?.TipoPagamento,
         recorrencia: "Mensal",
         apolice: apolice,
-        datadecriacaoformatada: getDateByTimeZoneCba(data?.VigenciaInicial, "dd'/'MM'/'yyyy"),
+        datadecriacaoformatada: getDateByTimeZoneCba(data.DataContrato ? data.DataContrato : data.VigenciaInicial, "dd'/'MM'/'yyyy"),
         dependentes: dependentes,
       };
       const resLinkContratoAdesao = await apiNoBaseURL.post(`https://adm.vidavg.com.br/createlinkcontratoadesao`, JsonProposta);

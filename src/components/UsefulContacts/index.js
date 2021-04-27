@@ -18,23 +18,17 @@ import LessIcon from "./../../assets/icons/less";
 import { Container, Item, Header, HeaderTitle, Answer } from "./styles";
 import { Accordion, AnswerContent } from "./styles";
 
-const Questions = () => {
+const UsefulContacts = () => {
   const initialData = InitialDataContext;
 
   const [showing, setShowing] = useState(0);
 
   // const [questions, setQuestions] = useState(initialData.questions?.data ?? []);
 
-  const [questions, setQuestions] = useState([
+  const [items, setItems] = useState([
     {
-      title: "O Vida Cartão Fidelidade é um plano de saúde?",
-      answer: `Não. O Vida Cartão fidelidade é um clube de benefícios onde você cuida da sua saúde e de quem mais ama, com ótimos descontos e sem filas. Pagando
-  apenas uma mensalidade, você e seus dependentes tem acesso a consultas, vacinas e exames que fazem parte do complexo Vida, além do plano odontológico,
-  seguro de vida e assistência funeral para o titular.`,
-    },
-    {
-      title: "A primeira mensalidade ja vai vir na mesma cobrança da adesão?",
-      answer: `Sim!`,
+      title: "Central de Atendimento Generali - Assistência Funeral",
+      answer: `<b>Regiões Metropolitanas: </b>3004 5858<br /><b>Demais Regiões: </b>0800 7070 2011`,
     },
   ]);
 
@@ -44,10 +38,10 @@ const Questions = () => {
 
   return (
     <>
-      {questions.length > 0 ? (
-        <Container id="duvidas-frequentes">
-          <Title title1="Dúvidas" title2="Frequentes" invert styles={{ marginBottom: "40px" }} />
-          {questions.map((item, index) => (
+      {items.length > 0 ? (
+        <Container id="telefones-uteis">
+          <Title title1="Telefones" title2="Úteis" styles={{ marginBottom: "40px" }} />
+          {items.map((item, index) => (
             <Item key={index}>
               <Header onClick={() => setShowing(showing === index ? -1 : index)}>
                 <HeaderTitle>{item.title}</HeaderTitle>
@@ -83,4 +77,4 @@ const Questions = () => {
   );
 };
 
-export default Questions;
+export default UsefulContacts;

@@ -13,7 +13,7 @@ export const Container = styled.section`
   width: 1100px;
 
   /*margin-bottom: 100px;*/
-  margin-top: 0px;
+  margin-top: 100px;
 
   @media (max-width: 1366px) {
   }

@@ -43,7 +43,7 @@ const Links = () => {
     <>
       {questions.length > 0 ? (
         <Container id="link-uteis">
-          <Title title1="Documentos" title2="Importantes" invert styles={{ marginBottom: "80px" }} />
+          <Title title1="Documentos" title2="Importantes" invert styles={{ marginBottom: "40px" }} />
           {questions.map((item, index) => (
             <Item key={index}>
               <Header href={item.link} target="_blank">

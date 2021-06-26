@@ -53,6 +53,10 @@ function Component(props) {
   const [client_id, setClient_id] = useState("");
   const [plan_id, setPlan_id] = useState("");
 
+  const [terms, setTerms] = useState(false);
+  const [privacy_policy, setPrivacy_policy] = useState(false);
+  const [refund_policy, setRefund_policy] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const [clientContract, setClientContract] = useState(false);
@@ -127,6 +131,9 @@ function Component(props) {
       await localStorage.setItem("CLIENT_PAYMENT", client_id);
 
       const { data } = await api.post("/contratos", {
+        Terms: terms,
+        PrivacyPolicy: privacy_policy,
+        RefundPolicy: refund_policy,
         CodigoEmpresa: "5f8da1658c4466ce8b70113a",
         CodigoCliente: client_id,
         CodigoVendedor: "5f98c54ee75ab2fdf19c0e6c",
@@ -431,6 +438,47 @@ function Component(props) {
                 label="Indicado Por:"
                 infoText="Se foi uma indicação, por favor informe o nome da Pessoa"
                 type="text"
+              />
+            </Row>
+
+            <ContentTitle>Aceite os termos</ContentTitle>
+
+            <Row style={{ marginTop: "25px" }}>
+              <Checkbox
+                name="terms"
+                id="terms"
+                initialValue={"terms"}
+                onChange={(text, checked) => setTerms(checked)}
+                label="Aceitar os Termos"
+                link={"/static/files/termo_adesao.pdf"}
+                checked={terms}
+                required
+              />
+            </Row>
+
+            <Row>
+              <Checkbox
+                name="privacy_policy"
+                id="privacy_policy"
+                initialValue={"privacy_policy"}
+                onChange={(text, checked) => setPrivacy_policy(checked)}
+                label="Aceitar o Política de Privacidade"
+                link={"/static/files/regras_privacidade.pdf"}
+                checked={privacy_policy}
+                required
+              />
+            </Row>
+
+            <Row>
+              <Checkbox
+                name="refund_policy"
+                id="refund_policy"
+                initialValue={"refund_policy"}
+                onChange={(text, checked) => setRefund_policy(checked)}
+                label="Aceitar a Política de Reembolso"
+                link={"/static/files/politica_reembolso.pdf"}
+                checked={refund_policy}
+                required
               />
             </Row>
             <Button disabled={loading}>{loading ? `PROCESSANDO PAGAMENTO...` : method === "billet" ? "Gerar Boleto" : "Realizar Pagamento"}</Button>
